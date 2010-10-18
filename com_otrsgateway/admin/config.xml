@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config menu="hide">
+    <params>
+        <param name="otrsgateway_rpc_url" type="text" size="60" default="http://localhost/otrs/rpc.extended.pl" label="OTRS_RPC_URL" description="OTRS_RPC_URL_DESC" />
+        <param name="otrsgateway_rpc_user" type="text" size="30" default="some_user" label="OTRS_RPC_USER" description="OTRS_RPC_USER_DESC" />
+        <param name="otrsgateway_rpc_password" type="password" size="30" default="some_pass" label="OTRS_RPC_PASSWORD" description="OTRS_RPC_PASSWORD_DESC" />
+        <param name="otrsgateway_auth_map" type="radio" default="0" label="OTRS_AUTH_MAP" description="OTRS_AUTH_MAP_DESC">
+            <option value="0">Login</option>
+            <option value="1">Email</option>
+        </param>
+    </params>
+</config>

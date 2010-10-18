@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<otrs_package version="1.0"> 
+    <Name>OTRS-Joomla-Gateway</Name> 
+    <Version>0.8.0</Version> 
+    <Framework>2.4.x</Framework>
+    <Vendor>Cognidox Ltd</Vendor> 
+    <URL>http://www.cognidox.com/</URL>
+    <License>GNU AFFERO GENERAL PUBLIC LICENSE v3 - http://www.opensource.org/licenses/agpl-v3.html</License>
+    <Description Lang="en">Provides an RPC gateway allowing Joomla to access OTRS ticket data.</Description> 
+    <BuildDate>?</BuildDate> 
+    <BuildHost>?</BuildHost> 
+    <Filelist> 
+        <File Permission="755" Location="bin/cgi-bin/rpc.extended.pl"></File> 
+        <File Permission="644" Location="Kernel/System/JoomlaGateway.pm"></File> 
+        <File Permission="644" Location="Kernel/Config/Files/JoomlaGateway.xml"></File> 
+    </Filelist>
+
+    <IntroInstall Type="post" Lang="en" Title="Installation Complete" Format="plain">
+Thank you for installing the Joomla gateway module.
+
+In order to use this module, you must set and enable the SOAP::User and 
+SOAP::Password OTRS configuration values. Once set, they can be configured
+in the Joomla gateway component to allow access from Joomla to OTRS.
+    </IntroInstall>
+</otrs_package>

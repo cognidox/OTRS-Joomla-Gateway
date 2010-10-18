@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id: default.xml 10880 2008-08-31 17:51:53Z willebil $ -->
+<metadata>
+	<layout title="Ticket List Layout">
+		<message>
+			<![CDATA[TICKET LIST LAYOUT DESC]]>
+		</message>
+	</layout>
+	<state>
+		<name>Ticket List Layout</name>
+		<description>TICKET LIST LAYOUT DESC</description>
+		<params>
+            <param type="list" name="listtype" default="" label="List Type" description="LISTTYPE">
+                <option value="">My Tickets</option>
+                <option value="company">Company Tickets</option>
+            </param>
+        </params>
+	</state>
+</metadata>
