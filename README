@@ -1,0 +1,20 @@
+OTRS Joomla Gateway
+===================
+
+This is the Cognidox Ltd OTRS Joomla gateway. It can be used to connect
+a Joomla site with the customer user ticket side of an OTRS installation.
+
+It is distributed under the GNU Affero General Public License v3:
+http://www.opensource.org/licenses/agpl-v3.html
+
+This repository holds:
+
+    com_otrsgateway    - Joomla component and plugin sources
+    otrs_joomla_module - OTRS component sources
+
+Installation packages for both the Joomla and OTRS components are provided
+in the Files section of the Guthub repository.
+
+More information about installation and usage can be found on the Cognidox
+project page: 
+http://www.cognidox.com/opensource/otrs-joomla-gateway
