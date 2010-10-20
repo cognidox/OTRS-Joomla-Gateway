@@ -205,9 +205,9 @@ sub GetTicket {
 
     # Gather the basic information needed for the ticket display
     my %ticketData;
-    foreach (qw(Changed Created TicketID CustomerUserID CustomerID Queue
+    for my $Attribute (qw(Changed Created TicketID CustomerUserID CustomerID Queue
                 State StateType Title Priority PriorityID StateID)) {
-        $ticketData{$_} = $ticket{$_};
+        $ticketData{$Attribute} = $ticket{$Attribute};
     }
     $ticketData{'TicketNumber'} = $ticket{'TicketNumber'} . ' ';
     $ticketData{'ArticleIndex'} = [];
