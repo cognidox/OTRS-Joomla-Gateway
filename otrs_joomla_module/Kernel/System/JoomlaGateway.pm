@@ -149,9 +149,9 @@ sub GetTicketQueues {
         %NewTos = ( $Object->Run( Env => $Self ), ( '', => '' ) );
     }
     if (%NewTos) {
-        for ( keys %NewTos ) {
-            $NewTos{"$_||$NewTos{$_}"} = $NewTos{$_};
-            delete $NewTos{$_};
+        for my $Key ( keys %NewTos ) {
+            $NewTos{"$Key||$NewTos{$Key}"} = $NewTos{$Key};
+            delete $NewTos{$Key};
         }
     }
     return \%NewTos;
