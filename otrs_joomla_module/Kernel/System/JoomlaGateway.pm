@@ -1,23 +1,19 @@
 # --
 # Kernel/System/JoomlaGateway.pm - functions used by the Joomla gateway
 # Copyright (c) 2010 Cognidox Ltd
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
 #
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 #
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # --
 
 use lib qw(../../cpan-lib);
@@ -57,13 +53,13 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # Get needed objects
-    for (qw(ConfigObject LogObject TimeObject DBObject TicketObject
+    for my $Object (qw(ConfigObject LogObject TimeObject DBObject TicketObject
             MainObject EncodeObject TicketObject CustomerUserObject
             QueueObject)) {
-        if ( $Param{$_} ) {
-            $Self->{$_} = $Param{$_};
+        if ( $Param{$Object} ) {
+            $Self->{$Object} = $Param{$Object};
         } else {
-            die "Got no $_!";
+            die "Got no $Object!";
         }
     }
     $Self->{'StateObject'} = Kernel::System::State->new(%{$Self}, %Param);
@@ -92,7 +88,7 @@ sub TicketSearch {
     my @ticketData;
     my %customerCache;
     my @CustomerArticleTypes = $Self->{TicketObject}->ArticleTypeList(Type => 'Customer');
-    foreach my $id (@ids) {
+    for my $id (@ids) {
         my %article = $Self->{TicketObject}->ArticleLastCustomerArticle(TicketID => $id);
         if (!%article) {
             my @idx = $Self->{TicketObject}->ArticleIndex(TicketID => $id);
@@ -105,10 +101,10 @@ sub TicketSearch {
         # interface fairly quick, we'll only grab a few pieces of the 
         # ticket data
         my %ticketData;
-        foreach (qw(Age PriorityID StateID Changed ArticleID QueueID 
+        for my $Attribute (qw(Age PriorityID StateID Changed ArticleID QueueID 
                     TicketID CustomerUserID CustomerID Priority Queue
                     State Title Created CreateTimeUnix)) {
-            $ticketData{$_} = $article{$_};
+            $ticketData{$Attribute} = $article{$Attribute};
         }
         $ticketData{'TicketNumber'} = $article{'TicketNumber'} . " ";
         if ($ticketData{'CustomerID'} && 
@@ -149,9 +145,9 @@ sub GetTicketQueues {
         %NewTos = ( $Object->Run( Env => $Self ), ( '', => '' ) );
     }
     if (%NewTos) {
-        for ( keys %NewTos ) {
-            $NewTos{"$_||$NewTos{$_}"} = $NewTos{$_};
-            delete $NewTos{$_};
+        for my $Key ( keys %NewTos ) {
+            $NewTos{"$Key||$NewTos{$Key}"} = $NewTos{$Key};
+            delete $NewTos{$Key};
         }
     }
     return \%NewTos;
@@ -205,9 +201,9 @@ sub GetTicket {
 
     # Gather the basic information needed for the ticket display
     my %ticketData;
-    foreach (qw(Changed Created TicketID CustomerUserID CustomerID Queue
+    for my $Attribute (qw(Changed Created TicketID CustomerUserID CustomerID Queue
                 State StateType Title Priority PriorityID StateID)) {
-        $ticketData{$_} = $ticket{$_};
+        $ticketData{$Attribute} = $ticket{$Attribute};
     }
     $ticketData{'TicketNumber'} = $ticket{'TicketNumber'} . ' ';
     $ticketData{'ArticleIndex'} = [];
@@ -220,40 +216,40 @@ sub GetTicket {
     # Go through the articles, processing
     # Need the submitter, the submit date, the body of the content,
     # the encoding of the content
-    foreach my $a (@articles) {
+    for my $Article (@articles) {
         my $item = {};
-        $item->{'From'} = $a->{'From'};
-        $item->{'Created'} = $a->{'Created'};
-        $item->{'ArticleID'} = $a->{'ArticleID'};
+        $item->{'From'} = $Article->{'From'};
+        $item->{'Created'} = $Article->{'Created'};
+        $item->{'ArticleID'} = $Article->{'ArticleID'};
         $item->{'Type'} = 'text/plain';
         $item->{'Body'} = '';
 
-        if (exists $a->{'Atms'}) {
-            $item->{'Atms'} = $a->{'Atms'};
-            if (exists $a->{'AttachmentIDOfHTMLBody'} &&
-                $a->{'AttachmentIDOfHTMLBody'}) {
+        if (exists $Article->{'Atms'}) {
+            $item->{'Atms'} = $Article->{'Atms'};
+            if (exists $Article->{'AttachmentIDOfHTMLBody'} &&
+                $Article->{'AttachmentIDOfHTMLBody'}) {
                 # Get the attachment
-                my $att = $a->{'Atms'}->{$a->{'AttachmentIDOfHTMLBody'}};
-                if ($att && exists $att->{'ContentType'} &&
-                    $att->{'ContentType'} =~ m#^text/x?html#i) {
+                my $ArticleBody = $Article->{'Atms'}->{$Article->{'AttachmentIDOfHTMLBody'}};
+                if ($ArticleBody && exists $ArticleBody->{'ContentType'} &&
+                    $ArticleBody->{'ContentType'} =~ m#^text/x?html#i) {
                     $item->{'Type'} = 'text/html';
-                    my %attData = $Self->{TicketObject}->ArticleAttachment(
-                                    ArticleID => $a->{'ArticleID'},
-                                    FileID => $a->{'AttachmentIDOfHTMLBody'});
-                    if (%attData) {
-                        $item->{'Body'} = $attData{'Content'};
+                    my %ArticleBodyData = $Self->{TicketObject}->ArticleAttachment(
+                                    ArticleID => $Article->{'ArticleID'},
+                                    FileID => $Article->{'AttachmentIDOfHTMLBody'});
+                    if (%ArticleBodyData) {
+                        $item->{'Body'} = $ArticleBodyData{'Content'};
                         $item->{'Type'} = 'text/html';
                     }
                 } else {
-                    $item->{'Body'} = $a->{'Body'};
+                    $item->{'Body'} = $Article->{'Body'};
                 }
-                delete($item->{'Atms'}->{$a->{'AttachmentIDOfHTMLBody'}});
+                delete($item->{'Atms'}->{$Article->{'AttachmentIDOfHTMLBody'}});
             } else {
-                $item->{'Body'} = $a->{'Body'};
+                $item->{'Body'} = $Article->{'Body'};
             }
             if (scalar(keys(%{$item->{'Atms'}}))) {
                 push(@{$ticketData{'Attachments'}},
-                        { 'ArticleID' => $a->{'ArticleID'},
+                        { 'ArticleID' => $Article->{'ArticleID'},
                           'Atms' => $item->{'Atms'} });
             }
             delete($item->{'Atms'});
@@ -338,11 +334,11 @@ sub TicketReply {
             );
         }
         if (exists($Param{'Attachments'}) && ref($Param{'Attachments'}) eq 'ARRAY') {
-            foreach my $a (@{$Param{'Attachments'}}) {
-                next unless ($a->{'name'});
-                my %aData = ( 'Content' => decode_base64($a->{'content'}),
-                              'Filename' => $a->{'name'},
-                              'ContentType' => $a->{'type'},
+            for my $Attachment (@{$Param{'Attachments'}}) {
+                next unless ($Attachment->{'name'});
+                my %aData = ( 'Content' => decode_base64($Attachment->{'content'}),
+                              'Filename' => $Attachment->{'name'},
+                              'ContentType' => $Attachment->{'type'},
                               'ArticleID' => $ArticleID,
                               'UserID' => $Self->{ConfigObject}->Get('CustomerPanelUserID') );
                 $Self->{TicketObject}->ArticleWriteAttachment(%aData);
@@ -423,11 +419,11 @@ sub TicketSubmit {
         );
         if ($ArticleID) {
             if (exists($Param{'Attachments'}) && ref($Param{'Attachments'}) eq 'ARRAY') {
-                foreach my $a (@{$Param{'Attachments'}}) {
-                    next unless ($a->{'name'});
-                    my %aData = ( 'Content' => decode_base64($a->{'content'}),
-                                  'Filename' => $a->{'name'},
-                                  'ContentType' => $a->{'type'},
+                for my $Attachment (@{$Param{'Attachments'}}) {
+                    next unless ($Attachment->{'name'});
+                    my %aData = ( 'Content' => decode_base64($Attachment->{'content'}),
+                                  'Filename' => $Attachment->{'name'},
+                                  'ContentType' => $Attachment->{'type'},
                                   'ArticleID' => $ArticleID,
                                   'UserID' => $Self->{ConfigObject}->Get('CustomerPanelUserID') );
                     $Self->{TicketObject}->ArticleWriteAttachment(%aData);

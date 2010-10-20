@@ -13,8 +13,14 @@ This repository holds:
     otrs_joomla_module - OTRS component sources
 
 Installation packages for both the Joomla and OTRS components are provided
-in the Files section of the Guthub repository.
+in the Files section of the Github repository.
 
 More information about installation and usage can be found on the Cognidox
 project page: 
 http://www.cognidox.com/opensource/otrs-joomla-gateway
+
+
+Credits
+=======
+
+Elias Probst - http://github.com/eliasp
