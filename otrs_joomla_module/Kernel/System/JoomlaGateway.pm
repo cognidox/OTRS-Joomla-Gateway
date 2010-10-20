@@ -57,13 +57,13 @@ sub new {
     $Self->{Debug} = $Param{Debug} || 0;
 
     # Get needed objects
-    for (qw(ConfigObject LogObject TimeObject DBObject TicketObject
+    for my $Object (qw(ConfigObject LogObject TimeObject DBObject TicketObject
             MainObject EncodeObject TicketObject CustomerUserObject
             QueueObject)) {
-        if ( $Param{$_} ) {
-            $Self->{$_} = $Param{$_};
+        if ( $Param{$Object} ) {
+            $Self->{$Object} = $Param{$Object};
         } else {
-            die "Got no $_!";
+            die "Got no $Object!";
         }
     }
     $Self->{'StateObject'} = Kernel::System::State->new(%{$Self}, %Param);
