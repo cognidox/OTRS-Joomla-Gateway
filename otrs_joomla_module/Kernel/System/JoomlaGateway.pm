@@ -220,40 +220,40 @@ sub GetTicket {
     # Go through the articles, processing
     # Need the submitter, the submit date, the body of the content,
     # the encoding of the content
-    for my $a (@articles) {
+    for my $Article (@articles) {
         my $item = {};
-        $item->{'From'} = $a->{'From'};
-        $item->{'Created'} = $a->{'Created'};
-        $item->{'ArticleID'} = $a->{'ArticleID'};
+        $item->{'From'} = $Article->{'From'};
+        $item->{'Created'} = $Article->{'Created'};
+        $item->{'ArticleID'} = $Article->{'ArticleID'};
         $item->{'Type'} = 'text/plain';
         $item->{'Body'} = '';
 
-        if (exists $a->{'Atms'}) {
-            $item->{'Atms'} = $a->{'Atms'};
-            if (exists $a->{'AttachmentIDOfHTMLBody'} &&
-                $a->{'AttachmentIDOfHTMLBody'}) {
+        if (exists $Article->{'Atms'}) {
+            $item->{'Atms'} = $Article->{'Atms'};
+            if (exists $Article->{'AttachmentIDOfHTMLBody'} &&
+                $Article->{'AttachmentIDOfHTMLBody'}) {
                 # Get the attachment
-                my $att = $a->{'Atms'}->{$a->{'AttachmentIDOfHTMLBody'}};
-                if ($att && exists $att->{'ContentType'} &&
-                    $att->{'ContentType'} =~ m#^text/x?html#i) {
+                my $Articlett = $Article->{'Atms'}->{$Article->{'AttachmentIDOfHTMLBody'}};
+                if ($Articlett && exists $Articlett->{'ContentType'} &&
+                    $Articlett->{'ContentType'} =~ m#^text/x?html#i) {
                     $item->{'Type'} = 'text/html';
                     my %attData = $Self->{TicketObject}->ArticleAttachment(
-                                    ArticleID => $a->{'ArticleID'},
-                                    FileID => $a->{'AttachmentIDOfHTMLBody'});
+                                    ArticleID => $Article->{'ArticleID'},
+                                    FileID => $Article->{'AttachmentIDOfHTMLBody'});
                     if (%attData) {
-                        $item->{'Body'} = $attData{'Content'};
+                        $item->{'Body'} = $ArticlettData{'Content'};
                         $item->{'Type'} = 'text/html';
                     }
                 } else {
-                    $item->{'Body'} = $a->{'Body'};
+                    $item->{'Body'} = $Article->{'Body'};
                 }
-                delete($item->{'Atms'}->{$a->{'AttachmentIDOfHTMLBody'}});
+                delete($item->{'Atms'}->{$Article->{'AttachmentIDOfHTMLBody'}});
             } else {
-                $item->{'Body'} = $a->{'Body'};
+                $item->{'Body'} = $Article->{'Body'};
             }
             if (scalar(keys(%{$item->{'Atms'}}))) {
                 push(@{$ticketData{'Attachments'}},
-                        { 'ArticleID' => $a->{'ArticleID'},
+                        { 'ArticleID' => $Article->{'ArticleID'},
                           'Atms' => $item->{'Atms'} });
             }
             delete($item->{'Atms'});
