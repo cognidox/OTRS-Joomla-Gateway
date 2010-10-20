@@ -92,7 +92,7 @@ sub TicketSearch {
     my @ticketData;
     my %customerCache;
     my @CustomerArticleTypes = $Self->{TicketObject}->ArticleTypeList(Type => 'Customer');
-    foreach my $id (@ids) {
+    for my $id (@ids) {
         my %article = $Self->{TicketObject}->ArticleLastCustomerArticle(TicketID => $id);
         if (!%article) {
             my @idx = $Self->{TicketObject}->ArticleIndex(TicketID => $id);
@@ -105,10 +105,10 @@ sub TicketSearch {
         # interface fairly quick, we'll only grab a few pieces of the 
         # ticket data
         my %ticketData;
-        foreach (qw(Age PriorityID StateID Changed ArticleID QueueID 
+        for my $Attribute (qw(Age PriorityID StateID Changed ArticleID QueueID 
                     TicketID CustomerUserID CustomerID Priority Queue
                     State Title Created CreateTimeUnix)) {
-            $ticketData{$_} = $article{$_};
+            $ticketData{$Attribute} = $article{$Attribute};
         }
         $ticketData{'TicketNumber'} = $article{'TicketNumber'} . " ";
         if ($ticketData{'CustomerID'} && 
