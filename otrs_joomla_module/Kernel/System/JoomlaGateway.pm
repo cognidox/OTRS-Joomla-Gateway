@@ -220,7 +220,7 @@ sub GetTicket {
     # Go through the articles, processing
     # Need the submitter, the submit date, the body of the content,
     # the encoding of the content
-    foreach my $a (@articles) {
+    for my $a (@articles) {
         my $item = {};
         $item->{'From'} = $a->{'From'};
         $item->{'Created'} = $a->{'Created'};
