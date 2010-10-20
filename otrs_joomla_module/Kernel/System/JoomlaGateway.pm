@@ -423,11 +423,11 @@ sub TicketSubmit {
         );
         if ($ArticleID) {
             if (exists($Param{'Attachments'}) && ref($Param{'Attachments'}) eq 'ARRAY') {
-                foreach my $a (@{$Param{'Attachments'}}) {
-                    next unless ($a->{'name'});
-                    my %aData = ( 'Content' => decode_base64($a->{'content'}),
-                                  'Filename' => $a->{'name'},
-                                  'ContentType' => $a->{'type'},
+                for my $Attachment (@{$Param{'Attachments'}}) {
+                    next unless ($Attachment->{'name'});
+                    my %aData = ( 'Content' => decode_base64($Attachment->{'content'}),
+                                  'Filename' => $Attachment->{'name'},
+                                  'ContentType' => $Attachment->{'type'},
                                   'ArticleID' => $ArticleID,
                                   'UserID' => $Self->{ConfigObject}->Get('CustomerPanelUserID') );
                     $Self->{TicketObject}->ArticleWriteAttachment(%aData);
