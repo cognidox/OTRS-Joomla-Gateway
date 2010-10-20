@@ -338,7 +338,7 @@ sub TicketReply {
             );
         }
         if (exists($Param{'Attachments'}) && ref($Param{'Attachments'}) eq 'ARRAY') {
-            foreach my $a (@{$Param{'Attachments'}}) {
+            for my $a (@{$Param{'Attachments'}}) {
                 next unless ($a->{'name'});
                 my %aData = ( 'Content' => decode_base64($a->{'content'}),
                               'Filename' => $a->{'name'},
