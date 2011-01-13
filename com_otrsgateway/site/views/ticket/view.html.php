@@ -54,7 +54,7 @@ class OTRSGatewayViewTicket extends JView
         if ( $ticketID )
         {
             $ticket = $model->getTicket( $ticketID );
-            $allowedTags = '<p><span><a><b><u><ul><li><pre><ol><strike><br><tt><hr><div><strong>';
+            $allowedTags = '<p><em><i><span><a><b><u><ul><li><pre><ol><strike><br><tt><hr><div><strong>';
             $this->assignRef( 'allowedTags', $allowedTags );
             $this->assignRef( 'ticket', $ticket );
 

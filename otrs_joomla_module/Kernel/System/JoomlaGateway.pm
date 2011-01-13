@@ -211,7 +211,7 @@ sub GetTicket {
 
     # Get all the articles attached to the ticket
     my @CustomerArticleTypes = $Self->{TicketObject}->ArticleTypeList(Type => 'Customer');
-    my @articles = $Self->{TicketObject}->ArticleContentIndex(TicketID => $Param{TicketID}, ArticleType => \@CustomerArticleTypes, StripPlainBodyAsAttachment => 2);
+    my @articles = $Self->{TicketObject}->ArticleContentIndex(TicketID => $Param{TicketID}, ArticleType => \@CustomerArticleTypes, StripPlainBodyAsAttachment => 2, UserID => $Param{'CustomerUserID'});
 
     # Go through the articles, processing
     # Need the submitter, the submit date, the body of the content,
@@ -235,7 +235,8 @@ sub GetTicket {
                     $item->{'Type'} = 'text/html';
                     my %ArticleBodyData = $Self->{TicketObject}->ArticleAttachment(
                                     ArticleID => $Article->{'ArticleID'},
-                                    FileID => $Article->{'AttachmentIDOfHTMLBody'});
+                                    FileID => $Article->{'AttachmentIDOfHTMLBody'},
+                                    UserID => $Param{'CustomerUserID'});
                     if (%ArticleBodyData) {
                         $item->{'Body'} = $ArticleBodyData{'Content'};
                         $item->{'Type'} = 'text/html';
@@ -487,7 +488,7 @@ sub GetAttachment {
     my $Access = $Self->{TicketObject}->CustomerPermission(
         Type     => 'ro',
         TicketID => $Article{TicketID},
-        UserID   => $Param{CustomerUserID}
+        UserID   => $Param{CustomerUserID},
     );
     if ( !$Access ) {
         return { 'error' => 'Access denied' };
@@ -495,6 +496,7 @@ sub GetAttachment {
     my %Data = $Self->{TicketObject}->ArticleAttachment(
         ArticleID => $Param{ArticleID},
         FileID    => $Param{FileID},
+        UserID    => $Param{CustomerUserID},
     );
     if ( !%Data ) {
         return { 'error' => 'Attachment not found' };
