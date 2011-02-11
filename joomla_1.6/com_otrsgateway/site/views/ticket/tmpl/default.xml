@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id: default.xml 10880 2008-08-31 17:51:53Z willebil $ -->
+<metadata>
+	<layout title="COM_OTRSGATEWAY_TICKET_VIEW_DEFAULT_TITLE" hidden="true">
+		<message>
+			<![CDATA[COM_OTRSGATEWAY_TICKET_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>
+</metadata>

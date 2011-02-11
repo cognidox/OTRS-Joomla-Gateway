@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id: default.xml 10880 2008-08-31 17:51:53Z willebil $ -->
+<metadata>
+	<layout title="Ticket Zoom Layout" hidden="true">
+		<message>
+			<![CDATA[OTRS_LAYOUT_TICKET_ZOOM_DESC]]>
+		</message>
+	</layout>
+	<state>
+		<name>Ticket Zoom Layout</name>
+		<description>OTRS_LAYOUT_TICKET_ZOOM_DESC</description>
+		<params />
+	</state>
+</metadata>

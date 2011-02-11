@@ -33,6 +33,7 @@ use Kernel::System::Priority;
 use Kernel::System::SystemAddress;
 use Kernel::System::Ticket;
 use Kernel::System::Time;
+use Kernel::System::Type;
 use Kernel::System::Valid;
 use Kernel::System::Web::Request;
 
@@ -383,7 +384,7 @@ sub TicketSubmit {
     my $From = $userData{'UserFirstname'} . ' ' . $userData{'UserLastname'} .
                ' <' . $userData{'UserEmail'} . '>';
 
-    my $TicketID = $Self->{TicketObject}->TicketCreate(
+    my %TicketData = (
             QueueID      => $NewQueueID,
             Title        => $Param{Subject},
             PriorityID   => $Param{PriorityID},
@@ -396,6 +397,16 @@ sub TicketSubmit {
             UserID       => $Self->{ConfigObject}->Get('CustomerPanelUserID'),
         );
 
+    # Add the optional ticket type if it's been sent and is allowed
+    # by the config
+    if ( $Self->{ConfigObject}->Get('Ticket::Type') ) {
+        if ($Param{'TypeID'} && $Param{'TypeID'} =~ /^\d+$/) {
+            $TicketData{'TypeID'} = $Param{'TypeID'};
+        }
+    }
+
+    my $TicketID = $Self->{TicketObject}->TicketCreate(%TicketData);
+
     if ($TicketID) {
         my $ArticleID = $Self->{TicketObject}->ArticleCreate(
             TicketID         => $TicketID,
@@ -405,7 +416,7 @@ sub TicketSubmit {
             To               => $To,
             Subject          => $Param{Subject},
             Body             => $Self->{LayoutObject}->RichTextDocumentComplete(
-                String => $Param{Body}),
+            String => $Param{Body}),
             MimeType         => 'text/html',
             Charset          => 'utf-8',
             UserID           => $Self->{ConfigObject}->Get('CustomerPanelUserID'
@@ -504,6 +515,19 @@ sub GetAttachment {
     if ( !%Data ) {
         return { 'error' => 'Attachment not found' };
     }
+    return { %Data };
+}
+
+# Return a list of ticket types
+sub TicketTypeList {
+    my ( $Self, %Param ) = @_;
+
+    # Make sure the config option for setting type is really available
+    if ( !$Self->{ConfigObject}->Get('Ticket::Type') ) {
+        return undef;
+    }
+    my $TypeObject = Kernel::System::Type->new( %{$Self}, %Param );
+    my %Data = $TypeObject->TypeList(%Param);
     return { %Data };
 }
 

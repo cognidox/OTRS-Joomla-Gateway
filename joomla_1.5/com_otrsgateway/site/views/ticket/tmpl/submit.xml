@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id: default.xml 10880 2008-08-31 17:51:53Z willebil $ -->
+<metadata>
+	<layout title="New Ticket Form Layout">
+		<message>
+			<![CDATA[OTRS_LAYOUT_TICKET_SUBMIT_DESC]]>
+		</message>
+	</layout>
+	<state>
+		<name>New Ticket Form Layout</name>
+		<description>OTRS_LAYOUT_TICKET_SUBMIT_DESC</description>
+        <url>
+            <param name="task" type="hidden" default="submitForm" />
+        </url>
+		<params />
+	</state>
+</metadata>

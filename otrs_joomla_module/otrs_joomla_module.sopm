@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?> 
 <otrs_package version="1.0"> 
     <Name>OTRS-Joomla-Gateway</Name> 
-    <Version>0.9.0</Version> 
+    <Version>0.9.1</Version> 
     <Framework>3.0.x</Framework>
     <Framework>2.4.x</Framework>
     <Vendor>Cognidox Ltd</Vendor> 
