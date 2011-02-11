@@ -157,6 +157,9 @@ sub GetTicketQueues {
 # customer(s) of the user here
 sub GetCustomerUserData {
     my ( $Self, %Param ) = @_;
+    if ( !exists $Param{'PostMasterSearch'} && exists $Param{'UserEmail'} ) {
+        $Param{'PostMasterSearch'} = $Param{'UserEmail'};
+    }
     my %user = $Self->{'CustomerUserObject'}->CustomerSearch(%Param);
     if (!%user) {
         return undef;
