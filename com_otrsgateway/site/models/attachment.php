@@ -87,7 +87,8 @@ class OTRSGatewayModelAttachment extends JModel
         if ( $tmpPath )
         {
             $dest = tempnam( $tmpPath, 'OGA' );
-            JFile::upload($file['tmp_name'], $dest);
+            move_uploaded_file( $file['tmp_name'], $dest );
+            chmod ( $dest, 0600 );
 
             $fileID = uniqid();
             $ct = $file['type'];
