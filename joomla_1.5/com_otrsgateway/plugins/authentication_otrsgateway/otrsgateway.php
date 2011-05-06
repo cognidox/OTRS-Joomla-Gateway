@@ -55,7 +55,6 @@ class plgAuthenticationOTRSGateway extends JPlugin
         if ( $com_otrsgw )
         {
             // Check that it's configured
-            $gwParams = new JParameter( $com_otrsgw->params );
             include_once( JPATH_SITE . DS . 'components' . DS .
                           "com_otrsgateway" . DS . "helpers" . DS . 
                           "userhelper.php" );
