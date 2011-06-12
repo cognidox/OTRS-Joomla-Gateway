@@ -8,10 +8,10 @@
  */
 
 defined('_JEXEC') or die('Restricted access'); 
+JHTML::_('behavior.mootools');
 $doc =& JFactory::getDocument();
 $doc->addStyleSheet( 'templates/system/css/system.css' );
 $doc->addStyleSheet( 'templates/system/css/general.css' );
-$doc->addScript( 'media/system/js/mootools.js' );
 
 ?>
 <script type="text/javascript">
