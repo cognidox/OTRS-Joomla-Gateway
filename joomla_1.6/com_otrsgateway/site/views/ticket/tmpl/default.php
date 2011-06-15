@@ -146,7 +146,7 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 <div class="contentpaneopen">
 <a name="endticket"></a>
 <hr />
-<a class="modal button" href="index.php?option=com_otrsgateway&task=replyForm&ticketID=<?php echo $this->ticket->TicketID; ?>" rel="{handler:'iframe',size:{x:650,y:450},ajaxOptions:{}}">Reply</a>
+<a class="modal button" href="index.php?option=com_otrsgateway&task=replyForm&ticketID=<?php echo $this->ticket->TicketID; ?>" rel="{handler:'iframe',size:{x:650,y:450},ajaxOptions:{}}"><?php echo JText::_('COM_OTRSGATEWAY_REPLY'); ?></a>
 </div>
 
 
