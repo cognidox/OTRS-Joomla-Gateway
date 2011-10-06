@@ -37,6 +37,7 @@ class plgAuthenticationOTRSGateway extends JPlugin
 		$success = false;
         // Check the gateway component is installed
         $com_otrsgw = & JComponentHelper::getComponent( 'com_otrsgateway' );
+        $response->type = 'OTRSGateway';
         if ( $com_otrsgw )
         {
             // Check that it's configured
