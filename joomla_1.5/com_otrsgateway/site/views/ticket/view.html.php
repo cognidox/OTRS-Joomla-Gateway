@@ -168,7 +168,7 @@ class OTRSGatewayViewTicket extends JView
             if ( array_key_exists( 'id', $result ) )
             {
                 // redirect to the ticket
-                $link = JRoute::_('index.php?option=com_otrsgateway&view=ticket&ticketID=' . $result['id']);
+                $link = JRoute::_( 'index.php?option=com_otrsgateway&view=ticket&ticketID=' . $result['id'], false );
                 $mainframe->redirect($link);
             }
             else
