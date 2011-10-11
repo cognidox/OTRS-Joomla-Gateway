@@ -140,6 +140,12 @@ sub GetTicketQueues {
     my %NewTos = ( '', '' );
     my $Module = $Self->{ConfigObject}->Get('CustomerPanel::NewTicketQueueSelectionModule')
         || 'Kernel::Output::HTML::CustomerNewTicketQueueSelectionGeneric';
+    my $TicketConf = $Self->{ConfigObject}->Get('Ticket::Frontend::CustomerTicketMessage');
+    my $DefaultQueue = '';
+    if ( $TicketConf->{Queue} == 0 &&
+         $TicketConf->{QueueDefault} ) {
+        $DefaultQueue = $TicketConf->{QueueDefault};
+    }
     if ( $Self->{MainObject}->Require($Module) ) {
         $Self->{UserID} = $Param{'CustomerUserID'};
         my $Object = $Module->new(%{$Self});
@@ -147,6 +153,11 @@ sub GetTicketQueues {
     }
     if (%NewTos) {
         for my $Key ( keys %NewTos ) {
+            if ( $DefaultQueue &&
+                 $DefaultQueue ne $NewTos{$Key} ) {
+                delete $NewTos{$Key};
+                next;
+            }
             $NewTos{"$Key||$NewTos{$Key}"} = $NewTos{$Key};
             delete $NewTos{$Key};
         }
