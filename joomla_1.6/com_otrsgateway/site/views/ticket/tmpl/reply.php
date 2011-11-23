@@ -22,7 +22,7 @@ var locked = false;
 <table class="adminform" style="vertical-align:top;width:600px">
 	<tr>
 		<td width="100">
-			<label for="replyText">
+			<label for="otrsReplyText">
 				<strong><?php echo JText::_( 'COM_OTRSGATEWAY_REPLY' ); ?>:</strong>
 			</label>
 		</td>
@@ -30,11 +30,11 @@ var locked = false;
 <?php 
 if ( isset( $this->editor ) )
 {
-    echo $this->editor->display('replyText', '' , '450', '200', '75', '10', false, 'replyText', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
+    echo $this->editor->display('otrsReplyText', '' , '450', '200', '75', '10', false, 'otrsReplyText', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
 }
 else
 {
-    echo '<textarea name="replyText" id="replyText" cols="60" rows="10" style="height:auto!important"></textarea>';
+    echo '<textarea name="otrsReplyText" id="otrsReplyText" cols="60" rows="10" style="height:auto!important"></textarea>';
 }
 ?>
 		</td>
@@ -136,8 +136,8 @@ window.addEvent('domready', function() {
             locked = true;
             this.setStyle('opacity', '10%');
             this.setAttribute('disabled', 'disabled');
-            <?php if ( isset( $this->editor ) ) { echo $this->editor->save('replyText'); } ?>
-            if ($$('textarea[name="replyText"]').get('value') == '') {
+            <?php if ( isset( $this->editor ) ) { echo $this->editor->save('otrsReplyText'); } ?>
+            if ($$('textarea[name="otrsReplyText"]').get('value') == '') {
                 alert('<?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?>');
                 this.removeAttribute('disabled');
                 this.setStyle('opacity', '100%');

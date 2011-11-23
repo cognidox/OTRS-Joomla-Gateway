@@ -26,7 +26,7 @@ var locked = false;
 <table class="adminform" style="vertical-align:top;width:600px">
 	<tr>
 		<td width="100">
-			<label for="replyText">
+			<label for="otrsReplyText">
 				<strong><?php echo JText::_( 'OTRS_REPLY' ); ?>:</strong>
 			</label>
 		</td>
@@ -34,11 +34,11 @@ var locked = false;
 <?php 
 if ( isset( $this->editor ) )
 {
-    echo $this->editor->display('replyText', '' , '450', '200', '75', '', false, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
+    echo $this->editor->display('otrsReplyText', '' , '450', '200', '75', '', false, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
 }
 else
 {
-    echo '<textarea name="replyText" id="replyText" cols="60" rows="10" style="height:auto!important"></textarea>';
+    echo '<textarea name="otrsReplyText" id="otrsReplyText" cols="60" rows="10" style="height:auto!important"></textarea>';
 }
 ?>
 		</td>
@@ -137,8 +137,8 @@ if ( ! empty($this->priorityList) )
         if (locked) { return false; }
         locked = true;
         if (pressbutton == 'submit') {
-            <?php if ( isset( $this->editor ) ) { echo $this->editor->save('replyText'); } ?>
-            if (form.replyText.value == '') {
+            <?php if ( isset( $this->editor ) ) { echo $this->editor->save('otrsReplyText'); } ?>
+            if (form.otrsReplyText.value == '') {
                 alert('<?php echo JText::_( 'OTRS_ALERT_PROVIDE_REPLY' ); ?>');
             } else {
                 $('otrsReplyForm').send({

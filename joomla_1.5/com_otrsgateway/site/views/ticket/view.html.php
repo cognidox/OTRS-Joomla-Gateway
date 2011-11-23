@@ -148,7 +148,7 @@ class OTRSGatewayViewTicket extends JView
         global $mainframe;
         $this->setLayout( 'submit' );
         $result = array();
-        $text = JRequest::getVar( 'message', '', 'POST', 'string', JREQUEST_ALLOWHTML );
+        $text = JRequest::getVar( 'otrsMessage', '', 'POST', 'string', JREQUEST_ALLOWHTML );
         $editor = JFactory::getEditor();
         // Make sure the editor is active
         $plugin =& JPluginHelper::getPlugin( 'editors', $editor->_name );

@@ -92,7 +92,7 @@ if ( ! empty($this->priorityList) )
     </tr>
     <tr>
         <td width="100">
-            <label for="message">
+            <label for="otrsMessage">
                 <strong><?php echo JText::_( 'OTRS_MESSAGE' ); ?>:</strong>
             </label>
         </td>
@@ -100,11 +100,11 @@ if ( ! empty($this->priorityList) )
 <?php 
     if ( isset( $this->editor ) )
     {
-        echo $this->editor->display('message', $this->defaultText , '450', '200', '75', '', false, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple')); 
+        echo $this->editor->display('otrsMessage', $this->defaultText , '450', '200', '75', '', false, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple')); 
     }
     else
     {
-        echo '<textarea name="message" rows="10" cols="60" style="height:auto!important"></textarea>';
+        echo '<textarea name="otrsMessage" rows="10" cols="60" style="height:auto!important"></textarea>';
     }
 ?>
         </td>
@@ -154,7 +154,7 @@ if ( ! empty($this->priorityList) )
     function submitbutton(pressbutton) {
         var form = document.otrsNewTicketForm;
         if (pressbutton == 'submit') {
-            <?php if ( isset( $this->editor ) ) { echo $this->editor->save( 'message' ); } ?>
+            <?php if ( isset( $this->editor ) ) { echo $this->editor->save( 'otrsMessage' ); } ?>
             // Check for required fields
             if (form.Dest.selectedIndex < 1) {
                 alert('<?php echo JText::_( 'OTRS_ALERT_PROVIDE_TO' ); ?>');
@@ -162,7 +162,7 @@ if ( ! empty($this->priorityList) )
             } else if (form.Subject.value.trim() == '') {
                 alert('<?php echo JText::_( 'OTRS_ALERT_PROVIDE_SUBJECT' ); ?>');
                 form.Subject.focus();
-            } else if (form.message.value.trim() == '') {
+            } else if (form.otrsMessage.value.trim() == '') {
                 alert('<?php echo JText::_( 'OTRS_ALERT_PROVIDE_MESSAGE' ); ?>');
             } else {
                 document.otrsNewTicketForm.submit();
