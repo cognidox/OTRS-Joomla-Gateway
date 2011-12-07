@@ -40,7 +40,7 @@ class OTRSGatewayViewAttachment extends JView
                 break;
         }
         parent::display( $tpl );
-        // Prevent plugins altering the content my exiting
+        // Prevent plugins altering the content by exiting
         jexit();
     }
 
