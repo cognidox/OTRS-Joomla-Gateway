@@ -24,13 +24,13 @@ var locked = false;
 
 <form action="index.php" method="post" id="otrsReplyForm" name="otrsReplyForm">
 <table class="adminform" style="vertical-align:top;width:600px">
-	<tr>
-		<td width="100">
-			<label for="otrsReplyText">
-				<strong><?php echo JText::_( 'OTRS_REPLY' ); ?>:</strong>
-			</label>
-		</td>
-		<td width="500">
+    <tr>
+        <td width="100">
+            <label for="otrsReplyText">
+                <strong><?php echo JText::_( 'OTRS_REPLY' ); ?>:</strong>
+            </label>
+        </td>
+        <td width="500">
 <?php 
 if ( isset( $this->editor ) )
 {
@@ -41,19 +41,19 @@ else
     echo '<textarea name="otrsReplyText" id="otrsReplyText" cols="60" rows="10" style="height:auto!important"></textarea>';
 }
 ?>
-		</td>
-	</tr>
+        </td>
+    </tr>
 <?php
 if ( ! empty($this->priorityList) )
 {
 ?>
     <tr>
-		<td>
-			<label for="priorityID">
-				<strong><?php echo JText::_( 'OTRS_PRIORITY' ); ?>:</strong>
-			</label>
-		</td>
-		<td>
+        <td>
+            <label for="priorityID">
+                <strong><?php echo JText::_( 'OTRS_PRIORITY' ); ?>:</strong>
+            </label>
+        </td>
+        <td>
             <select name="priorityID" id="priorityID">
 <?php
     foreach ($this->priorityList as $key => $val)
@@ -68,12 +68,12 @@ if ( ! empty($this->priorityList) )
     </tr>
 <?php } ?>
     <tr>
-		<td>
-			<label for="StateID">
-				<strong><?php echo JText::_( 'OTRS_NEXT_STATE' ); ?>:</strong>
-			</label>
-		</td>
-		<td>
+        <td>
+            <label for="StateID">
+                <strong><?php echo JText::_( 'OTRS_NEXT_STATE' ); ?>:</strong>
+            </label>
+        </td>
+        <td>
             <select name="StateID" id="StateID">
 <?php
     foreach ($this->stateList as $key => $val)
@@ -97,9 +97,9 @@ if ( ! empty($this->priorityList) )
 </form>
 <table class="adminform" style="vertical-align:top;width:100%">
     <tr style="vertical-align:top">
-		<td width="100">
-				<strong><?php echo JText::_( 'OTRS_ATTACHMENTS' ); ?>:</strong>
-		</td>
+        <td width="100">
+            <strong><?php echo JText::_( 'OTRS_ATTACHMENTS' ); ?>:</strong>
+        </td>
         <td width="500">
 <ul id="attachmentlist"></ul>
 <form enctype="multipart/form-data" method="post" action="index.php" id="attform" name="attform" target="attpost">
@@ -132,8 +132,8 @@ if ( ! empty($this->priorityList) )
     
 <script language="javascript" type="text/javascript">
 <!--
-	function submitbutton(pressbutton) {
-		var form = document.otrsReplyForm;
+    function submitbutton(pressbutton) {
+        var form = document.otrsReplyForm;
         if (locked) { return false; }
         locked = true;
         if (pressbutton == 'submit') {
@@ -147,7 +147,7 @@ if ( ! empty($this->priorityList) )
                 });
             }
         }
-	}
+    }
 
     function addAttachment(error, id, name) {
         if (!error) {
