@@ -7,7 +7,9 @@
  * @license  GNU AFFERO GENERAL PUBLIC LICENSE v3
  */
 
-defined('_JEXEC') or die('Restricted access'); ?>
+defined('_JEXEC') or die('Restricted access');
+JHTML::_('behavior.mootools');
+?>
 
 <h1 class="componentheading"><?php echo JText::_( 'OTRS_NEW_TICKET' ); ?></h1>
 

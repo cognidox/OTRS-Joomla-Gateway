@@ -8,6 +8,7 @@
  */
 
 defined('_JEXEC') or die('Restricted access');
+JHTML::_('behavior.mootools');
 
 ?>
 
