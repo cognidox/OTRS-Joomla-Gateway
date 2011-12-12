@@ -16,9 +16,9 @@ $document->setMimeEncoding('text/html');
 <head>
 <script type="text/javascript">
 <!--
-parent.addAttachment( <?php echo escapeshellarg($this->result['error']); ?>,
-                      <?php echo escapeshellarg($this->result['id']); ?>,
-                      <?php echo escapeshellarg($this->result['name']); ?> );
+parent.addAttachment( <?php echo ( $this->result['error'] ? escapeshellarg( $this->result['error'] ) : '""' ); ?>,
+                      <?php echo ( $this->result['id']    ? escapeshellarg( $this->result['id'] )    : '""' ); ?>,
+                      <?php echo ( $this->result['name']  ? escapeshellarg( $this->result['name'] )  : '""' ); ?> );
 // -->
 </script>
 </head>
