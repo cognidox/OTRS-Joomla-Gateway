@@ -33,7 +33,7 @@ JHTML::_('behavior.mootools');
     foreach ($this->ticketTypes as $key => $val)
     {
         echo '<option value="' . htmlspecialchars($key) . '"' .
-             $selected . '>' . htmlspecialchars($val) . '</option>';
+             '>' . htmlspecialchars($val) . '</option>';
     }
 ?>
             </select>
