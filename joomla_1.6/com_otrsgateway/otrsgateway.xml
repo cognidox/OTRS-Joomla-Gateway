@@ -35,6 +35,7 @@
 
     <languages>
         <language tag="en-GB">site/language/en-GB/en-GB.com_otrsgateway.ini</language>
+        <language tag="fr-FR">site/language/fr-FR/fr-FR.com_otrsgateway.ini</language>
     </languages>
 
     <administration>
