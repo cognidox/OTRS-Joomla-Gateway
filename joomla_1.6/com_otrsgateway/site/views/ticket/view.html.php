@@ -141,7 +141,7 @@ class OTRSGatewayViewTicket extends JView
     {
         $this->setLayout( 'submit' );
         $result = array();
-        $text = JRequest::getVar( 'otrsMessage', '', 'POST', 'string', JREQUEST_ALLOWHTML );
+        $text = JRequest::getVar( 'otrsmessage', '', 'POST', 'string', JREQUEST_ALLOWHTML );
         $editor =& JFactory::getEditor();
         if ( !is_object( $editor ) || 
              $editor->get('_name') == 'none' || $editor->get('_name') == 'codemirror' )

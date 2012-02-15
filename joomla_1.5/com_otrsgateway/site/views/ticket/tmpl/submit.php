@@ -18,8 +18,8 @@ if ( isset( $this->editor ) ) {
     $editorJS .= "content = form.otrsmessage.value.trim();\n";
 }
 $editorJS .= "return content;\n}\n";
-$document =& JFactory::getDocument();
-$document->addScriptDeclaration($editorJS);
+$doc =& JFactory::getDocument();
+$doc->addScriptDeclaration($editorJS);
 
 ?>
 
@@ -118,7 +118,7 @@ if ( ! empty($this->priorityList) )
     }
     else
     {
-        echo '<textarea name="otrsmessage" rows="10" cols="60" style="height:auto!important"></textarea>';
+        echo '<textarea name="otrsmessage" id="otrsmessage" rows="10" cols="60" style="height:auto!important"></textarea>';
     }
 ?>
         </td>

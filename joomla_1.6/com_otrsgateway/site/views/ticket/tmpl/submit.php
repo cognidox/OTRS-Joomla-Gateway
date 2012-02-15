@@ -9,6 +9,17 @@
 
 defined('_JEXEC') or die('Restricted access');
 JHTML::_('behavior.mootools');
+$editorJS = "function validateEditor(form){
+var content = '';
+";
+if ( isset( $this->editor ) ) {
+    $editorJS .= "content = " . $this->editor->getContent( 'otrsmessage' ) . "\n";
+} else {
+    $editorJS .= "content = form.otrsmessage.value.trim();\n";
+}
+$editorJS .= "return content;\n}\n";
+$doc =& JFactory::getDocument();
+$doc->addScriptDeclaration($editorJS);
 
 ?>
 
@@ -95,7 +106,7 @@ if ( ! empty($this->priorityList) )
     </tr>
     <tr>
         <td width="100">
-            <label for="otrsMessage">
+            <label for="otrsmessage">
                 <strong><?php echo JText::_( 'COM_OTRSGATEWAY_MESSAGE' ); ?>:</strong>
             </label>
         </td>
@@ -103,11 +114,11 @@ if ( ! empty($this->priorityList) )
 <?php 
     if ( isset( $this->editor ) )
     {
-        echo $this->editor->display('otrsMessage', $this->defaultText , '450', '200', '75', '10', false, 'otrsMessage', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple')); 
+        echo $this->editor->display('otrsmessage', $this->defaultText , '450', '200', '75', '10', false, 'otrsmessage', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple')); 
     }
     else
     {
-        echo '<textarea name="otrsMessage" rows="10" cols="60" style="height:auto!important"></textarea>';
+        echo '<textarea name="otrsmessage" id="otrsmessage" rows="10" cols="60" style="height:auto!important"></textarea>';
     }
 ?>
         </td>
@@ -157,7 +168,7 @@ if ( ! empty($this->priorityList) )
     function submitbutton(pressbutton) {
         var form = document.otrsNewTicketForm;
         if (pressbutton == 'submit') {
-            <?php if ( isset( $this->editor ) ) { echo $this->editor->save( 'otrsMessage' ); } ?>
+            <?php if ( isset( $this->editor ) ) { echo $this->editor->save( 'otrsmessage' ); } ?>
             // Check for required fields
             if (form.Dest.selectedIndex < 1) {
                 alert('<?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_TO' ); ?>');
@@ -165,7 +176,7 @@ if ( ! empty($this->priorityList) )
             } else if (form.Subject.value.trim() == '') {
                 alert('<?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_SUBJECT' ); ?>');
                 form.Subject.focus();
-            } else if (form.otrsMessage.value.trim() == '') {
+            } else if (!validateEditor(form)) {
                 alert('<?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_MESSAGE' ); ?>');
             } else {
                 document.otrsNewTicketForm.submit();

@@ -8,6 +8,18 @@
  */
 
 defined('_JEXEC') or die('Restricted access'); 
+$editorJS = "function validateEditor(){
+var content = '';
+";
+if ( isset( $this->editor ) ) {
+    $this->editor->save( 'otrsreplytext' );
+    $editorJS .= "content = " . $this->editor->getContent( 'otrsreplytext' ) . "\n";
+} else {
+    $editorJS .= "content = $('otrsreplytext').value.trim();\n";
+}
+$editorJS .= "return content;\n}\n";
+$doc = JFactory::getDocument();
+$doc->addScriptDeclaration($editorJS);
 
 ?>
 <script type="text/javascript">
@@ -22,7 +34,7 @@ var locked = false;
 <table class="adminform" style="vertical-align:top;width:600px">
     <tr>
         <td width="100">
-            <label for="otrsReplyText">
+            <label for="otrsreplytext">
                 <strong><?php echo JText::_( 'COM_OTRSGATEWAY_REPLY' ); ?>:</strong>
             </label>
         </td>
@@ -30,11 +42,11 @@ var locked = false;
 <?php 
 if ( isset( $this->editor ) )
 {
-    echo $this->editor->display('otrsReplyText', '' , '450', '200', '75', '10', false, 'otrsReplyText', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
+    echo $this->editor->display('otrsreplytext', '' , '450', '200', '75', '10', false, 'otrsreplytext', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
 }
 else
 {
-    echo '<textarea name="otrsReplyText" id="otrsReplyText" cols="60" rows="10" style="height:auto!important"></textarea>';
+    echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important"></textarea>';
 }
 ?>
         </td>
@@ -136,13 +148,19 @@ window.addEvent('domready', function() {
             locked = true;
             this.setStyle('opacity', '10%');
             this.setAttribute('disabled', 'disabled');
-            <?php if ( isset( $this->editor ) ) { echo $this->editor->save('otrsReplyText'); } ?>
-            if ($$('textarea[name="otrsReplyText"]').get('value') == '') {
+            <?php if ( isset( $this->editor ) ) { echo $this->editor->save('otrsreplytext'); } ?>
+            if (!validateEditor()) {
                 alert('<?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?>');
                 this.removeAttribute('disabled');
                 this.setStyle('opacity', '100%');
                 locked = false;
             } else {
+                <?php if ( isset( $this->editor ) ): ?>
+                    if (!$('otrsreplytext').value) {
+                        $('otrsreplytext').value = <?php echo $this->editor->getContent('otrsreplytext'); ?>
+                }
+                <?php endif; ?>
+
                 $('otrsReplyForm').set('send', {
                     noCache: true,
                     onComplete: function(resp) {
