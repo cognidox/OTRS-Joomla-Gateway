@@ -9,6 +9,18 @@
 
 defined('_JEXEC') or die('Restricted access');
 JHTML::_('behavior.mootools');
+$editorJS = "function validateEditor(form){
+var content = '';
+";
+if ( isset( $this->editor ) ) {
+    $editorJS .= "content = " . $this->editor->getContent( 'otrsMessage' ) . "\n";
+} else {
+    $editorJS .= "content = form.otrsMessage.value.trim();\n";
+}
+$editorJS .= "return content;\n}\n";
+$document =& JFactory::getDocument();
+$document->addScriptDeclaration($editorJS);
+
 ?>
 
 <h1 class="componentheading"><?php echo JText::_( 'OTRS_NEW_TICKET' ); ?></h1>
@@ -164,7 +176,7 @@ if ( ! empty($this->priorityList) )
             } else if (form.Subject.value.trim() == '') {
                 alert('<?php echo JText::_( 'OTRS_ALERT_PROVIDE_SUBJECT' ); ?>');
                 form.Subject.focus();
-            } else if (form.otrsMessage.value.trim() == '') {
+            } else if (!validateEditor(form)) {
                 alert('<?php echo JText::_( 'OTRS_ALERT_PROVIDE_MESSAGE' ); ?>');
             } else {
                 document.otrsNewTicketForm.submit();

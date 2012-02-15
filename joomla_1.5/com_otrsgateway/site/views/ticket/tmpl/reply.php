@@ -9,9 +9,20 @@
 
 defined('_JEXEC') or die('Restricted access'); 
 JHTML::_('behavior.mootools');
+$editorJS = "function validateEditor(form){
+var content = '';
+";
+if ( isset( $this->editor ) ) {
+    $editorJS .= "content = " . $this->editor->getContent( 'otrsReplyText' ) . "\n";
+} else {
+    $editorJS .= "content = form.otrsReplyText.value.trim();\n";
+}
+$editorJS .= "return content;\n}\n";
 $doc =& JFactory::getDocument();
 $doc->addStyleSheet( 'templates/system/css/system.css' );
 $doc->addStyleSheet( 'templates/system/css/general.css' );
+$document->addScriptDeclaration($editorJS);
+
 
 ?>
 <script type="text/javascript">
@@ -138,7 +149,7 @@ if ( ! empty($this->priorityList) )
         locked = true;
         if (pressbutton == 'submit') {
             <?php if ( isset( $this->editor ) ) { echo $this->editor->save('otrsReplyText'); } ?>
-            if (form.otrsReplyText.value == '') {
+            if (!validateEditor(form)) {
                 alert('<?php echo JText::_( 'OTRS_ALERT_PROVIDE_REPLY' ); ?>');
             } else {
                 $('otrsReplyForm').send({
