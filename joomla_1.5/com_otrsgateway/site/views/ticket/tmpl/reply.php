@@ -13,15 +13,16 @@ $editorJS = "function validateEditor(form){
 var content = '';
 ";
 if ( isset( $this->editor ) ) {
-    $editorJS .= "content = " . $this->editor->getContent( 'otrsReplyText' ) . "\n";
+    $this->editor->save( 'otrsreplytext' );
+    $editorJS .= "content = " . $this->editor->getContent( 'otrsreplytext' ) . "\n";
 } else {
-    $editorJS .= "content = form.otrsReplyText.value.trim();\n";
+    $editorJS .= "content = form.otrsreplytext.value.trim();\n";
 }
 $editorJS .= "return content;\n}\n";
 $doc =& JFactory::getDocument();
 $doc->addStyleSheet( 'templates/system/css/system.css' );
 $doc->addStyleSheet( 'templates/system/css/general.css' );
-$document->addScriptDeclaration($editorJS);
+$doc->addScriptDeclaration($editorJS);
 
 
 ?>
@@ -37,7 +38,7 @@ var locked = false;
 <table class="adminform" style="vertical-align:top;width:600px">
     <tr>
         <td width="100">
-            <label for="otrsReplyText">
+            <label for="otrsreplytext">
                 <strong><?php echo JText::_( 'OTRS_REPLY' ); ?>:</strong>
             </label>
         </td>
@@ -45,11 +46,11 @@ var locked = false;
 <?php 
 if ( isset( $this->editor ) )
 {
-    echo $this->editor->display('otrsReplyText', '' , '450', '200', '75', '', false, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
+    echo $this->editor->display('otrsreplytext', '' , '450', '200', '75', '', false, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
 }
 else
 {
-    echo '<textarea name="otrsReplyText" id="otrsReplyText" cols="60" rows="10" style="height:auto!important"></textarea>';
+    echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important"></textarea>';
 }
 ?>
         </td>
@@ -148,10 +149,19 @@ if ( ! empty($this->priorityList) )
         if (locked) { return false; }
         locked = true;
         if (pressbutton == 'submit') {
-            <?php if ( isset( $this->editor ) ) { echo $this->editor->save('otrsReplyText'); } ?>
+            <?php if ( isset( $this->editor ) ) {
+                echo $this->editor->save('otrsreplytext');
+            } ?>
             if (!validateEditor(form)) {
+                locked = false;
                 alert('<?php echo JText::_( 'OTRS_ALERT_PROVIDE_REPLY' ); ?>');
             } else {
+                <?php if ( isset( $this->editor ) ): ?>
+                if (!form.otrsreplytext.value) {
+                    form.otrsreplytext.value = <?php echo $this->editor->getContent('otrsreplytext'); ?>
+                }
+                <?php endif; ?>
+
                 $('otrsReplyForm').send({
                     onSuccess: function(resp){ var obj = Json.evaluate(resp); parent.closeReply(obj.error,document.forms['otrsReplyForm'].elements['formtoken'].value);},
                     onFailure: function(resp){ alert("<?php echo JText::_('OTRS_ALERT_SUBMISSION_FAILED');?>"); parent.closeReply(null,document.forms['otrsReplyForm'].elements['formtoken'].value);}

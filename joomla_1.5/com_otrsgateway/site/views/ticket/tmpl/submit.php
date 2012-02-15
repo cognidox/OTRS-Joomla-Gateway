@@ -13,9 +13,9 @@ $editorJS = "function validateEditor(form){
 var content = '';
 ";
 if ( isset( $this->editor ) ) {
-    $editorJS .= "content = " . $this->editor->getContent( 'otrsMessage' ) . "\n";
+    $editorJS .= "content = " . $this->editor->getContent( 'otrsmessage' ) . "\n";
 } else {
-    $editorJS .= "content = form.otrsMessage.value.trim();\n";
+    $editorJS .= "content = form.otrsmessage.value.trim();\n";
 }
 $editorJS .= "return content;\n}\n";
 $document =& JFactory::getDocument();
@@ -106,7 +106,7 @@ if ( ! empty($this->priorityList) )
     </tr>
     <tr>
         <td width="100">
-            <label for="otrsMessage">
+            <label for="otrsmessage">
                 <strong><?php echo JText::_( 'OTRS_MESSAGE' ); ?>:</strong>
             </label>
         </td>
@@ -114,11 +114,11 @@ if ( ! empty($this->priorityList) )
 <?php 
     if ( isset( $this->editor ) )
     {
-        echo $this->editor->display('otrsMessage', $this->defaultText , '450', '200', '75', '', false, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple')); 
+        echo $this->editor->display('otrsmessage', $this->defaultText , '450', '200', '75', '', false, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple')); 
     }
     else
     {
-        echo '<textarea name="otrsMessage" rows="10" cols="60" style="height:auto!important"></textarea>';
+        echo '<textarea name="otrsmessage" rows="10" cols="60" style="height:auto!important"></textarea>';
     }
 ?>
         </td>
@@ -168,7 +168,7 @@ if ( ! empty($this->priorityList) )
     function submitbutton(pressbutton) {
         var form = document.otrsNewTicketForm;
         if (pressbutton == 'submit') {
-            <?php if ( isset( $this->editor ) ) { echo $this->editor->save( 'otrsMessage' ); } ?>
+            <?php if ( isset( $this->editor ) ) { echo $this->editor->save( 'otrsmessage' ); } ?>
             // Check for required fields
             if (form.Dest.selectedIndex < 1) {
                 alert('<?php echo JText::_( 'OTRS_ALERT_PROVIDE_TO' ); ?>');

@@ -37,7 +37,7 @@ class OTRSGatewayViewTicket extends JView
 
                 if ($ticket && JRequest::getVar( 'task' ) == 'reply') {
 
-                    $text = JRequest::getVar( 'otrsReplyText', '', 'POST', 'string', JREQUEST_ALLOWHTML );
+                    $text = JRequest::getVar( 'otrsreplytext', '', 'POST', 'string', JREQUEST_ALLOWHTML );
                     // Determine if we should auto-escape the content
                     // of the ticket
                     $editor = JFactory::getEditor();
