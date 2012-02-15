@@ -81,6 +81,12 @@ sub Dispatch {
     $CommonObject{TicketObject}       = Kernel::System::Ticket->new(%CommonObject);
     $CommonObject{LinkObject}         = Kernel::System::LinkObject->new(%CommonObject);
 
+    # Set up an empty web request - all the data we need has come in
+    # from SOAP, so extra query data should be ignored. If the query
+    # isn't blanked, there can be problems under Windows with 'new CGI'
+    # hanging
+    $CommonObject{WebRequest} = {};
+
     # Load RPC extra objects, which can be defined by modules
     my $rpcExtras = $CommonObject{ConfigObject}->Get('SOAP::ModuleObject');
     if ($rpcExtras && ref($rpcExtras) eq 'HASH') {
