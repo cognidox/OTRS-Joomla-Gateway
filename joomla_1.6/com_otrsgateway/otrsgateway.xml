@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="1.6" method="upgrade">
     <name>COM_OTRSGATEWAY</name>
-    <creationDate>May 2011</creationDate>
+    <creationDate>February 2012</creationDate>
     <author>Cognidox Ltd</author>
     <authorEmail>opensource@cognidox.com</authorEmail>
     <authorUrl>www.cognidox.com</authorUrl>
     <copyright>All Rights Reserved - 2011 Cognidox Ltd</copyright>
     <license>GNU AFFERO GENERAL PUBLIC LICENSE v3</license>
-    <version>0.9.1</version>
+    <version>0.9.2</version>
     <description>This component provides a Joomla gateway to OTRS through which Joomla users can access OTRS services</description>
 
     <scriptfile>script.php</scriptfile>
