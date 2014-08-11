@@ -182,7 +182,6 @@ class OTRSGatewayFieldHelper
  */
 function translateOTRSTicketState($state)
 {
-	echo $state;
 	switch ($state) {
 			case "new":
 				$state = JText::_('COM_OTRSGATEWAY_STATE_NEW');
