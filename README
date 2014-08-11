@@ -9,6 +9,7 @@ http://www.opensource.org/licenses/agpl-v3.html
 
 This repository holds:
 
+    joomla_3x/com_otrsgateway  - Joomla 3.x component and plugin sources   
     joomla_1.5/com_otrsgateway - Joomla 1.5 component and plugin sources
     joomla_1.6/com_otrsgateway - Joomla 1.6/1.7/2.5 component and plugin sources
     otrs_joomla_module         - OTRS component sources
@@ -27,6 +28,7 @@ Credits
 The following people have contributed code and/or comments that have helped
 with the project:
 
+ChuckNorrison - http://github.com/ChuckNorrison
 Elias Probst - http://github.com/eliasp
 Manuel Neubecker
 
