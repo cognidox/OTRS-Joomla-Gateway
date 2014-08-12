@@ -54,7 +54,7 @@ var locked = false;
 // }
 // else
 // {
-    echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important"></textarea>';
+    echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 80%;"></textarea>';
 // }
 ?>
         </td>
@@ -63,7 +63,7 @@ var locked = false;
 if ( ! empty($this->priorityList) )
 {
 ?>
-    <tr>
+    <!--<tr>
         <td>
             <label for="priorityID">
                 <strong><?php echo JText::_( 'COM_OTRSGATEWAY_PRIORITY' ); ?>:</strong>
@@ -81,7 +81,7 @@ if ( ! empty($this->priorityList) )
 ?>
             </select>
         </td>
-    </tr>
+    </tr>-->
 <?php } ?>
     <tr>
         <td>
@@ -90,7 +90,7 @@ if ( ! empty($this->priorityList) )
             </label>
         </td>
         <td>
-            <select name="StateID" id="StateID">
+            <select name="StateID" id="StateID" style="width: 40%;">
 <?php
     foreach ($this->stateList as $key => $val)
     {
@@ -103,6 +103,7 @@ if ( ! empty($this->priorityList) )
         </td>
     </tr>
 </table>
+<input type="hidden" name="priorityID" value="3" />
 <input type="hidden" name="ticketID" value="<?php echo htmlspecialchars($this->ticket->TicketID);?>" />
 <input type="hidden" name="option" value="com_otrsgateway" />
 <input type="hidden" name="task" value="reply" />
@@ -112,7 +113,7 @@ if ( ! empty($this->priorityList) )
 <?php echo JHTML::_( 'form.token' ); ?>
 </form>
 <table class="adminform" style="vertical-align:top;width:100%">
-    <tr style="vertical-align:top">
+    <tr style="vertical-align:baseline">
         <td width="100">
             <strong><?php echo JText::_( 'COM_OTRSGATEWAY_ATTACHMENTS' ); ?>:</strong>
         </td>
@@ -139,9 +140,10 @@ if ( ! empty($this->priorityList) )
 <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
 </form>
 
-<form id="replyForm" action="#" method="get" onsubmit="return false">
+<form id="replyForm" action="<?php echo JRoute::_('index.php'); ?>" method="get" onsubmit="return false">
+<div id="loading" style="display: none; float: left; padding: 0 10px;"><img src="<?php echo JURI::root(); ?>components/com_otrsgateway/views/img/ajax-loader.gif"/></div>
 <input name="submit" id="submitButton" class="button" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" />
-<a href="#" onclick="parent.cancelReply(document.forms['otrsReplyForm'].elements['formtoken'].value);"><?php echo JText::_( 'COM_OTRSGATEWAY_CANCEL' ); ?></a>
+<a href="#" onclick="parent.cancelReply(document.forms['otrsReplyForm'].elements['formtoken'].value);" style="padding-left: 10px;"><?php echo JText::_( 'COM_OTRSGATEWAY_CANCEL' ); ?></a>
 </form>
 
 </div>
@@ -149,6 +151,7 @@ if ( ! empty($this->priorityList) )
 <!--
 	jQuery( document ).ready(function(e) {
 		jQuery('#submitButton').click(function(e2) {
+			jQuery('#loading').show();
 			jQuery('#error').remove();
 			if (locked) { return void(0); }
 			locked = true;
@@ -157,9 +160,11 @@ if ( ! empty($this->priorityList) )
 			<?php if ( isset( $this->editor ) ) { echo $this->editor->save('otrsreplytext'); } ?>
 			if (!validateEditor()) {
 				jQuery('#errormsg').append('<span id="error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?></span>');
+				//alert('<?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?>');
 				jQuery(this).removeAttr('disabled');
 				jQuery(this).css('opacity', '100%');
 				locked = false;
+				jQuery('#loading').hide();
 			} else {
 				<?php if ( isset( $this->editor ) ): ?>
 					if (!jQuery('#otrsreplytext').val()) {
@@ -172,10 +177,12 @@ if ( ! empty($this->priorityList) )
 					onComplete: function(resp) {
 						var obj = JSON.decode(resp);
 						window.parent.closeReply(obj.error,document.forms['otrsReplyForm'].elements['formtoken'].value);
+						jQuery('#loading').hide();
 					},
 					onFailure: function(resp) {
 						alert("<?php echo JText::_('COM_OTRSGATEWAY_ALERT_SUBMISSION_FAILED');?>");
 						window.parent.closeReply(null,document.forms['otrsReplyForm'].elements['formtoken'].value);
+						jQuery('#loading').hide();
 					}
 				}).send();
 			}
