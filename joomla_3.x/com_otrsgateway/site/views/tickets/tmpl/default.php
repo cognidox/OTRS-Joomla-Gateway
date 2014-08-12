@@ -11,7 +11,7 @@
 defined('_JEXEC') or die( 'Restricted access' );
 require_once( JPATH_COMPONENT.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'fieldhelper.php' );
 ?>
-<h1 class="componentheading"><?php 
+<!--<h1 class="componentheading"><?php 
     $title = "";
     switch ( $this->listType )
     {
@@ -21,8 +21,10 @@ require_once( JPATH_COMPONENT.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.
         default:
             $title = 'Tickets';
     }
-    echo JText::_( $title ); ?></h1>
+    echo JText::_( $title ); ?></h1>-->
+
 <?php if ($this->tickets && count($this->tickets)) { ?>
+
 <table class="otrs-ticket-table">
 <thead>
 <tr>
@@ -58,7 +60,7 @@ require_once( JPATH_COMPONENT.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.
 		echo '<td>' . htmlspecialchars(JText::_($t->Priority)) . '</td>-->';
 		echo '<td id="otrs-ticket-state">' . translateOTRSTicketState(htmlspecialchars(JText::_($t->State)),true) . '</td>';
 		
-		$created = strtotime(htmlspecialchars($t->Created));
+		$created = htmlspecialchars($t->CreateTimeUnix);
 		$changed = strtotime(htmlspecialchars($t->Changed));
 		
 		echo '<td id="otrs-ticket-created">' . date( 'd.m.Y H:i',$created ) . '</td>';
