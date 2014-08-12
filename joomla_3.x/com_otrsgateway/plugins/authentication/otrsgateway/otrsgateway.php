@@ -80,7 +80,10 @@ class plgAuthenticationOTRSGateway extends JPlugin
 		else
 		{
 			$response->status = JAUTHENTICATE_STATUS_FAILURE;
-			$response->error_message = JText::sprintf( 'PLG_AUTHENTICATION_OTRSGATEWAY_AUTH_FAIL', $message );
+			//Only show message if user already logged in
+			if(JFactory::getUser()->id) {
+				$response->error_message = JText::sprintf( 'PLG_AUTHENTICATION_OTRSGATEWAY_AUTH_FAIL', $message );
+			}
 		}
 	}
 }
