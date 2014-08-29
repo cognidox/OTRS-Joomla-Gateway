@@ -41,7 +41,17 @@ require_once( JPATH_COMPONENT.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.
 <?php
     // Loop through the ticket, writing out the various bits
 	$row = true;
-	foreach ($this->tickets as $t)
+	
+	// Sort Tickets in Overview. Show last changed first
+	function do_compare($i1, $i2) {
+		$t1 = strtotime(htmlspecialchars($i1->Changed));
+		$t2 = strtotime(htmlspecialchars($i2->Changed));
+		return $t2 - $t1;
+	}
+	$tickets = $this->tickets;
+	usort($tickets, 'do_compare');
+
+	foreach ($tickets as $t)
 	{
 		$url = JRoute::_('index.php?view=ticket&ticketID=' . $t->TicketID);
 		echo '<tr class="sectiontableentry' . ($row ? 1 : 2) . '">' .
