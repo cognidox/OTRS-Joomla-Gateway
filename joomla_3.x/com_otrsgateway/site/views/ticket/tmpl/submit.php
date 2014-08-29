@@ -9,34 +9,15 @@
 
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.framework');
-$editorJS = "function validateEditor(form){
-var content = '';
-";
-if ( isset( $this->editor ) ) {
-    $editorJS .= "content = " . $this->editor->getContent( 'otrsmessage' ) . "\n";
-} else {
-    $editorJS .= "content = form.otrsmessage.value.trim();\n";
-}
-$editorJS .= "return content;\n}\n";
-$doc =& JFactory::getDocument();
-$doc->addScriptDeclaration($editorJS);
-
 ?>
 
 <h1 class="componentheading"><?php echo JText::_( 'COM_OTRSGATEWAY_NEW_TICKET' ); ?></h1>
 
 <div id="otrs-submit-form" class="contentpaneopen">
-
+<div id="error-container"></div>
 <form action="index.php" method="post" id="otrsNewTicketForm" name="otrsNewTicketForm" enctype="multipart/form-data">
 
 <table class="adminform" style="vertical-align:top;">
-<tr>
-<td>
-<p id="errormsg">&nbsp;</p>
-</td>
-<td>
-</td>
-</tr>
 <?php if ( !empty( $this->ticketTypes ) ): ?>
     <tr>
         <td>
@@ -67,21 +48,21 @@ $doc->addScriptDeclaration($editorJS);
         <td width="500">
             <select name="Dest" id="Dest">
 <?php
-	//all queues
-    foreach ($this->queues as $key => $val)
-    {
-        $selected = ($this->defaultDest == $key) ? ' selected="selected"' : '';
-        echo '<option value="' . htmlspecialchars($key) . '"' . $selected .
-             '>' . htmlspecialchars($val) . '</option>';
-    }
-	
-	// or specific queue
-	// foreach ($this->queues as $key => $val)
-    // {
-        // if (htmlspecialchars($val)=="specific_queuename") {
-			// echo '<option value="' . htmlspecialchars($key) . '" selected="selected">' . htmlspecialchars($val) . '</option>';
-		// }
-    // }
+    // all queues
+     foreach ($this->queues as $key => $val)
+     {
+         $selected = ($this->defaultDest == $key) ? ' selected="selected"' : '';
+         echo '<option value="' . htmlspecialchars($key) . '"' . $selected .
+              '>' . htmlspecialchars($val) . '</option>';
+     }
+
+    // or specific queue
+    //foreach ($this->queues as $key => $val)
+    //{
+    //    if (htmlspecialchars($val)=="specific queuename") {
+    //        echo '<option value="' . htmlspecialchars($key) . '" selected="selected">' . htmlspecialchars($val) . '</option>';
+    //    }
+    //}
 ?>
             </select>
         </td>
@@ -128,18 +109,21 @@ if ( ! empty($this->priorityList) )
         </td>
         <td width="500">
 <?php 
-    if ( isset( $this->editor ) )
-    {
-        echo $this->editor->display('otrsmessage', $this->defaultText , '450', '200', '75', '10', false, 'otrsmessage', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple')); 
-    }
-    else
-    {
+    // if ( isset( $this->editor ) )
+    // {
+        // echo $this->editor->display('otrsmessage', $this->defaultText , '450', '200', '75', '10', false, 'otrsmessage', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple')); 
+    // }
+    // else
+    // {
         echo '<textarea name="otrsmessage" id="otrsmessage" rows="10" cols="60" style="height:auto!important"></textarea>';
-    }
+    // }
 ?>
         </td>
     </tr>
 </table>
+<input type="hidden" name="priorityID" value="3" />
+<input type="hidden" name="Dest" value="5||MTS Educator" />
+
 <input type="hidden" name="option" value="com_otrsgateway" />
 <input type="hidden" name="task" value="submit" />
 <input type="hidden" name="view" value="ticket" />
@@ -154,19 +138,19 @@ if ( ! empty($this->priorityList) )
         <td width="500">
 <ul id="attachmentlist"></ul>
 <form enctype="multipart/form-data" method="post" action="index.php" id="attform" name="attform" target="attpost">
-<input type="file" name="attachment" /> 
-<input type="submit" value="<?php echo JText::_( 'COM_OTRSGATEWAY_ADD' ); ?>" class="button"  />
-<input type="hidden" name="option" value="com_otrsgateway" />
-<input type="hidden" name="task" value="addAttachment" />
-<input type="hidden" name="format" value="raw" />
-<input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
+    <input type="file" name="attachment" class="addAttachment" /> 
+    <input type="submit" value="<?php echo JText::_( 'COM_OTRSGATEWAY_ADD' ); ?>" class="button"  />
+    <input type="hidden" name="option" value="com_otrsgateway" />
+    <input type="hidden" name="task" value="addAttachment" />
+    <input type="hidden" name="format" value="raw" />
+    <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
 </form>
 <iframe id="attpost" name="attpost" style="display:none;width:1px;height:1px"></iframe>
         </td>
     </tr>
 </table>
 
-<form action="#" onsubmit="return false;">
+<form action="index.php" onsubmit="return false;">
 <input name="submitBtn" class="button" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" onclick="submitbutton('submit');" />
 </form>
 
@@ -183,39 +167,59 @@ if ( ! empty($this->priorityList) )
 <!--
     function submitbutton(pressbutton) {
         var form = document.otrsNewTicketForm;
+        var errorcount = 0;
         if (pressbutton == 'submit') {
             <?php if ( isset( $this->editor ) ) { echo $this->editor->save( 'otrsmessage' ); } ?>
-            //clear errors
-			jQuery('#error').remove();
-			// Check for required fields
-            if (form.Dest.selectedIndex < 1) {
-				jQuery('#errormsg').append('<span id="error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_TO' ); ?></span>');
-                form.Dest.focus();
-            } else if (form.Subject.value.trim() == '') {
-				jQuery('#errormsg').append('<span id="error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_SUBJECT' ); ?></span>');
+            //clear error messages
+            jQuery('.alert-error').remove();
+            
+            //check form
+            if (form.Subject.value.trim() == '' || form.Subject.value.length < 5) {
+                jQuery('#error-container').append('<div class="alert alert-error"><p><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_SUBJECT' ); ?></p></div>');
                 form.Subject.focus();
+                errorcount = errorcount + 1;
+            } else if (form.otrsmessage.value.trim() == '' || form.Subject.value.length < 20) {
+                jQuery('#error-container').append('<div class="alert alert-error"><p class="alert-error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_MESSAGE' ); ?></p></div>');
+                form.otrsmessage.focus();
+                errorcount = errorcount + 1;
             } else if (!validateEditor(form)) {
-				jQuery('#errormsg').append('<span id="error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_MESSAGE' ); ?></span>');
-            } else {
+                jQuery('#error-container').append('<div class="alert alert-error"><p class="alert-error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_MESSAGE' ); ?></p></div>');
+                form.otrsmessage.focus();
+                errorcount = errorcount + 1;
+            }
+            
+            if (errorcount == 0) {
                 document.otrsNewTicketForm.submit();
             }
         }
     }
-	
+    
     function addAttachment(error, id, name) {
         if (!error) {
-            // Looks OK
-            // Add the file inside the attachmentlist list
-            var newEl = new Element('li', { 'id': 'att-' + id  });
-            newEl.appendText(name + ' ');
-            var newLink = new Element('a', { 'href': 'javascript:delAttachment("' + id + '")', 'onclick':'delAttachment("' + id + '")', 'class': 'small button' });
-            newLink.appendText('<?php echo JText::_( 'COM_OTRSGATEWAY_REMOVE' ); ?>');
-            newLink.inject(newEl);
-            newEl.inject($('attachmentlist'));
-            document.forms['attform'].reset();
+            var fileInput = jQuery('.addAttachment');
+            var maxSize = 4096; //max 4MB
+            if(fileInput.get(0).files.length) {
+                var fileSize = fileInput.get(0).files[0].size; // in bytes
+            }
+            if ((fileSize/1024) < maxSize) {
+                console.log("addAttachment: " + error + " id: " + id + " name: " + name + " fileSize: " + fileSize/1024 + " MB");
+                // Looks OK
+                // Add the file inside the attachmentlist list
+                var newEl = new Element('li', { 'id': 'att-' + id  });
+                newEl.appendText(name + ' ');
+                var newLink = new Element('a', { 'href': 'javascript:delAttachment("' + id + '")', 'onclick':'delAttachment("' + id + '")', 'class': 'small button' });
+                newLink.appendText('<?php echo JText::_( 'COM_OTRSGATEWAY_REMOVE' ); ?>');
+                newLink.inject(newEl);
+                newEl.inject($('attachmentlist'));
+                document.forms['attform'].reset();
+            } else {
+                jQuery('.alert-error').remove();
+                jQuery('#error-container').append('<div class="alert alert-error"><p class="alert-error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_ATTACHMENT_MESSAGE' ); ?></p></div>');
+                console.log("fileSize too big: " + error + " id: " + id + " name: " + name + " fileSize: " + fileSize + " Bytes");
+            }
         } else {
-			console.log("error addAttachment: " + error + " id: " + id + " name: " + name);
-		}
+            console.log("error addAttachment: " + error + " id: " + id + " name: " + name);
+        }
     }
 
     function delAttachment( id ) {
@@ -227,6 +231,18 @@ if ( ! empty($this->priorityList) )
                             if (el) { el.dispose(); }
                         }
         }).send();
+    }
+
+    function validateEditor(form) {
+        var content = '';
+        <?php 
+        if ( isset( $this->editor ) ) { 
+            echo "content = " . $this->editor->getContent( 'otrsmessage' ) . "\n";
+        } else {
+            echo "content = form.otrsmessage.value.trim();\n";
+        }
+        ?>
+        return content;
     }
 //-->
 </script>
