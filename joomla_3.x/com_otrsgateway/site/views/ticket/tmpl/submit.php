@@ -174,11 +174,11 @@ if ( ! empty($this->priorityList) )
             jQuery('.alert-error').remove();
             
             //check form
-            if (form.Subject.value.trim() == '' || form.Subject.value.length < 5) {
+            if (form.Subject.value.length < 5) {
                 jQuery('#error-container').append('<div class="alert alert-error"><p><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_SUBJECT' ); ?></p></div>');
                 form.Subject.focus();
                 errorcount = errorcount + 1;
-            } else if (form.otrsmessage.value.trim() == '' || form.Subject.value.length < 20) {
+            } else if (form.otrsmessage.value.length < 20) {
                 jQuery('#error-container').append('<div class="alert alert-error"><p class="alert-error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_MESSAGE' ); ?></p></div>');
                 form.otrsmessage.focus();
                 errorcount = errorcount + 1;
