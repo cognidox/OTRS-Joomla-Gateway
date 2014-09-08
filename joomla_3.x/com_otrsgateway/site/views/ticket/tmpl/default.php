@@ -38,13 +38,13 @@ function cancelReply(token) {
  -->
 </script>
 
-<h1 id="otrs-ticket-heading" class="componentheading">[<?php echo htmlspecialchars(trim($this->ticket->TicketNumber)); ?>]
-<?php echo htmlspecialchars(trim($this->ticket->Title)); ?></h1>
-
-<div class="contentpaneopen otrs-ticket-status">
+<h4 style="float:left;" id="otrs-ticket-heading" class="componentheading">[<?php echo htmlspecialchars(trim($this->ticket->TicketNumber)); ?>]
+<?php echo htmlspecialchars(trim($this->ticket->Title)); ?></h4>
+<a style="float:right;" class="btn" href="<?php echo JRoute::_( 'index.php?option=com_otrsgateway&view=ticket&ticketID=' . $ticket->TicketID ) . $this->ticket->TicketID; ?>#endticket"><?php echo JText::_('COM_OTRSGATEWAY_REPLY');?></a>
+<div style="clear:both;" class="contentpaneopen otrs-ticket-status">
 <div class="article-tools"><div class="article-meta">
 
-<table class="small" id="otrs-ticket-status-table">
+<table class="small" id="otrs-ticket-status-table" style="width:100%;">
 <tr>
 <td class="otrs-ticket-status-col1"><b><?php echo JText::_('COM_OTRSGATEWAY_CREATED'); ?>:</b> <?php echo htmlspecialchars($this->ticket->Created); ?></td>
 <td><b><?php echo JText::_('COM_OTRSGATEWAY_UPDATED');?>:</b> <?php echo htmlspecialchars($this->ticket->Changed); ?></td></tr>
@@ -62,10 +62,6 @@ echo translateOTRSTicketState(htmlspecialchars($this->ticket->State));
 <b><?php echo JText::_('COM_OTRSGATEWAY_QUEUE');?>:</b> <?php echo htmlspecialchars($this->ticket->Queue); ?></td>
 </tr>
 </table>
-
-<div id="otrs-ticket-top-reply">
-<a class="modal button" href="index.php?option=com_otrsgateway&task=replyForm&ticketID=<?php echo $this->ticket->TicketID; ?>" rel="{handler:'iframe',size:{x:650,y:450},ajaxOptions:{}}"><?php echo JText::_('COM_OTRSGATEWAY_REPLY');?></a>
-</div>
 </div></div></div>
 
 
@@ -147,11 +143,9 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 ?>
 </div>
 <?php } ?>
+
 <div class="contentpaneopen">
-<a name="endticket"></a>
-<hr />
-<a class="modal button" href="index.php?option=com_otrsgateway&task=replyForm&ticketID=<?php echo $this->ticket->TicketID; ?>" rel="{handler:'iframe',size:{x:650,y:450},ajaxOptions:{}}"><?php echo JText::_('COM_OTRSGATEWAY_REPLY'); ?></a>
+    <h2><?php echo JText::_('COM_OTRSGATEWAY_REPLY'); ?></h2>
+    <a name="endticket">&nbsp;</a>
+    <iframe style="max-width: 100%; height: 555px; width: 100%;" src="index.php?option=com_otrsgateway&task=replyForm&ticketID=<?php echo $this->ticket->TicketID; ?>"></iframe>
 </div>
-
-
-

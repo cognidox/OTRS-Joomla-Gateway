@@ -109,14 +109,14 @@ if ( ! empty($this->priorityList) )
         </td>
         <td width="500">
 <?php 
-    // if ( isset( $this->editor ) )
-    // {
-        // echo $this->editor->display('otrsmessage', $this->defaultText , '450', '200', '75', '10', false, 'otrsmessage', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple')); 
-    // }
-    // else
-    // {
+    if ( isset( $this->editor ) )
+    {
+        echo $this->editor->display('otrsmessage', $this->defaultText , '400', '200', '75', '10', false, 'otrsmessage', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple')); 
+    }
+    else
+    {
         echo '<textarea name="otrsmessage" id="otrsmessage" rows="10" cols="60" style="height:auto!important"></textarea>';
-    // }
+    }
 ?>
         </td>
     </tr>

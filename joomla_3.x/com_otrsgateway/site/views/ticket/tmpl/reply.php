@@ -9,20 +9,8 @@
 
 defined('_JEXEC') or die('Restricted access'); 
 JHtml::_('behavior.framework');
-$editorJS = "function validateEditor(){
-var content = '';
-";
-if ( isset( $this->editor ) ) {
-    $this->editor->save( 'otrsreplytext' );
-    $editorJS .= "content = " . $this->editor->getContent( 'otrsreplytext' ) . "\n";
-} else {
-    $editorJS .= "content = $('otrsreplytext').value.trim();\n";
-}
-$editorJS .= "return content;\n}\n";
-$doc = JFactory::getDocument();
-$doc->addScriptDeclaration($editorJS);
-
 ?>
+
 <script type="text/javascript">
 <!--
 var locked = false;
@@ -32,45 +20,24 @@ var locked = false;
 <div id="otrs-reply-form" class="contentpaneopen">
 
 <form action="index.php" method="post" id="otrsReplyForm" name="otrsReplyForm">
-<table class="adminform" style="vertical-align:top;width:600px">
-	<tr>
-		<td>
-		</td>
-		<td>
-			<p id="errormsg">&nbsp;</p>
-		</td>
-	</tr>
-    <tr>
-        <td width="100">
-            <label for="otrsreplytext">
-                <strong><?php echo JText::_( 'COM_OTRSGATEWAY_REPLY' ); ?>:</strong>
-            </label>
-        </td>
-        <td width="500">
+<div class="adminform" style="vertical-align:top;width:100%;">
+    <div id="error-container"></div>
 <?php 
-// if ( isset( $this->editor ) )
-// {
-    // echo $this->editor->display('otrsreplytext', '' , '450', '200', '75', '10', false, 'otrsreplytext', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
-// }
-// else
-// {
-    echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 80%;"></textarea>';
-// }
-?>
-        </td>
-    </tr>
-<?php
+if ( isset( $this->editor ) )
+{
+    echo $this->editor->display('otrsreplytext', '' , '465', '200', '75', '10', false, 'otrsreplytext', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
+}
+else
+{
+    echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
+}
+
 if ( ! empty($this->priorityList) )
 {
 ?>
-    <!--<tr>
-        <td>
-            <label for="priorityID">
-                <strong><?php echo JText::_( 'COM_OTRSGATEWAY_PRIORITY' ); ?>:</strong>
-            </label>
-        </td>
-        <td>
-            <select name="priorityID" id="priorityID">
+    <div class="priority" style="margin-top: 30px;">
+        <strong><?php echo JText::_( 'COM_OTRSGATEWAY_PRIORITY' ); ?>:</strong>
+        <select name="priorityID" id="priorityID">
 <?php
     foreach ($this->priorityList as $key => $val)
     {
@@ -79,18 +46,12 @@ if ( ! empty($this->priorityList) )
              '>' . htmlspecialchars($val) . '</option>';
     }
 ?>
-            </select>
-        </td>
-    </tr>-->
+        </select>
+    </div>
 <?php } ?>
-    <tr>
-        <td>
-            <label for="StateID">
-                <strong><?php echo JText::_( 'COM_OTRSGATEWAY_NEXT_STATE' ); ?>:</strong>
-            </label>
-        </td>
-        <td>
-            <select name="StateID" id="StateID" style="width: 40%;">
+    <div class="state" style="margin-top: 30px;">
+        <strong><?php echo JText::_( 'COM_OTRSGATEWAY_NEXT_STATE' ); ?>:</strong>
+        <select name="StateID" id="StateID" style="width: 45%;">
 <?php
     foreach ($this->stateList as $key => $val)
     {
@@ -99,10 +60,9 @@ if ( ! empty($this->priorityList) )
              '>' . htmlspecialchars($val) . '</option>';
     }
 ?>
-            </select>
-        </td>
-    </tr>
-</table>
+        </select>
+    </div>
+</div>
 <input type="hidden" name="priorityID" value="3" />
 <input type="hidden" name="ticketID" value="<?php echo htmlspecialchars($this->ticket->TicketID);?>" />
 <input type="hidden" name="option" value="com_otrsgateway" />
@@ -112,38 +72,31 @@ if ( ! empty($this->priorityList) )
 <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
 <?php echo JHTML::_( 'form.token' ); ?>
 </form>
-<table class="adminform" style="vertical-align:top;width:100%">
-    <tr style="vertical-align:baseline">
-        <td width="100">
-            <strong><?php echo JText::_( 'COM_OTRSGATEWAY_ATTACHMENTS' ); ?>:</strong>
-        </td>
-        <td width="500">
-<ul id="attachmentlist"></ul>
-<form enctype="multipart/form-data" method="post" action="index.php" id="attform" name="attform" target="attpost">
-<input type="file" name="attachment" /> 
-<input type="submit" value="<?php echo JText::_( 'COM_OTRSGATEWAY_ADD' ); ?>" class="button"  />
-<input type="hidden" name="option" value="com_otrsgateway" />
-<input type="hidden" name="task" value="addAttachment" />
-<input type="hidden" name="format" value="raw" />
-<input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
-</form>
-<iframe id="attpost" name="attpost" style="display:none;width:1px;height:1px"></iframe>
-        </td>
-    </tr>
-</table>
+<div class="adminform" style="vertical-align:top;width:100%">
+    <strong style="float: left; padding-right: 48px;"><?php echo JText::_( 'COM_OTRSGATEWAY_ATTACHMENTS' ); ?>:</strong>
+    <ul id="attachmentlist"></ul>
+    <form enctype="multipart/form-data" method="post" action="index.php" id="attform" name="attform" target="attpost">
+        <input type="file" name="attachment" /> 
+        <input type="submit" value="<?php echo JText::_( 'COM_OTRSGATEWAY_ADD' ); ?>" class="button"  />
+        <input type="hidden" name="option" value="com_otrsgateway" />
+        <input type="hidden" name="task" value="addAttachment" />
+        <input type="hidden" name="format" value="raw" />
+        <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
+    </form>
+    <iframe id="attpost" name="attpost" style="display:none;width:1px;height:1px"></iframe>
+</div>
 
 <form action="index.php" id="delattform" name="delattform" method="post">
-<input type="hidden" name="option" value="com_otrsgateway" />
-<input type="hidden" name="task" value="delAttachment" />
-<input type="hidden" name="format" value="raw" />
-<input type="hidden" name="fileID" value="" />
-<input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
+    <input type="hidden" name="option" value="com_otrsgateway" />
+    <input type="hidden" name="task" value="delAttachment" />
+    <input type="hidden" name="format" value="raw" />
+    <input type="hidden" name="fileID" value="" />
+    <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
 </form>
 
 <form id="replyForm" action="<?php echo JRoute::_('index.php'); ?>" method="get" onsubmit="return false">
-<div id="loading" style="display: none; float: left; padding: 0 10px;"><img src="<?php echo JURI::root(); ?>components/com_otrsgateway/views/img/ajax-loader.gif"/></div>
-<input name="submit" id="submitButton" class="button" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" />
-<a href="#" onclick="parent.cancelReply(document.forms['otrsReplyForm'].elements['formtoken'].value);" style="padding-left: 10px;"><?php echo JText::_( 'COM_OTRSGATEWAY_CANCEL' ); ?></a>
+    <div id="loading" style="display: none; float: left; padding: 0 10px;"><img src="<?php echo JURI::root(); ?>components/com_otrsgateway/views/img/ajax-loader.gif"/></div>
+    <input name="submit" id="submitButton" class="btn" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" />
 </form>
 
 </div>
@@ -152,15 +105,15 @@ if ( ! empty($this->priorityList) )
 	jQuery( document ).ready(function(e) {
 		jQuery('#submitButton').click(function(e2) {
 			jQuery('#loading').show();
-			jQuery('#error').remove();
+			jQuery('.alert-error').remove();
 			if (locked) { return void(0); }
 			locked = true;
 			jQuery(this).css('opacity', '10%');
 			jQuery(this).attr('disabled', 'disabled');
 			<?php if ( isset( $this->editor ) ) { echo $this->editor->save('otrsreplytext'); } ?>
-			if (!validateEditor()) {
-				jQuery('#errormsg').append('<span id="error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?></span>');
-				//alert('<?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?>');
+                        var form = document.otrsReplyForm;
+			if ( !validateEditor() || (form.otrsreplytext.value.length < 20) ) {
+				jQuery('#error-container').append('<div class="alert alert-error"><p><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?></p></div>');
 				jQuery(this).removeAttr('disabled');
 				jQuery(this).css('opacity', '100%');
 				locked = false;
@@ -191,8 +144,6 @@ if ( ! empty($this->priorityList) )
 
     function addAttachment(error, id, name) {
         if (!error) {
-            // Looks OK
-            // Add the file inside the attachmentlist list
             var newEl = new Element('li', { 'id': 'att-' + id  });
             newEl.appendText(name + ' ');
             var newLink = new Element('a', { 'href': 'javascript:delAttachment("' + id + '")', 'onclick':'delAttachment("' + id + '")', 'class': 'small button' });
@@ -215,5 +166,18 @@ if ( ! empty($this->priorityList) )
                         }
         }).send();
     }
+    
+    function validateEditor(form) {
+        var content = '';
+        <?php 
+        if ( isset( $this->editor ) ) { 
+            echo "content = " . $this->editor->getContent( 'otrsreplytext' ) . "\n";
+        } else {
+            echo "content = form.otrsreplytext.value.trim();\n";
+        }
+        ?>
+        return content;
+    }
+
 //-->
 </script>
