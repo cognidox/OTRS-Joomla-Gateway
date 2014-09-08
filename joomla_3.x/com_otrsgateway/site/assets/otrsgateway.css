@@ -1,0 +1,96 @@
+/* 
+ * CSS file for the OTRS Gateway component 
+ * Copyright (C) 2010 Cognidox Ltd
+ */
+
+/* Top ticket status section in ticket detail view */
+div.otrs-ticket-status div.article-tools div.article-meta {
+    position:relative;
+    width:100%;
+}
+#otrs-top-attachments {
+    clear:left;
+}
+
+/* Top ticket status table */
+#otrs-ticket-status-table {
+    border:0;
+    padding:0;
+    border-collapse:collapse;
+}
+
+/* First column in ticket status table */
+td.otrs-ticket-status-col1 {
+    padding-right:10em;
+}
+
+/* Ticket detail top reply button */
+#otrs-ticket-top-reply {
+    position:absolute;
+    top:5px;
+    right:20px;
+}
+
+/* Ticket attachment boxes */
+div.otrs-attachment-box {
+    border: 1px #999 dashed;
+    padding: 0.5em;
+}
+
+/* Style for monospaced plain text */
+.otrs-monospace-text {
+    font-family:monospace;
+    white-space:pre;
+}
+
+/* Reply form content */
+#otrs-reply-form, #otrs-submit-form {
+    padding: 10px;
+}
+
+/* Comment within a ticket detail view, including heading text */
+.otrs-ticket-comment {
+    border: 1px #ccc solid;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+/* Style for replies not sent by the current user in the ticket detail view */
+.otrs-reply-other {
+    background-color: #f4f0dc;
+}
+
+.adminform {
+    vertical-align:top;
+    width:100%;
+}
+
+.adminform select {
+    width: 220px; /* like 70 Chars from subject */
+}
+.adminform label {
+    float: left;
+    width: auto;
+    min-width: 20%;
+}
+
+.priority, .state {
+    margin-top: 30px;
+}
+
+#attachmentLabel {
+    float: left; 
+    padding-right: 48px;
+}
+
+.attpost {
+    display:none;
+    width:1px;
+    height:1px;
+}
+
+#loading {
+    display: none; 
+    float: left; 
+    padding: 0 10px;
+}
