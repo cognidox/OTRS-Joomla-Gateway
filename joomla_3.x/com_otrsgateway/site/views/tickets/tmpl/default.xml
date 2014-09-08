@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Id: default.xml 10880 2008-08-31 17:51:53Z willebil $ -->
+<metadata>
+	<layout title="COM_OTRSGATEWAY_TICKETS_VIEW_DEFAULT_TITLE">
+		<message>
+			<![CDATA[COM_OTRSGATEWAY_TICKETS_VIEW_DEFAULT_DESC]]>
+		</message>
+	</layout>
+	<fields name="request">
+		<fieldset name="request">
+			<field 
+				type="list"
+				name="listtype"
+				default=""
+				label="COM_OTRSGATEWAY_TICKETS_VIEW_DEFAULT_TYPE_LABEL"
+				description="COM_OTRSGATEWAY_TICKETS_VIEW_DEFAULT_TYPE_DESC">
+				<option value="">COM_OTRSGATEWAY_TICKETS_VIEW_DEFAULT_MY_TICKETS</option>
+				<option value="company">COM_OTRSGATEWAY_TICKETS_VIEW_DEFAULT_COMPANY_TICKETS</option>
+			</field>
+		</fieldset>
+	</fields>
+</metadata>
