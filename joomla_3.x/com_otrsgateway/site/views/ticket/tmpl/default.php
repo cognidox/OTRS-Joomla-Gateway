@@ -15,6 +15,29 @@ JHTML::_('behavior.modal');
 
 $attachmentIndex = array();
 ?>
+<script type="text/javascript">
+<!--
+    function closeReply(err, token) {
+        cancelReply(token);
+        if (err) {
+            alert(err);
+        } else {
+            var loc = window.location;
+            loc.hash = '#endticket';
+            window.location.assign(loc.toString());
+            window.location.reload(true);
+        }
+    }
+    
+    function cancelReply(token) {
+        SqueezeBox.close();
+        new Request({
+            url: '<?php echo $this->delAttLink; ?>' + '&formtoken=' + token, 
+            method: 'get',
+            async: false}).send();
+    }
+ -->
+</script>
 <h4 style="float:left;" id="otrs-ticket-heading" class="componentheading">
     <?php echo "[" . htmlspecialchars(trim($this->ticket->TicketNumber)) . "] " . htmlspecialchars(trim($this->ticket->Title)); ?>
 </h4>
