@@ -14,6 +14,10 @@ JHtml::_('behavior.framework');
 JHTML::_('behavior.modal');
 
 $attachmentIndex = array();
+
+if ($this->ticket->TicketNumber == "") {
+    echo "<span style='font-weight: bold;'>" . JText::_( 'COM_OTRSGATEWAY_UNABLE_TO_PROCESS_REQUEST' ) . "</span>";
+} else {
 ?>
 <script type="text/javascript">
 <!--
@@ -177,3 +181,4 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
     <a name="endticket">&nbsp;</a>
     <iframe style="max-width: 100%; height: 555px; width: 100%;" src="index.php?option=com_otrsgateway&task=replyForm&ticketID=<?php echo $this->ticket->TicketID; ?>"></iframe>
 </div>
+<?php } ?>
