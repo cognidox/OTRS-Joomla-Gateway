@@ -9,6 +9,7 @@
 
 defined('_JEXEC') or die('Restricted access'); 
 JHtml::_('behavior.framework');
+$params = JComponentHelper::getParams( 'com_otrsgateway' );
 ?>
 
 <script type="text/javascript">
@@ -20,60 +21,64 @@ var locked = false;
 <div id="otrs-reply-form" class="contentpaneopen">
 
 <form action="index.php" method="post" id="otrsReplyForm" name="otrsReplyForm">
-<div class="adminform">
-    <div id="error-container"></div>
-<?php 
-if ( isset( $this->editor ) )
-{
-    echo $this->editor->display('otrsreplytext', '' , '100%', '200', '75', '10', false, 'otrsreplytext', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
-}
-else
-{
-    echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
-}
-
-if ( ! empty($this->priorityList) )
-{
-?>
-    <div class="priority">
-        <strong><?php echo JText::_( 'COM_OTRSGATEWAY_PRIORITY' ); ?>:</strong>
-        <select name="priorityID" id="priorityID">
-<?php
-    foreach ($this->priorityList as $key => $val)
-    {
-        echo '<option value="' . htmlspecialchars($key) . '"' .
-             ($key == $this->ticket->PriorityID ? ' selected="selected"' : '') .
-             '>' . htmlspecialchars($val) . '</option>';
+    <div class="adminform" style="vertical-align:top;width:100%;">
+        <div id="error-container"></div>
+    <?php
+    if ($params->get('otrsgateway_editor') == "0") {
+        if ( isset( $this->editor ) ) {
+            echo $this->editor->display('otrsreplytext', '' , '100%', '200', '75', '10', false, 'otrsreplytext', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
+        } else {
+            echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
+        }  
+    } else {
+        echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
     }
-?>
-        </select>
-    </div>
-<?php } ?>
-    <div class="state">
-        <strong><?php echo JText::_( 'COM_OTRSGATEWAY_NEXT_STATE' ); ?>:</strong>
-        <select name="StateID" id="StateID" style="width: 45%;">
-<?php
-    foreach ($this->stateList as $key => $val)
+    
+    if ( $params->get('otrsgateway_submit_priority') == "0" && (! empty($this->priorityList)) )  
     {
-        echo '<option value="' . htmlspecialchars($key) . '"' .
-             ($key == $this->ticket->StateID ? ' selected="selected"' : '') .
-             '>' . htmlspecialchars($val) . '</option>';
+    ?>
+        <div class="priority" style="margin-top: 30px;">
+            <strong><?php echo JText::_( 'COM_OTRSGATEWAY_PRIORITY' ); ?>:</strong>
+            <select name="priorityID" id="priorityID">
+    <?php
+        foreach ($this->priorityList as $key => $val)
+        {
+            echo '<option value="' . htmlspecialchars($key) . '"' .
+                 ($key == $this->ticket->PriorityID ? ' selected="selected"' : '') .
+                 '>' . htmlspecialchars($val) . '</option>';
+        }
+    ?>
+            </select>
+        </div>
+    <?php 
+    } else { 
+        echo "<input type='hidden' name='priorityID' value='".$params->get('otrsgateway_submit_priority')."' />";
     }
-?>
-        </select>
+    ?>
+        <div class="state" style="margin-top: 30px;">
+            <strong><?php echo JText::_( 'COM_OTRSGATEWAY_NEXT_STATE' ); ?>:</strong>
+            <select name="StateID" id="StateID" style="width: 45%;">
+    <?php
+        foreach ($this->stateList as $key => $val)
+        {
+            echo '<option value="' . htmlspecialchars($key) . '"' .
+                 ($key == $this->ticket->StateID ? ' selected="selected"' : '') .
+                 '>' . htmlspecialchars($val) . '</option>';
+        }
+    ?>
+            </select>
+        </div>
     </div>
-</div>
-<input type="hidden" name="priorityID" value="3" />
-<input type="hidden" name="ticketID" value="<?php echo htmlspecialchars($this->ticket->TicketID);?>" />
-<input type="hidden" name="option" value="com_otrsgateway" />
-<input type="hidden" name="task" value="reply" />
-<input type="hidden" name="view" value="ticket" />
-<input type="hidden" name="format" value="raw" />
-<input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
-<?php echo JHTML::_( 'form.token' ); ?>
+    <input type="hidden" name="ticketID" value="<?php echo htmlspecialchars($this->ticket->TicketID);?>" />
+    <input type="hidden" name="option" value="com_otrsgateway" />
+    <input type="hidden" name="task" value="reply" />
+    <input type="hidden" name="view" value="ticket" />
+    <input type="hidden" name="format" value="raw" />
+    <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
+    <?php echo JHTML::_( 'form.token' ); ?>
 </form>
-<div class="adminform">
-    <strong id="attachmentLabel"><?php echo JText::_( 'COM_OTRSGATEWAY_ATTACHMENTS' ); ?>:</strong>
+<div class="adminform" style="vertical-align:top;width:100%">
+    <strong style="float: left; padding-right: 48px;"><?php echo JText::_( 'COM_OTRSGATEWAY_ATTACHMENTS' ); ?>:</strong>
     <ul id="attachmentlist"></ul>
     <form enctype="multipart/form-data" method="post" action="index.php" id="attform" name="attform" target="attpost">
         <input type="file" name="attachment" /> 
@@ -94,8 +99,8 @@ if ( ! empty($this->priorityList) )
     <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
 </form>
 
-<form id="replyForm" action="<?php echo JRoute::_('index.php'); ?>" method="get" onsubmit="return false">
-    <div id="loading"><img src="<?php echo JURI::root(); ?>components/com_otrsgateway/views/img/ajax-loader.gif"/></div>
+<form id="replyForm" action="index.php" method="get" onsubmit="return false">
+    <div id="loading" style="display: none; float: left; padding: 0 10px;"><img src="<?php echo JURI::root(); ?>components/com_otrsgateway/views/img/ajax-loader.gif"/></div>
     <input name="submit" id="submitButton" class="btn" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" />
 </form>
 

@@ -10,34 +10,40 @@
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die( 'Restricted access' );
 require_once( JPATH_COMPONENT.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'fieldhelper.php' );
+$params = JComponentHelper::getParams( 'com_otrsgateway' );
 ?>
 <?php if ($this->tickets && count($this->tickets)) { ?>
 
 <table class="otrs-ticket-table">
-    <thead>
-        <tr>
-            <th class='sectiontableheader'>Ticket#</th>
-            <th class='sectiontableheader'>Titel</th>
-            <th class='sectiontableheader'>Reporter</th>
-            <th class='sectiontableheader'>Priority</th>
-            <th class='sectiontableheader'>Status</th>
-            <th class='sectiontableheader'>Erstellt</th>
-            <th class='sectiontableheader'>Aktualisiert</th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php
-        // Loop through the ticket, writing out the various bits
-        $row = true;
+<thead>
+<tr>
+<th class='sectiontableheader'>Ticket#</th>
+<th class='sectiontableheader'>Titel</th>
+<?php 
+    if ($params->get('otrsgateway_tickets_reporter') == "1") 
+        echo "<th class='sectiontableheader'>Reporter</th>";
         
-        // Sort Tickets in Overview. Show last changed first
-        function do_compare($i1, $i2) {
-            $t1 = strtotime(htmlspecialchars($i1->Changed));
-            $t2 = strtotime(htmlspecialchars($i2->Changed));
-            return $t2 - $t1;
-        }
-        $tickets = $this->tickets;
-        usort($tickets, 'do_compare');
+    if ($params->get('otrsgateway_tickets_priority') == "1")
+        echo "<th class='sectiontableheader'>Priority</th>";
+?>
+<th class='sectiontableheader'>Status</th>
+<th class='sectiontableheader'>Erstellt</th>
+<th class='sectiontableheader'>Aktualisiert</th>
+</tr>
+</thead>
+<tbody>
+<?php
+    // Loop through the ticket, writing out the various bits
+	$row = true;
+	
+	// Sort Tickets in Overview. Show last changed first
+	function do_compare($i1, $i2) {
+		$t1 = strtotime(htmlspecialchars($i1->Changed));
+		$t2 = strtotime(htmlspecialchars($i2->Changed));
+		return $t2 - $t1;
+	}
+	$tickets = $this->tickets;
+	usort($tickets, 'do_compare');
 
         foreach ($tickets as $t)
         {
@@ -54,8 +60,12 @@ require_once( JPATH_COMPONENT.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.
             }
                  
             echo '<td id="otrs-ticket-title">' . $CutTitle . '</td>';
-            echo '<td>' . htmlspecialchars($t->CustomerUserID) . '</td>';
-            echo '<td>' . htmlspecialchars(JText::_($t->Priority)) . '</td>';
+            if ($params->get('otrsgateway_tickets_reporter') == "1") 
+	        echo '<td>' . htmlspecialchars($t->CustomerUserID) . '</td>';
+        
+            if ($params->get('otrsgateway_tickets_priority') == "1")
+                echo '<td>' . htmlspecialchars(JText::_($t->Priority)) . '</td>';
+		
             echo '<td id="otrs-ticket-state">' . translateOTRSTicketState(htmlspecialchars(JText::_($t->State)),true) . '</td>';
             
             $created = htmlspecialchars($t->CreateTimeUnix);

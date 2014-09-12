@@ -12,6 +12,7 @@ require_once( JPATH_COMPONENT.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.
 
 JHtml::_('behavior.framework');
 JHTML::_('behavior.modal');
+$params = JComponentHelper::getParams( 'com_otrsgateway' );
 
 $attachmentIndex = array();
 
@@ -78,10 +79,16 @@ if ($this->ticket->TicketNumber == "") {
                     ?>
                 </td>
                 <td class="otrs-ticket-status-col3">
-                    &nbsp;
+                    <?php 
+                        if ($params->get('otrsgateway_ticket_priority') == "1")
+                            echo "<b>" . JText::_('COM_OTRSGATEWAY_PRIORITY') . ":</b>";
+                    ?>
                 </td>
                 <td class="otrs-ticket-status-col4">
-                    &nbsp;
+                    <?php
+                        if ($params->get('otrsgateway_ticket_priority') == "1")
+                            echo htmlspecialchars($this->ticket->Priority); 
+                    ?>
                 </td>
             </tr>
             <tr>
@@ -91,6 +98,22 @@ if ($this->ticket->TicketNumber == "") {
                 <td colspan="3">
                      <?php echo htmlspecialchars($this->ticket->Main->From); ?>
                 </td>
+            </tr>
+            <tr>
+                <td class="otrs-ticket-status-col1">
+                    <?php 
+                        if ($params->get('otrsgateway_ticket_queue') == "1")
+                            echo "<b>" . JText::_('COM_OTRSGATEWAY_QUEUE') . ":</b>";
+                    ?>
+                </td>
+                <td class="otrs-ticket-status-col2">
+                    <?php 
+                        if ($params->get('otrsgateway_ticket_queue') == "1")
+                            echo htmlspecialchars($this->ticket->Queue);
+                    ?>
+                </td>
+                <td class="otrs-ticket-status-col3"></td>
+                <td class="otrs-ticket-status-col4"></td>
             </tr>
             </table>
         </div>

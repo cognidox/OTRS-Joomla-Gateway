@@ -9,6 +9,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.framework');
+$params = JComponentHelper::getParams( 'com_otrsgateway' );
 ?>
 
 <div id="otrs-submit-form" class="contentpaneopen">
@@ -31,32 +32,33 @@ JHtml::_('behavior.framework');
         ?>
                     </select>
             </div>
-        <?php } ?>
+        <?php } 
+        if ($params->get('otrsgateway_submit_queue') == "") 
+        {
+        ?>
             <div class="ticketDest">
                 <label for="Dest">
                     <strong><?php echo JText::_( 'COM_OTRSGATEWAY_TO' ); ?>:</strong>
                 </label>
                 <select name="Dest" id="Dest">
         <?php
-            // all queues
-            foreach ($this->queues as $key => $val)
-            {
-                $selected = ($this->defaultDest == $key) ? ' selected="selected"' : '';
-                echo '<option value="' . htmlspecialchars($key) . '"' . $selected .
-                     '>' . htmlspecialchars($val) . '</option>';
-            }
-
-            // or specific queue
-            //foreach ($this->queues as $key => $val)
-            //{
-                //if (htmlspecialchars($val)=="<specific queuename>") {
-                    //echo '<option value="' . htmlspecialchars($key) . '" selected="selected">' . htmlspecialchars($val) . '</option>';
-                // }
-            // }
+                foreach ($this->queues as $key => $val)
+                {
+                    $selected = ($this->defaultDest == $key) ? ' selected="selected"' : '';
+                    echo '<option value="' . htmlspecialchars($key) . '"' . $selected .
+                         '>' . htmlspecialchars($val) . '</option>';
+                }
         ?>
                 </select>
             </div>
-        <?php if ( ! empty($this->priorityList) ) { ?>
+        <?php 
+        } else {
+            echo "<input type='hidden' name='Dest' value='".$params->get('otrsgateway_submit_queue')."' />";
+        }
+        
+        if ( $params->get('otrsgateway_submit_priority') == "0" && (! empty($this->priorityList)) )  
+        {
+        ?>
             <div class="ticketPrio">
                 <label for="priorityID">
                     <strong><?php echo JText::_( 'COM_OTRSGATEWAY_PRIORITY' ); ?>:</strong>
@@ -73,7 +75,11 @@ JHtml::_('behavior.framework');
         ?>
                 </select>
             </div>
-        <?php } ?>
+        <?php 
+        } else {
+            echo "<input type='hidden' name='priorityID' value='".$params->get('otrsgateway_submit_priority')."' />";
+        }
+        ?>
             <div class="ticketSubj">
                 <label for="Subject">
                     <strong><?php echo JText::_( 'COM_OTRSGATEWAY_SUBJECT' ); ?>:</strong>
@@ -81,23 +87,18 @@ JHtml::_('behavior.framework');
 
                 <input type="text" name="Subject" class="inputbox" size="70" value="<?php echo htmlspecialchars($this->defaultSubject); ?>" />
         <?php 
-            if ( isset( $this->editor ) )
-            {
-                echo $this->editor->display('otrsmessage', '' , '100%', '200', '75', '10', false, 'otrsmessage', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
-            }
-            else
-            {
-                echo '<textarea name="otrsmessage" id="otrsmessage" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
+            if ($params->get('otrsgateway_editor') == "0") {
+                if ( isset( $this->editor ) ) {
+                    echo $this->editor->display('otrsreplytext', '' , '100%', '200', '75', '10', false, 'otrsreplytext', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
+                } else {
+                    echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
+                }  
+            } else {
+                echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
             }
         ?>
             </div>
         </div>
-
-        <?php 
-        // dont choose a queue: value=<queuenumber>||<queuename> (i.e. '1||MyFirstQueue')
-        //echo "<input type='hidden' name='Dest' value='1||MyFirstQueue' />";
-        ?>
-
         <input type="hidden" name="option" value="com_otrsgateway" />
         <input type="hidden" name="task" value="submit" />
         <input type="hidden" name="view" value="ticket" />

@@ -12,4 +12,26 @@
             <option value="1">Email</option>
         </field>
     </fieldset>
+    <fieldset
+        name="configuration"
+        label="COM_OTRSGATEWAY_CONFIGURATION_LABEL"
+        description="COM_OTRSGATEWAY_CONFIGURATION_DESC">
+        <field name="otrsgateway_editor" type="radio" default="0" label="COM_OTRSGATEWAY_CHOOSE_EDITOR" description="COM_OTRSGATEWAY_CHOOSE_EDITOR_DESC">
+            <option value="0">Joomla Editor</option>
+            <option value="1">No Editor</option>
+        </field>
+        <field name="otrsgateway_ticket_priority" type="checkbox" label="COM_OTRSGATEWAY_TICKET_PRIORITY" description="COM_OTRSGATEWAY_TICKET_PRIORITY_DESC" />
+        <field name="otrsgateway_ticket_queue" type="checkbox" label="COM_OTRSGATEWAY_TICKET_QUEUE" description="COM_OTRSGATEWAY_TICKET_QUEUE_DESC" />
+        <field name="otrsgateway_submit_priority" type="list" label="COM_OTRSGATEWAY_SUBMIT_PRIORITY" description="COM_OTRSGATEWAY_SUBMIT_PRIORITY_DESC">
+            <option value="0">choose priority...</option>
+            <option value="1">very low</option>
+            <option value="2">low</option>
+            <option value="3">normal</option>
+            <option value="4">high</option>
+            <option value="5">very high</option>
+        </field>
+        <field name="otrsgateway_submit_queue" type="text" label="COM_OTRSGATEWAY_SUBMIT_QUEUE" description="COM_OTRSGATEWAY_SUBMIT_QUEUE_DESC" />
+        <field name="otrsgateway_tickets_reporter" type="checkbox" label="COM_OTRSGATEWAY_TICKETS_REPORTER" description="COM_OTRSGATEWAY_TICKETS_REPORTER_DESC" />
+        <field name="otrsgateway_tickets_priority" type="checkbox" label="COM_OTRSGATEWAY_TICKETS_PRIORITY" description="COM_OTRSGATEWAY_TICKETS_PRIORITY_DESC" />
+    </fieldset>
 </config>
