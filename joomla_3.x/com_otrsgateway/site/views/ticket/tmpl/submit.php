@@ -14,7 +14,7 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
 
 <div id="otrs-submit-form" class="contentpaneopen">
     <div id="error-container"></div>
-    <form action="<?php echo JRoute::_('index.php'); ?>/../ticket-status" method="post" id="otrsNewTicketForm" name="otrsNewTicketForm" enctype="multipart/form-data">
+    <form action="<?php echo JRoute::_('index.php'); ?>" method="post" id="otrsNewTicketForm" name="otrsNewTicketForm" enctype="multipart/form-data">
         <div class="adminform">
         <?php if ( !empty( $this->ticketTypes ) ) { ?>
             <div class="ticketType">
@@ -87,14 +87,10 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
 
                 <input type="text" name="Subject" class="inputbox" size="70" value="<?php echo htmlspecialchars($this->defaultSubject); ?>" />
         <?php 
-            if ($params->get('otrsgateway_editor') == "0") {
-                if ( isset( $this->editor ) ) {
-                    echo $this->editor->display('otrsreplytext', '' , '100%', '200', '75', '10', false, 'otrsreplytext', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
-                } else {
-                    echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
-                }  
+            if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) {
+                    echo $this->editor->display('otrsmessage', '' , '100%', '200', '75', '10', false, 'otrsmessage', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
             } else {
-                echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
+                    echo '<textarea name="otrsmessage" id="otrsmessage" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
             }
         ?>
             </div>
@@ -136,7 +132,11 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
         var form = document.otrsNewTicketForm;
         var errorcount = 0;
         if (pressbutton == 'submit') {
-            <?php if ( isset( $this->editor ) ) { echo $this->editor->save( 'otrsmessage' ); } ?>
+            <?php 
+                if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
+                    echo $this->editor->save( 'otrsmessage' ); 
+                }
+            ?>
             //clear error messages
             jQuery('.alert-error').remove();
             
@@ -203,7 +203,7 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
     function validateEditor(form) {
         var content = '';
         <?php 
-        if ( isset( $this->editor ) ) { 
+        if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
             echo "content = " . $this->editor->getContent( 'otrsmessage' ) . "\n";
         } else {
             echo "content = form.otrsmessage.value.trim();\n";

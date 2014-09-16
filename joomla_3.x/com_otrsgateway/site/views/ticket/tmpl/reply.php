@@ -24,15 +24,11 @@ var locked = false;
     <div class="adminform" style="vertical-align:top;width:100%;">
         <div id="error-container"></div>
     <?php
-    if ($params->get('otrsgateway_editor') == "0") {
-        if ( isset( $this->editor ) ) {
+        if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) {
             echo $this->editor->display('otrsreplytext', '' , '100%', '200', '75', '10', false, 'otrsreplytext', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
         } else {
             echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
         }  
-    } else {
-        echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
-    }
     
     if ( $params->get('otrsgateway_submit_priority') == "0" && (! empty($this->priorityList)) )  
     {
@@ -115,16 +111,21 @@ var locked = false;
 			locked = true;
 			jQuery(this).css('opacity', '10%');
 			jQuery(this).attr('disabled', 'disabled');
-			<?php if ( isset( $this->editor ) ) { echo $this->editor->save('otrsreplytext'); } ?>
-                        var form = document.otrsReplyForm;
-			if ( !validateEditor() || (form.otrsreplytext.value.length < 20) ) {
+			<?php 
+                            if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
+                                echo $this->editor->save('otrsreplytext'); 
+                            }
+                        ?>
+            
+            var form = document.otrsReplyForm;
+			if ( !validateEditor(form) || (form.otrsreplytext.value.length < 20) ) {
 				jQuery('#error-container').append('<div class="alert alert-error"><p><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?></p></div>');
 				jQuery(this).removeAttr('disabled');
 				jQuery(this).css('opacity', '100%');
 				locked = false;
 				jQuery('#loading').hide();
 			} else {
-				<?php if ( isset( $this->editor ) ): ?>
+				<?php if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) : ?>
 					if (!jQuery('#otrsreplytext').val()) {
 						jQuery('#otrsreplytext').val() = <?php echo $this->editor->getContent('otrsreplytext'); ?>
 					}
@@ -175,7 +176,7 @@ var locked = false;
     function validateEditor(form) {
         var content = '';
         <?php 
-        if ( isset( $this->editor ) ) { 
+        if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) {
             echo "content = " . $this->editor->getContent( 'otrsreplytext' ) . "\n";
         } else {
             echo "content = form.otrsreplytext.value.trim();\n";
