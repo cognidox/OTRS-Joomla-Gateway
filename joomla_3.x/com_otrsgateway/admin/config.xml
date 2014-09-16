@@ -42,7 +42,9 @@
             <option value="0">Login</option>
             <option value="1">Email</option>
         </field>
+        
     </fieldset>
+    
     <fieldset
         name="configuration"
         label="COM_OTRSGATEWAY_CONFIGURATION_LABEL"
@@ -129,5 +131,13 @@
 			<option value="0">JNO</option>
         </field>
         
+        <field 
+            name="otrsgateway_submit_link" 
+            type="text" 
+            label="COM_OTRSGATEWAY_SUBMIT_LINK" 
+            description="COM_OTRSGATEWAY_SUBMIT_LINK_DESC" 
+        />
+        
     </fieldset>
+    
 </config>

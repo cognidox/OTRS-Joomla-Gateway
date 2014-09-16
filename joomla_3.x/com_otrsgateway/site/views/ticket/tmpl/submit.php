@@ -14,7 +14,7 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
 
 <div id="otrs-submit-form" class="contentpaneopen">
     <div id="error-container"></div>
-    <form action="<?php echo JRoute::_('index.php'); ?>" method="post" id="otrsNewTicketForm" name="otrsNewTicketForm" enctype="multipart/form-data">
+    <form action="<?php echo JRoute::_('index.php') . $params->get('otrsgateway_submit_link'); ?>" method="post" id="otrsNewTicketForm" name="otrsNewTicketForm" enctype="multipart/form-data">
         <div class="adminform">
         <?php if ( !empty( $this->ticketTypes ) ) { ?>
             <div class="ticketType">
