@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.3" client="site" method="upgrade">
+    <name>OTRS Gateway Summary</name>
+    <author>Chuck Norrison</author>
+    <version>1.0.0</version>
+    <description>Output a Ticket Summary</description>
+    <files>
+        <filename>mod_otrsgateway.xml</filename>
+        <filename module="mod_otrsgateway_stats">mod_otrsgateway.php</filename>
+        <filename>index.html</filename>
+        <filename>helper.php</filename>
+    </files>
+    <languages>
+		<language tag="de-DE">language/de-DE/de-DE.mod_otrsgateway.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.mod_otrsgateway.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+            
+                <field 
+                    name="otrsgateway_summary_stats" 
+                    type="radio"
+                    default="1" 
+                    class="btn-group btn-group-yesno" 
+                    label="MOD_OTRSGATEWAY_CONFIG_STATS" 
+                    description="MOD_OTRSGATEWAY_CONFIG_DESC"
+                    >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                
+                <field 
+                    name="otrsgateway_summary_dia" 
+                    type="radio"
+                    default="1" 
+                    class="btn-group btn-group-yesno" 
+                    label="MOD_OTRSGATEWAY_CONFIG_DIA" 
+                    description="MOD_OTRSGATEWAY_CONFIG_DIA_DESC"
+                    >
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                
+            </fieldset>
+        </fields>
+    </config>
+</extension>
