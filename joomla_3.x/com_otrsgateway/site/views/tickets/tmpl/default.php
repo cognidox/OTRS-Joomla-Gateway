@@ -34,7 +34,6 @@ if ($this->tickets && count($this->tickets)) {
         $stat_unsuccessful = 0;
         $stat_pending = 0;
         $max_bar_height = 210;
-        $max_ticket_height = round($max_bar_height/count($tickets));
         $tickets_year = 0;
         
         $date = array();
@@ -86,7 +85,7 @@ if ($this->tickets && count($this->tickets)) {
             //fill chart bars with tickets
             foreach ($date as $d) {
                 if (date('Y.' . str_pad($d, 2 ,'0', STR_PAD_LEFT)) === date( 'Y.m',htmlspecialchars($t->CreateTimeUnix) )) {
-                    $bars[$d] .= "<a href='".JRoute::_('index.php?view=ticket&ticketID='.$t->TicketID)."'><div class='bar' style='height:".$max_ticket_height."px;' title='".$CutTitle."'></div></a>";
+                    $bars[$d] .= "<a href='".JRoute::_('index.php?view=ticket&ticketID='.$t->TicketID)."'><div class='bar' title='".$CutTitle."'></div></a>";
                     $tickets_year++;
                 }
             }
@@ -117,6 +116,16 @@ if ($this->tickets && count($this->tickets)) {
     }
     
     if ($params->get('otrsgateway_tickets_stats')) {
+        //set the size the tickets should have in the chart bar
+        $max_ticket_height = round($max_bar_height/$tickets_year);
+        echo '
+            <style type="text/css">
+                .bar {
+                    height:'.$max_ticket_height.'px;
+                }
+            </style>
+        ';
+        
         //close chart bars
         for($i=1; $i<13; $i++) {
             $month = date('Y') . "-" . str_pad($i, 2 ,'0', STR_PAD_LEFT) . "-" . "01";
