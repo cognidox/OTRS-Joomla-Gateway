@@ -141,11 +141,11 @@ if ($params->get('otrsgateway_summary_stats') && $params->get('otrsgateway_summa
             float: right;
             padding: 5px;
         }
-        
+
         #ticket-stats table tbody tr {
             border: 1px solid #e3e3e3;
         }
-        
+
         #ticket-stats table tbody tr td {
             padding-left: 5px;
         }
@@ -171,11 +171,11 @@ if ($params->get('otrsgateway_summary_stats') && $params->get('otrsgateway_summa
                 width: 100%;
                 font-size: 12px;
             }
-            
+
             #ticket-stats table tbody tr {
                 border: 1px solid #e3e3e3;
             }
-            
+
             #ticket-stats table tbody tr td {
                 padding-left: 5px;
             }

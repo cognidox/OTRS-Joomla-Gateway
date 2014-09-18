@@ -132,6 +132,18 @@
         </field>
         
         <field 
+            name="otrsgateway_tickets_stats" 
+            type="radio"
+            default="1"             
+            class="btn-group btn-group-yesno" 
+            label="COM_OTRSGATEWAY_TICKETS_STATS" 
+            description="COM_OTRSGATEWAY_TICKETS_STATS_DESC"
+            >
+            <option value="1">JYES</option>
+			<option value="0">JNO</option>
+        </field>
+        
+        <field 
             name="otrsgateway_submit_link" 
             type="text" 
             label="COM_OTRSGATEWAY_SUBMIT_LINK" 

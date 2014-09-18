@@ -55,42 +55,82 @@ div.otrs-attachment-box {
     margin-bottom: 1em;
 }
 
+.otrs-ticket-table {
+    width: 100%;
+}
+
 /* Style for replies not sent by the current user in the ticket detail view */
 .otrs-reply-other {
     background-color: #f4f0dc;
 }
 
-.adminform {
-    vertical-align:top;
-    width:100%;
+.replyiframe {
+    max-width: 100%; 
+    height: 555px; 
+    width: 100%;
 }
 
-.adminform select {
-    width: 220px; /* like 70 Chars from subject */
+@media (max-width: 560px) {
+    .replyiframe {
+        max-width: 100%; 
+        height: 600px; 
+        width: 100%;
+    }
 }
-.adminform label {
+
+/* Style for Ticket Stats and Chart */
+.bar {
+    margin-right: 1px;
+    margin-left: 1px;
+    z-index: 1;
+    background-color: #2E9AFE;
+    font-size: 0.8em;
+    overflow: hidden;
+}
+
+.bar_column {
+    text-align: center;
+    border: 1px solid #e3e3e3;
+    font-size: 12px;
+    min-width: 37px;
+}
+
+.bar:hover {
+    margin-right: 1px;
+    z-index: 1;
+    background-color: #ff5151;
+}
+
+#ticket-stats {
+    width: 30%;
     float: left;
+    padding: 5px;
+}
+
+#ticket-dia {
     width: auto;
-    min-width: 20%;
+    float: right;
+    padding: 5px;
 }
 
-.priority, .state {
-    margin-top: 30px;
+#ticket-stats table tbody tr {
+    border: 1px solid #e3e3e3;
 }
 
-#attachmentLabel {
-    float: left; 
-    padding-right: 48px;
+#ticket-stats table tbody tr td {
+    padding-left: 5px;
 }
 
-.attpost {
-    display:none;
-    width:1px;
-    height:1px;
-}
+@media (max-width: 979px) {
+    #ticket-stats {
+        width: 100%;
+        float: none;
+        padding: 0;
+    }
 
-#loading {
-    display: none; 
-    float: left; 
-    padding: 0 10px;
-}
+    #ticket-dia {
+        width: 100%;
+        float: none;
+        padding: 0;
+    }
+} 

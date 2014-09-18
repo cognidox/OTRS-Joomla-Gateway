@@ -30,6 +30,9 @@ class OTRSGatewayViewTickets extends JViewLegacy
 		$listType = $jinput->get( 'listtype', null, null );
         $session = JFactory::getSession();
         $showClosed = false;
+        
+        $doc = JFactory::getDocument();
+		$doc->addStyleSheet( JUri::root() . 'components/com_otrsgateway/assets/otrsgateway.css' );
 
 		if ( $jinput->get( 'closed', null, null ) )
         {
