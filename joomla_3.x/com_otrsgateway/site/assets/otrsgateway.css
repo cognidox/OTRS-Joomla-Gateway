@@ -79,7 +79,7 @@ div.otrs-attachment-box {
 }
 
 /* Style for Ticket Stats and Chart */
-.bar {
+.ticket-summary .bar {
     margin-right: 1px;
     margin-left: 1px;
     z-index: 1;
@@ -88,47 +88,47 @@ div.otrs-attachment-box {
     overflow: hidden;
 }
 
-.bar_column {
+.ticket-summary .bar_column {
     text-align: center;
     border: 1px solid #e3e3e3;
     font-size: 12px;
     min-width: 37px;
 }
 
-.bar:hover {
+.ticket-summary .bar:hover {
     margin-right: 1px;
     z-index: 1;
     background-color: #ff5151;
 }
 
-#ticket-stats {
+.ticket-summary #ticket-stats {
     width: 30%;
     float: left;
-    padding: 5px;
+    padding-right: 5px;
 }
 
-#ticket-dia {
+.ticket-summary #ticket-dia {
     width: auto;
     float: right;
-    padding: 5px;
+    padding-left: 5px;
 }
 
-#ticket-stats table tbody tr {
+.ticket-summary #ticket-stats table tbody tr {
     border: 1px solid #e3e3e3;
 }
 
-#ticket-stats table tbody tr td {
+.ticket-summary #ticket-stats table tbody tr td {
     padding-left: 5px;
 }
 
 @media (max-width: 979px) {
-    #ticket-stats {
+    .ticket-summary #ticket-stats {
         width: 100%;
         float: none;
         padding: 0;
     }
 
-    #ticket-dia {
+    .ticket-summary #ticket-dia {
         width: 100%;
         float: none;
         padding: 0;

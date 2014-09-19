@@ -24,6 +24,7 @@ class OTRSGatewayViewTickets extends JViewLegacy
 {
     function display($tpl = null)
     {
+        $params = JComponentHelper::getParams( 'com_otrsgateway' );
         global $mainframe;
         $model = &$this->getModel();
 		$jinput = JFactory::getApplication()->input;
@@ -46,16 +47,27 @@ class OTRSGatewayViewTickets extends JViewLegacy
             $showClosed = true;
         }
         $tickets = null;
+        $tickets_stats = null;
         switch ( $listType )
         {
             case "company":
                 $tickets = $showClosed ? $model->getCompanyTickets() : $model->getCompanyOpenTickets();
+                if ($params->get('otrsgateway_tickets_stats')) {
+                    $tickets_stats = $model->getCompanyTickets();
+                }
                 break;
             default:
                 $tickets = $showClosed ? $model->getMyTickets() : $model->getMyOpenTickets();
+                if ($params->get('otrsgateway_tickets_stats')) {
+                    $tickets_stats = $model->getMyTickets();
+                }
         }
 		$this->tickets=$tickets;
 		$this->listType=$listType;
+        
+        if ($params->get('otrsgateway_tickets_stats')) {
+           $this->tickets_stats=$tickets_stats;
+        }
 
         $uri = JFactory::getURI();
         $toggleLinkText = '';

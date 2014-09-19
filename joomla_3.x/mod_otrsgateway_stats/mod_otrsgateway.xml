@@ -24,7 +24,7 @@
                     default="1" 
                     class="btn-group btn-group-yesno" 
                     label="MOD_OTRSGATEWAY_CONFIG_STATS" 
-                    description="MOD_OTRSGATEWAY_CONFIG_DESC"
+                    description="MOD_OTRSGATEWAY_CONFIG_STATS_DESC"
                     >
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
