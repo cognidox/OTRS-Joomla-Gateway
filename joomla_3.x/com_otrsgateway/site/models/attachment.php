@@ -154,7 +154,7 @@ class OTRSGatewayModelAttachment extends JModelLegacy
         $db =& JFactory::getDBO();
         $query = sprintf( 'SELECT id FROM #__otrsgateway_attachments WHERE token = %s', $db->Quote( $token ) );
         $db->setQuery( $query );
-        $ids = $db->loadResultArray();
+        $ids = $db->loadColumn();
         foreach ( $ids as $id )
         {
             $this->remove( $id, $token );
@@ -169,7 +169,7 @@ class OTRSGatewayModelAttachment extends JModelLegacy
         $db =& JFactory::getDBO();
         $query = 'SELECT filename FROM #__otrsgateway_attachments WHERE (UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(uploaded)) > 86400';
         $db->setQuery( $query );
-        $rows = $db->loadResultArray();
+        $rows = $db->loadColumn();
         foreach ( $rows as $file )
         {
             if ( file_exists( $file ) )
