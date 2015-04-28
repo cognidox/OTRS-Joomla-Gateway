@@ -16,7 +16,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 jimport( 'joomla.application.component.model' );
 
 require_once( JPATH_COMPONENT.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'userhelper.php' );
- 
+
 /**
  * Ticket Model
  *
@@ -42,7 +42,7 @@ class OTRSGatewayModelTicket extends JModelLegacy
     }
 
     function getTicket( $id = false )
-    {
+    {   
         if ( !$this->_userID )
         {
             return null;
@@ -56,8 +56,19 @@ class OTRSGatewayModelTicket extends JModelLegacy
             'TicketID' => array( $id, XSD_STRING ),
             'CustomerUserLogin' => array( $this->_userID, XSD_STRING ),
             'CustomerUserID' => array( $this->_userID, XSD_STRING ),
-            'Permission' => array( 'ro', XSD_STRING )
+            'Permission' => array( 'ro', XSD_STRING ),
+            'Queues' => array( [], XSD_STRING )
             );
+         
+        # Filter Queues
+        $vars['Queues'][] = array(); 
+        $params = JComponentHelper::getParams( 'com_otrsgateway' );
+        $filtered_queues = explode(',',$params->get('otrsgateway_filter_queues'));
+        
+        for ( $i = 0; $i < sizeof($filtered_queues); $i++ ) {
+            $vars['Queues'][0][$i] = $filtered_queues[$i];
+        } 
+         
         $result = null;
         if ( $err = $this->_gateway->callOTRS(
                         'JoomlaGatewayObject', 'GetTicket', $vars,
