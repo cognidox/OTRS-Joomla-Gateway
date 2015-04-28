@@ -77,7 +77,11 @@ if ($this->tickets_stats && count($this->tickets_stats)) {
     }
     
     //set the size the tickets should have in the chart bar
-    $max_ticket_height = round($max_bar_height/$tickets_year);
+    if ($tickets_year <> 0) {
+        $max_ticket_height = round($max_bar_height/$tickets_year);
+    } else {
+        $max_ticket_height = $max_bar_height;
+    }
     echo '
         <style type="text/css">
             .bar {
