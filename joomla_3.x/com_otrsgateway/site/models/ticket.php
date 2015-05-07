@@ -59,15 +59,20 @@ class OTRSGatewayModelTicket extends JModelLegacy
             'Permission' => array( 'ro', XSD_STRING ),
             'Queues' => array( [], XSD_STRING )
             );
-         
-        # Filter Queues
-        $vars['Queues'][] = array(); 
-        $params = JComponentHelper::getParams( 'com_otrsgateway' );
-        $filtered_queues = explode(',',$params->get('otrsgateway_filter_queues'));
         
-        for ( $i = 0; $i < sizeof($filtered_queues); $i++ ) {
-            $vars['Queues'][0][$i] = $filtered_queues[$i];
-        } 
+        $params = JComponentHelper::getParams( 'com_otrsgateway' );
+        If ( $params->get('otrsgateway_filter_queues') <> "" ) {        
+            # Filter Queues
+            $vars['Queues'][] = array(); 
+            $filtered_queues = explode(',',$params->get('otrsgateway_filter_queues'));
+            
+            for ( $i = 0; $i < sizeof($filtered_queues); $i++ ) {
+                $vars['Queues'][0][$i] = $filtered_queues[$i];
+            }
+        } else {
+            # Show all Queues
+            unset($vars['Queues']);       
+        }
          
         $result = null;
         if ( $err = $this->_gateway->callOTRS(

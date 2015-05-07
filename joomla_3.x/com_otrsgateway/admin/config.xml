@@ -157,6 +157,12 @@
             description="COM_OTRSGATEWAY_TICKET_SYSTEMMAIL_DESC" 
         />
         
+        <field 
+            name="otrsgateway_filter_queues" 
+            type="text" 
+            label="COM_OTRSGATEWAY_FILTER_QUEUES" 
+            description="COM_OTRSGATEWAY_FILTER_QUEUES_DESC" 
+        />
     </fieldset>
     
 </config>
