@@ -88,8 +88,8 @@ class plgSearchOTRSGateway extends JPlugin
                        'ContentSearch' => array( 'OR', XSD_STRING  ),
                        'IncludeDescription' => array( 1, XSD_INTEGER  ),
                        'FullTextIndex' => array( 1, XSD_INTEGER  ),
-                       'Subject' => array( '%' . mysql_real_escape_string( $text ) . '%', XSD_STRING  ),
-                       'Body' => array( '%' . mysql_real_escape_string( $text ) . '%', XSD_STRING  ),
+                       'Subject' => array( '%' . @mysql_real_escape_string( $text ) . '%', XSD_STRING  ),
+                       'Body' => array( '%' . @mysql_real_escape_string( $text ) . '%', XSD_STRING  ),
                  );
         switch ( $ordering )
         {
