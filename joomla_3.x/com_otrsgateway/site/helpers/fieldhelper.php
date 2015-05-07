@@ -230,7 +230,7 @@ function translateOTRSTicketState($state, $show_img = false)
 					$state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/unsuccessful.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_CLOSED_UNSUCCESSFUL')."' title='".JText::_('COM_OTRSGATEWAY_STATE_CLOSED_UNSUCCESSFUL')."' width=22 />";
 					break;
 				case "open":
-					$state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/in_process.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_OPEN')."' title='".JText::_('COM_OTRSGATEWAY_STATE_OPEN')."' width=22 />";
+					$state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/open.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_OPEN')."' title='".JText::_('COM_OTRSGATEWAY_STATE_OPEN')."' width=22 />";
 					break;
 				default:
 					$state = " - "; // this should never happen... missing state?
