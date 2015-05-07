@@ -171,9 +171,16 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
         $extraclass = 'otrs-reply-self';
         if ( preg_match( '/^.+?<([^>]+)>/', $article->From, $matches ) )
         {
-            if ( strtolower( $matches[1] ) != strtolower( $user->email ) )
-            {
-                $extraclass = 'otrs-reply-other';
+            if ($params->get('otrsgateway_ticket_systemmail') <> "") {
+                if ( strtolower( $matches[1] ) == strtolower( $params->get('otrsgateway_ticket_systemmail') ) )
+                {
+                    $extraclass = 'otrs-reply-other';
+                }
+            } else { 
+                if ( strtolower( $matches[1] ) != strtolower( $user->email ) )
+                {   
+                    $extraclass = 'otrs-reply-other';
+                }
             }
         }
         echo '<div class="otrs-ticket-comment ' . $extraclass . '"><div class="article-tools"><div class="article-meta otrs-comment-from">' .

@@ -150,6 +150,13 @@
             description="COM_OTRSGATEWAY_SUBMIT_LINK_DESC" 
         />
         
+        <field 
+            name="otrsgateway_ticket_systemmail" 
+            type="text" 
+            label="COM_OTRSGATEWAY_TICKET_SYSTEMMAIL" 
+            description="COM_OTRSGATEWAY_TICKET_SYSTEMMAIL_DESC" 
+        />
+        
     </fieldset>
     
 </config>
