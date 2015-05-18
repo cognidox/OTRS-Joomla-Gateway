@@ -146,10 +146,23 @@ if ($this->tickets && count($this->tickets)) {
                            
         //generate tickets table
         $url = JRoute::_('index.php?view=ticket&ticketID=' . $t->TicketID);
-        $result_tickets_view .= '<tr class="sectiontableentry' . ($row ? 1 : 2) . '">' .
-             '<td id="otrs-ticket-id"><a href="' . $url . '">' .
-             htmlspecialchars(trim($t->TicketNumber)) . '</a></td>';
-             
+        
+        if ($params->get('otrsgateway_tickets_showclosed') == "0") {
+            if ($t->State == "closed successful" || $t->State == "closed unsuccessful") {
+                $result_tickets_view .= '<tr class="sectiontableentry' . ($row ? 1 : 2) . '">' .
+                     '<td id="otrs-ticket-id">' .
+                     htmlspecialchars(trim($t->TicketNumber)) . '</td>';
+            } else {
+                $result_tickets_view .= '<tr class="sectiontableentry' . ($row ? 1 : 2) . '">' .
+                     '<td id="otrs-ticket-id"><a href="' . $url . '">' .
+                     htmlspecialchars(trim($t->TicketNumber)) . '</a></td>';
+            }
+        } else {
+            $result_tickets_view .= '<tr class="sectiontableentry' . ($row ? 1 : 2) . '">' .
+                '<td id="otrs-ticket-id"><a href="' . $url . '">' .
+                htmlspecialchars(trim($t->TicketNumber)) . '</a></td>';
+        }
+        
         $result_tickets_view .= '<td id="otrs-ticket-title">' . $CutTitle . '</td>';
         if ($params->get('otrsgateway_tickets_reporter') == "1") 
             $result_tickets_view .= '<td>' . htmlspecialchars($t->CustomerUserID) . '</td>';

@@ -19,6 +19,13 @@ $attachmentIndex = array();
 if ($this->ticket->TicketNumber == "") {
     echo "<span style='font-weight: bold;'>" . JText::_( 'COM_OTRSGATEWAY_UNABLE_TO_PROCESS_REQUEST' ) . "</span>";
 } else {
+
+    if ($params->get('otrsgateway_tickets_showclosed') == "0") {
+        if ($this->ticket->State == "closed successful" || $this->ticket->State == "closed unsuccessful") {
+            echo "<span style='font-weight: bold;'>" . JText::_( 'COM_OTRSGATEWAY_TICKET_ACCESS_DENIED' ) . "</span>";
+            exit;
+        }
+    }
 ?>
 <script type="text/javascript">
 <!--

@@ -163,6 +163,18 @@
             label="COM_OTRSGATEWAY_FILTER_QUEUES" 
             description="COM_OTRSGATEWAY_FILTER_QUEUES_DESC" 
         />
+        
+        <field 
+            name="otrsgateway_tickets_showclosed" 
+            type="radio"
+            default="1" 
+            class="btn-group btn-group-yesno" 
+            label="COM_OTRSGATEWAY_TICKETS_SHOWCLOSED" 
+            description="COM_OTRSGATEWAY_TICKETS_SHOWCLOSED_DESC"
+            >
+            <option value="1">JYES</option>
+			<option value="0">JNO</option>
+        </field>
     </fieldset>
     
 </config>
