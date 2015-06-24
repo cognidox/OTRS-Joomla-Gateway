@@ -216,6 +216,6 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 <div class="contentpaneopen">
     <h2><?php echo JText::_('COM_OTRSGATEWAY_REPLY'); ?></h2>
     <a name="endticket">&nbsp;</a>
-    <iframe style="max-width: 100%; height: 555px; width: 100%;" src="index.php?option=com_otrsgateway&task=replyForm&ticketID=<?php echo $this->ticket->TicketID; ?>"></iframe>
+    <iframe style="max-width: 100%; height: 555px; width: 100%;" frameborder="0" src="index.php?option=com_otrsgateway&task=replyForm&ticketID=<?php echo $this->ticket->TicketID; ?>"></iframe>
 </div>
 <?php } ?>

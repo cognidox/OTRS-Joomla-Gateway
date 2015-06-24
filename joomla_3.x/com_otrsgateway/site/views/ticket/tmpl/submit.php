@@ -112,7 +112,7 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
             <input type="hidden" name="format" value="raw" />
             <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
         </form>
-        <iframe id="attpost" name="attpost" style="display:none;width:1px;height:1px"></iframe>
+        <iframe id="attpost" name="attpost" style="display:none;width:1px;height:1px" frameborder="0"></iframe>
     </div>
     <form action="index.php" onsubmit="return false;">
         <input name="submitBtn" class="btn" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" onclick="submitbutton('submit');" />
