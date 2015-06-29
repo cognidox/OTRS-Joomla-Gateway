@@ -57,7 +57,7 @@ class OTRSGatewayModelTicket extends JModelLegacy
             'CustomerUserLogin' => array( $this->_userID, XSD_STRING ),
             'CustomerUserID' => array( $this->_userID, XSD_STRING ),
             'Permission' => array( 'ro', XSD_STRING ),
-            'Queues' => array( [], XSD_STRING )
+            'Queues' => array( array(), XSD_STRING )
             );
         
         $params = JComponentHelper::getParams( 'com_otrsgateway' );
