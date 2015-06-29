@@ -26,7 +26,6 @@ class OTRSGatewayController extends JControllerLegacy
         global $mainframe;
         parent::__construct();
         $this->registerDefaultTask( 'display' );
-        $this->registerTask( 'replyForm', 'replyForm' );
         $this->registerTask( 'reply', 'reply' );
         $this->registerTask( 'submitForm', 'submitForm' );
         $this->registerTask( 'addAttachment', 'addAttachment' );
@@ -61,15 +60,6 @@ class OTRSGatewayController extends JControllerLegacy
         {
             parent::display();
         }
-    }
-
-    function replyForm()
-    {
-		$jinput = JFactory::getApplication()->input;
-		$jinput->set( 'view', 'ticket' );
-        $jinput->set( 'layout', 'reply' );
-        $jinput->set( 'tmpl', 'component' );
-        parent::display();
     }
 
     function submitForm()

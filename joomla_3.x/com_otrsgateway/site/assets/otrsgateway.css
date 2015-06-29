@@ -64,12 +64,6 @@ div.otrs-attachment-box {
     background-color: #f4f0dc;
 }
 
-.replyiframe {
-    max-width: 100%; 
-    height: 555px; 
-    width: 100%;
-}
-
 @media (max-width: 560px) {
     .replyiframe {
         max-width: 100%; 

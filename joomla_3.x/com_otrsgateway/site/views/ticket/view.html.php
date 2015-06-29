@@ -35,9 +35,6 @@ class OTRSGatewayViewTicket extends JViewLegacy
 		$jinput = JFactory::getApplication()->input;
 		switch ( $jinput->get( 'task', null, null ) )
         {
-            case 'replyForm':
-                $this->_replyForm( $model, $tpl );
-                break;
             case 'submitForm':
                 $this->_submitForm( $model, $tpl, '', '', '', '' );
                 break;
@@ -58,43 +55,32 @@ class OTRSGatewayViewTicket extends JViewLegacy
         {
             $ticket = $model->getTicket( $ticketID );
             $allowedTags = '<p><em><i><span><a><b><u><ul><li><pre><ol><strike><br><tt><hr><div><strong>';
-			$this->allowedTags=$allowedTags;
-			$this->ticket=$ticket;
+            $this->allowedTags=$allowedTags;
+            $this->ticket=$ticket;
 
             $doc = JFactory::getDocument();
             $doc->setTitle( sprintf( '[%s] %s', $ticket->TicketNumber, $ticket->Title ) );
             $delAttLink = JRoute::_( 'index.php?option=com_otrsgateway&task=cleanAttachments&format=raw' );
-			$this->delAttLink=$delAttLink;
-        }
-    }
-
-    function _replyForm( $model, $tpl )
-    {
-		$jinput = JFactory::getApplication()->input;
-		$ticketID = $jinput->get( 'ticketID', null, null );
-        if ( $ticketID )
-        {
-            $ticket = $model->getTicket( $ticketID );
-			$this->ticket=$ticket;
-
-			$conf = JFactory::getConfig();
-			$editor_conf = $conf->get('editor');
-			$editor = JEditor::getInstance($editor_conf);
+            $this->delAttLink=$delAttLink;
+			
+            //Replyform
+            $priorityList = OTRSGatewayFieldHelper::getOTRSTicketPriorities( $ticketID, false );
+            $this->priorityList=$priorityList;
+            $stateList = OTRSGatewayFieldHelper::getOTRSTicketStates( $ticketID );
+            $this->stateList=$stateList;
+			
+            $conf = JFactory::getConfig();
+            $editor_conf = $conf->get('editor');
+            $editor = JEditor::getInstance($editor_conf);
 			
             if ( is_object( $editor ) )
             {
 				$this->editor=$editor;
             }
-
-            $priorityList = OTRSGatewayFieldHelper::getOTRSTicketPriorities( $ticketID, false );
-			$this->priorityList=$priorityList;
-            $stateList = OTRSGatewayFieldHelper::getOTRSTicketStates( $ticketID );
-			$this->stateList=$stateList;
-
-            // Generate a token allowing form attachments to be 
-            // tracked
-			$token = JApplication::getHash( uniqid() );
-			$this->formToken=$token;
+			
+            // Generate a token allowing form attachments to be tracked
+            $token = JApplication::getHash( uniqid() );
+            $this->formToken=$token;
         }
     }
 
