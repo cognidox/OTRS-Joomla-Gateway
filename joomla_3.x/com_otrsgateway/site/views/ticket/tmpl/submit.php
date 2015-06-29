@@ -11,7 +11,9 @@ defined('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.framework');
 $params = JComponentHelper::getParams( 'com_otrsgateway' );
 ?>
-
+<noscript>
+	<?php echo JText::_('COM_OTRSGATEWAY_REPLY_JS_ERROR'); ?>
+</noscript>
 <div id="otrs-submit-form" class="contentpaneopen">
     <div id="error-container"></div>
     <form action="<?php echo JRoute::_('index.php') . $params->get('otrsgateway_submit_link'); ?>" method="post" id="otrsNewTicketForm" name="otrsNewTicketForm" enctype="multipart/form-data">
@@ -105,8 +107,7 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
         <strong id="attachmentLabel"><?php echo JText::_( 'COM_OTRSGATEWAY_ATTACHMENTS' ); ?>:</strong>
         <ul id="attachmentlist"></ul>
         <form enctype="multipart/form-data" method="post" action="index.php" id="attform" name="attform" target="attpost">
-            <input type="file" name="attachment" class="addAttachment" /> 
-            <input type="submit" value="<?php echo JText::_( 'COM_OTRSGATEWAY_ADD' ); ?>" class="button"  />
+            <input type="file" onchange="this.form.submit()" name="attachment" class="addAttachment" /> 
             <input type="hidden" name="option" value="com_otrsgateway" />
             <input type="hidden" name="task" value="addAttachment" />
             <input type="hidden" name="format" value="raw" />

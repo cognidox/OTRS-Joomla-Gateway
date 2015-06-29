@@ -212,7 +212,9 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 ?>
 </div>
 <?php } ?>
-
+<noscript>
+	<?php echo JText::_('COM_OTRSGATEWAY_REPLY_JS_ERROR'); ?>
+</noscript>
 <div class="contentpaneopen">
     <h2><?php echo JText::_('COM_OTRSGATEWAY_REPLY'); ?></h2>
     <a name="endticket">&nbsp;</a>
@@ -282,8 +284,7 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 		<strong style="float: left; padding-right: 48px;"><?php echo JText::_( 'COM_OTRSGATEWAY_ATTACHMENTS' ); ?>:</strong>
 		<ul id="attachmentlist"></ul>
 		<form enctype="multipart/form-data" method="post" action="index.php" id="attform" name="attform" target="attpost">
-			<input type="file" name="attachment" /> 
-			<input type="submit" value="<?php echo JText::_( 'COM_OTRSGATEWAY_ADD' ); ?>" class="button"  />
+			<input type="file" onchange="this.form.submit()" name="attachment" /> 
 			<input type="hidden" name="option" value="com_otrsgateway" />
 			<input type="hidden" name="task" value="addAttachment" />
 			<input type="hidden" name="format" value="raw" />
