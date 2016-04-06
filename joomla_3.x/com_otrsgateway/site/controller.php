@@ -33,7 +33,7 @@ class OTRSGatewayController extends JControllerLegacy
         $this->registerTask( 'cleanAttachments', 'cleanAttachments' );
     }
 
-    function display()
+    function display($cachable = false, $urlparams = array())
     {
 		$jinput = JFactory::getApplication()->input;
         $doDisplay = true;
