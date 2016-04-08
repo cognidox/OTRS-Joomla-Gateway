@@ -324,12 +324,13 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 							?>
 				
 				var form = document.otrsReplyForm;
-				if ( !validateEditor(form) || (form.otrsreplytext.value.length < 20) ) {
+				if ( !validateEditor(form) ) {
 					jQuery('#error-container').append('<div class="alert alert-error"><p><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?></p></div>');
 					jQuery(this).removeAttr('disabled');
 					jQuery(this).css('opacity', '100%');
 					locked = false;
 					jQuery('#loading').hide();
+					jQuery('.alert-error').show();
 				} else {
 					<?php if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) : ?>
 						if (!jQuery('#otrsreplytext').val()) {
@@ -382,10 +383,27 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 		function validateEditor(form) {
 			var content = '';
 			<?php 
-			if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) {
-				echo "content = " . $this->editor->getContent( 'otrsreplytext' ) . "\n";
+			if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
+				echo "	content = " . $this->editor->getContent( 'otrsreplytext' ) . ";\r
+						if (content == null) {\r
+							content = false;\r
+						} else {\r
+							content = content.replace(/<[^>]*>?/g,'');\r
+							if (content.length < 20) {\r
+								content = false;\r
+							}\r
+						}\r
+				";
 			} else {
-				echo "content = form.otrsreplytext.value.trim();\n";
+				echo "	content = form.otrsreplytext.value.trim();\r
+						if (content == null) {\r
+							content = false;\r
+						} else {\r
+							if (content.length < 20) {\r
+								content = false;\r
+							}\r
+						}\r		
+				";
 			}
 			?>
 			return content;

@@ -116,6 +116,7 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
         <iframe id="attpost" name="attpost" style="display:none;width:1px;height:1px" frameborder="0"></iframe>
     </div>
     <form action="index.php" onsubmit="return false;">
+		<div id="loading" style="display: none; float: left; padding: 0 10px;"><img src="<?php echo JURI::root(); ?>components/com_otrsgateway/views/img/ajax-loader.gif"/></div>
         <input name="submitBtn" class="btn" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" onclick="submitbutton('submit');" />
     </form>
     <form action="index.php" id="delattform" name="delattform" method="post">
@@ -138,17 +139,14 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
                     echo $this->editor->save( 'otrsmessage' ); 
                 }
             ?>
-            //clear error messages
+            //clear error messages and show loading animation
             jQuery('.alert-error').remove();
-            
+			jQuery('#loading').show();
+			
             //check form
             if (form.Subject.value.length < 5) {
                 jQuery('#error-container').append('<div class="alert alert-error"><p><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_SUBJECT' ); ?></p></div>');
-                form.Subject.focus();
-                errorcount = errorcount + 1;
-            } else if (form.otrsmessage.value.length < 20) {
-                jQuery('#error-container').append('<div class="alert alert-error"><p class="alert-error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_MESSAGE' ); ?></p></div>');
-                form.otrsmessage.focus();
+				form.Subject.focus();
                 errorcount = errorcount + 1;
             } else if (!validateEditor(form)) {
                 jQuery('#error-container').append('<div class="alert alert-error"><p class="alert-error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_MESSAGE' ); ?></p></div>');
@@ -158,7 +156,11 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
             
             if (errorcount == 0) {
                 document.otrsNewTicketForm.submit();
-            }
+				jQuery('#loading').hide();
+            } else {
+				jQuery('#loading').hide();
+				jQuery('.alert-error').show();
+			}
         }
     }
     
@@ -205,9 +207,26 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
         var content = '';
         <?php 
         if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
-            echo "content = " . $this->editor->getContent( 'otrsmessage' ) . "\n";
+            echo "	content = " . $this->editor->getContent( 'otrsmessage' ) . ";\r
+					if (content == null) {\r
+						content = false;\r
+					} else {\r
+						content = content.replace(/<[^>]*>?/g,'');\r
+						if (content.length < 20) {\r
+							content = false;\r
+						}\r
+					}\r
+			";
         } else {
-            echo "content = form.otrsmessage.value.trim();\n";
+            echo "	content = form.otrsmessage.value.trim();\r
+					if (content == null) {\r
+						content = false;\r
+					} else {\r
+						if (content.length < 20) {\r
+							content = false;\r
+						}\r
+					}\r		
+			";
         }
         ?>
         return content;
