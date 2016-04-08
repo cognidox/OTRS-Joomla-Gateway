@@ -301,60 +301,58 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 		<input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
 	</form>
 
-	<form id="replyForm" action="index.php" method="get" onsubmit="return false">
+	<form id="replyForm" action="index.php" method="get" onsubmit="return false;">
 		<div id="loading" style="display: none; float: left; padding: 0 10px;"><img src="<?php echo JURI::root(); ?>components/com_otrsgateway/views/img/ajax-loader.gif"/></div>
-		<input name="submit" id="submitButton" class="btn" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" />
+		<input name="submit" id="submitButton" class="btn" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" onclick="submitbutton('submit');" />
 	</form>
 
 	</div>
 	<script language="javascript" type="text/javascript">
-	<!--
-		jQuery( document ).ready(function(e) {
-			jQuery('#submitButton').click(function(e2) {
-				jQuery('#loading').show();
-				jQuery('.alert-error').remove();
-				if (locked) { return void(0); }
-				locked = true;
-				jQuery(this).css('opacity', '10%');
-				jQuery(this).attr('disabled', 'disabled');
-				<?php 
-								if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
-									echo $this->editor->save('otrsreplytext'); 
-								}
-							?>
-				
-				var form = document.otrsReplyForm;
-				if ( !validateEditor(form) ) {
-					jQuery('#error-container').append('<div class="alert alert-error"><p><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?></p></div>');
-					jQuery(this).removeAttr('disabled');
-					jQuery(this).css('opacity', '100%');
-					locked = false;
-					jQuery('#loading').hide();
-					jQuery('.alert-error').show();
-				} else {
-					<?php if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) : ?>
-						if (!jQuery('#otrsreplytext').val()) {
-							jQuery('#otrsreplytext').val() = <?php echo $this->editor->getContent('otrsreplytext'); ?>
+		function submitbutton(pressbutton) {
+			jQuery('#loading').show();
+			var form = document.otrsReplyForm;
+			var errorcount = 0;
+			if (pressbutton == 'submit') {	
+				<?php if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
+						echo $this->editor->save( 'otrsreplytext' );
+				?>
+						if (!jQuery('#otrsreplytext').val() || jQuery('#otrsreplytext').val().length <= 1) {
+							replyval = <?php echo $this->editor->getContent('otrsreplytext'); ?>
+							jQuery('#otrsreplytext').val(replyval);
 						}
-					<?php endif; ?>
+				<?php } ?>
+				
+				//clear error messages
+				jQuery('.alert-error').remove();
+				
+				//check form
+				if (!validateEditor(form)) {
+					jQuery('#error-container').append('<div class="alert alert-error"><p class="alert-error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?></p></div>');
+					form.otrsreplytext.focus();
+					errorcount = errorcount + 1;
+				}
+				
+				if (errorcount == 0) {
 					
 					$('otrsReplyForm').set('send', {
 						noCache: true,
 						onComplete: function(resp) {
 							var obj = JSON.decode(resp);
 							window.parent.closeReply(obj.error,document.forms['otrsReplyForm'].elements['formtoken'].value);
-							jQuery('#loading').hide();
 						},
 						onFailure: function(resp) {
 							alert("<?php echo JText::_('COM_OTRSGATEWAY_ALERT_SUBMISSION_FAILED');?>");
 							window.parent.closeReply(null,document.forms['otrsReplyForm'].elements['formtoken'].value);
-							jQuery('#loading').hide();
 						}
 					}).send();
-				}
-			});
-		});
-
+					
+				} else {
+					jQuery('#loading').hide();
+					jQuery('.alert-error').show();
+				}	
+			}
+		}
+		
 		function addAttachment(error, id, name) {
 			if (!error) {
 				var newEl = new Element('li', { 'id': 'att-' + id  });
