@@ -27,41 +27,41 @@ class OTRSGatewayViewTicket extends JViewLegacy
         global $mainframe;
         $model = &$this->getModel();
         $result = array();
-		$jinput = JFactory::getApplication()->input;
-		if ( JSession::checkToken() )
+        $jinput = JFactory::getApplication()->input;
+        if ( JSession::checkToken() )
         {
-			$ticketID = $jinput->get( 'ticketID', null, null );
+            $ticketID = $jinput->get( 'ticketID', null, null );
             if ( $ticketID )
             {
                 $ticket = $model->getTicket( $ticketID );
-				$this->ticket=$ticket;
+                $this->ticket=$ticket;
 
-				if ($ticket && $jinput->get( 'task', null, null ) == 'reply') {
+                if ($ticket && $jinput->get( 'task', null, null ) == 'reply') {
 
-					$text = $jinput->get( 'otrsreplytext', null, 'RAW' );
+                    $text = $jinput->get( 'otrsreplytext', null, 'RAW' );
                     
                     // Determine if we should auto-escape the content
                     // of the ticket
-					$conf = JFactory::getConfig();
-					$editor_conf = $conf->get('editor');
-					$editor = JEditor::getInstance($editor_conf);
-					
+                    $conf = JFactory::getConfig();
+                    $editor_conf = $conf->get('editor');
+                    $editor = JEditor::getInstance($editor_conf);
+                    
                     if ( !is_object( $editor ) || 
                         $editor->get('_name') == 'none' ||
                         $editor->get('_name') == 'codemirror' )
                     {
                         $text = '<span style="white-space:pre">' . htmlspecialchars( $text ) . '</span>';
                     }
-					
-					//convert carriage return when no editor is used
-					$params = JComponentHelper::getParams( 'com_otrsgateway' );
-					if ( $params->get('otrsgateway_editor') == "1" )
-					    $text = nl2br($text);
+                    
+                    //convert carriage return when no editor is used
+                    $params = JComponentHelper::getParams( 'com_otrsgateway' );
+                    if ( $params->get('otrsgateway_editor') == "1" )
+                        $text = nl2br($text);
 
-					$priority = $jinput->get( 'priorityID', null, null );
+                    $priority = $jinput->get( 'priorityID', null, null );
                     $state = $jinput->get( 'StateID', null, null );
                     $token = $jinput->get( 'formtoken', null, null );
-					
+                    
                     $result = $model->reply( $ticketID, $text, $priority, $state, $token );
                 }
                 else
@@ -78,7 +78,7 @@ class OTRSGatewayViewTicket extends JViewLegacy
         {
             $result['error'] = JText::_( 'COM_OTRSGATEWAY_UNABLE_TO_PROCESS_REQUEST' );
         }
-		$this->result=$result;
+        $this->result=$result;
         parent::display( $tpl );
         jexit();
     }

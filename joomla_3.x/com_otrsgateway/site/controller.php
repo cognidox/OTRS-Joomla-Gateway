@@ -35,21 +35,21 @@ class OTRSGatewayController extends JControllerLegacy
 
     function display($cachable = false, $urlparams = array())
     {
-		$jinput = JFactory::getApplication()->input;
+        $jinput = JFactory::getApplication()->input;
         $doDisplay = true;
 
         // Set a default view if none exists
-		if ( ! $jinput->getCmd( 'view' ) )
+        if ( ! $jinput->getCmd( 'view' ) )
         {
-			$jinput->set( 'view', 'tickets' );
+            $jinput->set( 'view', 'tickets' );
         } 
 
         // Handle displaying an attachment
-		if ( $jinput->getCmd( 'view' ) == 'attachment' )
+        if ( $jinput->getCmd( 'view' ) == 'attachment' )
         {
             $view = $this->getView( 'attachment', 'raw' );
             $model = $this->getModel( 'attachment' );
-			$result = $model->download( $jinput->get( 'ArticleID', null, null), $jinput->get( 'AtmID', null, null) );
+            $result = $model->download( $jinput->get( 'ArticleID', null, null), $jinput->get( 'AtmID', null, null) );
             if ( array_key_exists( 'data', $result ) )
             {
                 $view->displayAttachment( $result['data'] );
@@ -64,8 +64,8 @@ class OTRSGatewayController extends JControllerLegacy
 
     function submitForm()
     {
-		$jinput = JFactory::getApplication()->input;
-		$jinput->set( 'view', 'ticket' );
+        $jinput = JFactory::getApplication()->input;
+        $jinput->set( 'view', 'ticket' );
         $jinput->set( 'layout', 'submit' );
         $jinput->set( 'format', 'html' );
         parent::display();
@@ -73,8 +73,8 @@ class OTRSGatewayController extends JControllerLegacy
 
     function reply()
     {
-		$jinput = JFactory::getApplication()->input;
-		$jinput->set( 'view', 'ticket' );
+        $jinput = JFactory::getApplication()->input;
+        $jinput->set( 'view', 'ticket' );
         $jinput->set( 'layout', 'reply_result' );
         $jinput->set( 'format', 'raw' );
         parent::display();
@@ -82,8 +82,8 @@ class OTRSGatewayController extends JControllerLegacy
 
     function addAttachment()
     {
-		$jinput = JFactory::getApplication()->input;
-		$jinput->set( 'view', 'attachment' );
+        $jinput = JFactory::getApplication()->input;
+        $jinput->set( 'view', 'attachment' );
         $jinput->set( 'layout', 'add' );
         $jinput->set( 'format', 'raw' );
         parent::display();
@@ -91,8 +91,8 @@ class OTRSGatewayController extends JControllerLegacy
 
     function delAttachment()
     {
-		$jinput = JFactory::getApplication()->input;
-		$jinput->set( 'view', 'attachment' );
+        $jinput = JFactory::getApplication()->input;
+        $jinput->set( 'view', 'attachment' );
         $jinput->set( 'layout', 'delete' );
         $jinput->set( 'format', 'raw' );
         parent::display();
@@ -100,8 +100,8 @@ class OTRSGatewayController extends JControllerLegacy
 
     function cleanAttachments()
     {
-		$jinput = JFactory::getApplication()->input;
-		$jinput->set( 'view', 'attachment' );
+        $jinput = JFactory::getApplication()->input;
+        $jinput->set( 'view', 'attachment' );
         $jinput->set( 'layout', 'delete' );
         $jinput->set( 'format', 'raw' );
         parent::display();

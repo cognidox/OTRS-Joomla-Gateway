@@ -17,7 +17,7 @@ $jinput = JFactory::getApplication()->input;
 // Set up a default task in the submit form
 if ( !$task && $jinput->get( 'layout', null, null ) == 'submit' )
 {
-	$jinput->set( 'task', 'submitForm' );
+    $jinput->set( 'task', 'submitForm' );
 }
 // Create the controller
 $controller = JControllerLegacy::getInstance( 'OTRSGateway' );

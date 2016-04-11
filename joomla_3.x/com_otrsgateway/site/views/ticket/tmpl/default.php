@@ -213,201 +213,201 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 </div>
 <?php } ?>
 <noscript>
-	<?php echo JText::_('COM_OTRSGATEWAY_REPLY_JS_ERROR'); ?>
+    <?php echo JText::_('COM_OTRSGATEWAY_REPLY_JS_ERROR'); ?>
 </noscript>
 <div class="contentpaneopen">
     <h2><?php echo JText::_('COM_OTRSGATEWAY_REPLY'); ?></h2>
     <a name="endticket">&nbsp;</a>
-		
-	<script type="text/javascript">
-	<!--
-	var locked = false;
-	// -->
-	</script>
+        
+    <script type="text/javascript">
+    <!--
+    var locked = false;
+    // -->
+    </script>
 
-	<div id="otrs-reply-form" class="contentpaneopen">
+    <div id="otrs-reply-form" class="contentpaneopen">
 
-	<form action="index.php" method="post" id="otrsReplyForm" name="otrsReplyForm">
-		<div class="adminform" style="vertical-align:top;width:100%;">
-			<div id="error-container"></div>
-		<?php
-			if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) {
-				echo $this->editor->display('otrsreplytext', '' , '100%', '200', '75', '10', false, 'otrsreplytext', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
-			} else {
-				echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
-			}  
-		
-		if ( $params->get('otrsgateway_submit_priority') == "0" && (! empty($this->priorityList)) )  
-		{
-		?>
-			<div class="priority" style="margin-top: 30px;">
-				<strong><?php echo JText::_( 'COM_OTRSGATEWAY_PRIORITY' ); ?>:</strong>
-				<select name="priorityID" id="priorityID">
-		<?php
-			foreach ($this->priorityList as $key => $val)
-			{
-				echo '<option value="' . htmlspecialchars($key) . '"' .
-					 ($key == $this->ticket->PriorityID ? ' selected="selected"' : '') .
-					 '>' . htmlspecialchars($val) . '</option>';
-			}
-		?>
-				</select>
-			</div>
-		<?php 
-		} else { 
-			echo "<input type='hidden' name='priorityID' value='".$params->get('otrsgateway_submit_priority')."' />";
-		}
-		?>
-			<div class="state" style="margin-top: 30px;">
-				<strong><?php echo JText::_( 'COM_OTRSGATEWAY_NEXT_STATE' ); ?>:</strong>
-				<select name="StateID" id="StateID" style="width: 45%;">
-		<?php
-			foreach ($this->stateList as $key => $val)
-			{
-				echo '<option value="' . htmlspecialchars($key) . '"' .
-					 ($key == $this->ticket->StateID ? ' selected="selected"' : '') .
-					 '>' . htmlspecialchars($val) . '</option>';
-			}
-		?>
-				</select>
-			</div>
-		</div>
-		<input type="hidden" name="ticketID" value="<?php echo htmlspecialchars($this->ticket->TicketID);?>" />
-		<input type="hidden" name="option" value="com_otrsgateway" />
-		<input type="hidden" name="task" value="reply" />
-		<input type="hidden" name="view" value="ticket" />
-		<input type="hidden" name="format" value="raw" />
-		<input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
-		<?php echo JHTML::_( 'form.token' ); ?>
-	</form>
-	<div class="adminform" style="vertical-align:top;width:100%">
-		<strong style="float: left; padding-right: 48px;"><?php echo JText::_( 'COM_OTRSGATEWAY_ATTACHMENTS' ); ?>:</strong>
-		<ul id="attachmentlist"></ul>
-		<form enctype="multipart/form-data" method="post" action="index.php" id="attform" name="attform" target="attpost">
-			<input type="file" onchange="this.form.submit()" name="attachment" /> 
-			<input type="hidden" name="option" value="com_otrsgateway" />
-			<input type="hidden" name="task" value="addAttachment" />
-			<input type="hidden" name="format" value="raw" />
-			<input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
-		</form>
-		<iframe id="attpost" name="attpost" style="display:none;width:1px;height:1px" frameborder="0"></iframe>
-	</div>
+    <form action="index.php" method="post" id="otrsReplyForm" name="otrsReplyForm">
+        <div class="adminform" style="vertical-align:top;width:100%;">
+            <div id="error-container"></div>
+        <?php
+            if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) {
+                echo $this->editor->display('otrsreplytext', '' , '100%', '200', '75', '10', false, 'otrsreplytext', null, null, array('mode'=>'simple', 'advimg' => 0, 'theme' => 'simple'));
+            } else {
+                echo '<textarea name="otrsreplytext" id="otrsreplytext" cols="60" rows="10" style="height:auto!important; width: 100%;"></textarea>';
+            }  
+        
+        if ( $params->get('otrsgateway_submit_priority') == "0" && (! empty($this->priorityList)) )  
+        {
+        ?>
+            <div class="priority" style="margin-top: 30px;">
+                <strong><?php echo JText::_( 'COM_OTRSGATEWAY_PRIORITY' ); ?>:</strong>
+                <select name="priorityID" id="priorityID">
+        <?php
+            foreach ($this->priorityList as $key => $val)
+            {
+                echo '<option value="' . htmlspecialchars($key) . '"' .
+                     ($key == $this->ticket->PriorityID ? ' selected="selected"' : '') .
+                     '>' . htmlspecialchars($val) . '</option>';
+            }
+        ?>
+                </select>
+            </div>
+        <?php 
+        } else { 
+            echo "<input type='hidden' name='priorityID' value='".$params->get('otrsgateway_submit_priority')."' />";
+        }
+        ?>
+            <div class="state" style="margin-top: 30px;">
+                <strong><?php echo JText::_( 'COM_OTRSGATEWAY_NEXT_STATE' ); ?>:</strong>
+                <select name="StateID" id="StateID" style="width: 45%;">
+        <?php
+            foreach ($this->stateList as $key => $val)
+            {
+                echo '<option value="' . htmlspecialchars($key) . '"' .
+                     ($key == $this->ticket->StateID ? ' selected="selected"' : '') .
+                     '>' . htmlspecialchars($val) . '</option>';
+            }
+        ?>
+                </select>
+            </div>
+        </div>
+        <input type="hidden" name="ticketID" value="<?php echo htmlspecialchars($this->ticket->TicketID);?>" />
+        <input type="hidden" name="option" value="com_otrsgateway" />
+        <input type="hidden" name="task" value="reply" />
+        <input type="hidden" name="view" value="ticket" />
+        <input type="hidden" name="format" value="raw" />
+        <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
+        <?php echo JHTML::_( 'form.token' ); ?>
+    </form>
+    <div class="adminform" style="vertical-align:top;width:100%">
+        <strong style="float: left; padding-right: 48px;"><?php echo JText::_( 'COM_OTRSGATEWAY_ATTACHMENTS' ); ?>:</strong>
+        <ul id="attachmentlist"></ul>
+        <form enctype="multipart/form-data" method="post" action="index.php" id="attform" name="attform" target="attpost">
+            <input type="file" onchange="this.form.submit()" name="attachment" /> 
+            <input type="hidden" name="option" value="com_otrsgateway" />
+            <input type="hidden" name="task" value="addAttachment" />
+            <input type="hidden" name="format" value="raw" />
+            <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
+        </form>
+        <iframe id="attpost" name="attpost" style="display:none;width:1px;height:1px" frameborder="0"></iframe>
+    </div>
 
-	<form action="index.php" id="delattform" name="delattform" method="post">
-		<input type="hidden" name="option" value="com_otrsgateway" />
-		<input type="hidden" name="task" value="delAttachment" />
-		<input type="hidden" name="format" value="raw" />
-		<input type="hidden" name="fileID" value="" />
-		<input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
-	</form>
+    <form action="index.php" id="delattform" name="delattform" method="post">
+        <input type="hidden" name="option" value="com_otrsgateway" />
+        <input type="hidden" name="task" value="delAttachment" />
+        <input type="hidden" name="format" value="raw" />
+        <input type="hidden" name="fileID" value="" />
+        <input type="hidden" name="formtoken" value="<?php echo $this->formToken; ?>" />
+    </form>
 
-	<form id="replyForm" action="index.php" method="get" onsubmit="return false;">
-		<div id="loading" style="display: none; float: left; padding: 0 10px;"><img src="<?php echo JURI::root(); ?>components/com_otrsgateway/views/img/ajax-loader.gif"/></div>
-		<input name="submit" id="submitButton" class="btn" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" onclick="submitbutton('submit');" />
-	</form>
+    <form id="replyForm" action="index.php" method="get" onsubmit="return false;">
+        <div id="loading" style="display: none; float: left; padding: 0 10px;"><img src="<?php echo JURI::root(); ?>components/com_otrsgateway/views/img/ajax-loader.gif"/></div>
+        <input name="submit" id="submitButton" class="btn" type="button" value="<?php echo JText::_('COM_OTRSGATEWAY_SUBMIT'); ?>" onclick="submitbutton('submit');" />
+    </form>
 
-	</div>
-	<script language="javascript" type="text/javascript">
-		function submitbutton(pressbutton) {
-			jQuery('#loading').show();
-			var form = document.otrsReplyForm;
-			var errorcount = 0;
-			if (pressbutton == 'submit') {	
-				<?php if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
-						echo $this->editor->save( 'otrsreplytext' );
-				?>
-						if (!jQuery('#otrsreplytext').val() || jQuery('#otrsreplytext').val().length <= 1) {
-							replyval = <?php echo $this->editor->getContent('otrsreplytext'); ?>
-							replyval.replace( /\r?\n/g, "<br>" );
-							jQuery('#otrsreplytext').val(replyval);
-						}
-				<?php } ?>
-				
-				//clear error messages
-				jQuery('.alert-error').remove();
-				
-				//check form
-				if (!validateEditor(form)) {
-					jQuery('#error-container').append('<div class="alert alert-error"><p class="alert-error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?></p></div>');
-					form.otrsreplytext.focus();
-					errorcount = errorcount + 1;
-				}
-				
-				if (errorcount == 0) {
-					
-					$('otrsReplyForm').set('send', {
-						noCache: true,
-						onComplete: function(resp) {
-							var obj = JSON.decode(resp);
-							window.parent.closeReply(obj.error,document.forms['otrsReplyForm'].elements['formtoken'].value);
-						},
-						onFailure: function(resp) {
-							alert("<?php echo JText::_('COM_OTRSGATEWAY_ALERT_SUBMISSION_FAILED');?>");
-							window.parent.closeReply(null,document.forms['otrsReplyForm'].elements['formtoken'].value);
-						}
-					}).send();
-					
-				} else {
-					jQuery('#loading').hide();
-					jQuery('.alert-error').show();
-				}	
-			}
-		}
-		
-		function addAttachment(error, id, name) {
-			if (!error) {
-				var newEl = new Element('li', { 'id': 'att-' + id  });
-				newEl.appendText(name + ' ');
-				var newLink = new Element('a', { 'href': 'javascript:delAttachment("' + id + '")', 'onclick':'delAttachment("' + id + '")', 'class': 'small button' });
-				newLink.appendText('<?php echo JText::_( 'COM_OTRSGATEWAY_REMOVE' ); ?>');
-				newLink.inject(newEl);
-				newEl.inject($('attachmentlist'));
-				document.forms['attform'].reset();
-			} else {
-				console.log("error addAttachment: " + error + " id: " + id + " name: " + name);
-			}
-		}
+    </div>
+    <script language="javascript" type="text/javascript">
+        function submitbutton(pressbutton) {
+            jQuery('#loading').show();
+            var form = document.otrsReplyForm;
+            var errorcount = 0;
+            if (pressbutton == 'submit') {	
+                <?php if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
+                        echo $this->editor->save( 'otrsreplytext' );
+                ?>
+                        if (!jQuery('#otrsreplytext').val() || jQuery('#otrsreplytext').val().length <= 1) {
+                            replyval = <?php echo $this->editor->getContent('otrsreplytext'); ?>
+                            replyval.replace( /\r?\n/g, "<br>" );
+                            jQuery('#otrsreplytext').val(replyval);
+                        }
+                <?php } ?>
+                
+                //clear error messages
+                jQuery('.alert-error').remove();
+                
+                //check form
+                if (!validateEditor(form)) {
+                    jQuery('#error-container').append('<div class="alert alert-error"><p class="alert-error"><?php echo JText::_( 'COM_OTRSGATEWAY_ALERT_PROVIDE_REPLY' ); ?></p></div>');
+                    form.otrsreplytext.focus();
+                    errorcount = errorcount + 1;
+                }
+                
+                if (errorcount == 0) {
+                    
+                    $('otrsReplyForm').set('send', {
+                        noCache: true,
+                        onComplete: function(resp) {
+                            var obj = JSON.decode(resp);
+                            window.parent.closeReply(obj.error,document.forms['otrsReplyForm'].elements['formtoken'].value);
+                        },
+                        onFailure: function(resp) {
+                            alert("<?php echo JText::_('COM_OTRSGATEWAY_ALERT_SUBMISSION_FAILED');?>");
+                            window.parent.closeReply(null,document.forms['otrsReplyForm'].elements['formtoken'].value);
+                        }
+                    }).send();
+                    
+                } else {
+                    jQuery('#loading').hide();
+                    jQuery('.alert-error').show();
+                }	
+            }
+        }
+        
+        function addAttachment(error, id, name) {
+            if (!error) {
+                var newEl = new Element('li', { 'id': 'att-' + id  });
+                newEl.appendText(name + ' ');
+                var newLink = new Element('a', { 'href': 'javascript:delAttachment("' + id + '")', 'onclick':'delAttachment("' + id + '")', 'class': 'small button' });
+                newLink.appendText('<?php echo JText::_( 'COM_OTRSGATEWAY_REMOVE' ); ?>');
+                newLink.inject(newEl);
+                newEl.inject($('attachmentlist'));
+                document.forms['attform'].reset();
+            } else {
+                console.log("error addAttachment: " + error + " id: " + id + " name: " + name);
+            }
+        }
 
-		function delAttachment( id ) {
-			document.forms['delattform'].elements['fileID'].value = id;
-			$('delattform').set('send', {
-				noCache: true,
-				onComplete: function(resp){
-								var el = $('att-' + id);
-								if (el) { el.dispose(); }
-							}
-			}).send();
-		}
-		
-		function validateEditor(form) {
-			var content = '';
-			<?php 
-			if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
-				echo "	content = " . $this->editor->getContent( 'otrsreplytext' ) . ";\r
-						if (content == null) {\r
-							content = false;\r
-						} else {\r
-							if (content.length < 20) {\r
-								content = false;\r
-							}\r
-						}\r
-				";
-			} else {
-				echo "	content = form.otrsreplytext.value.trim();\r
-						if (content == null) {\r
-							content = false;\r
-						} else {\r
-							content = '<p>' + content.replace(/\\r\\n?|\\n/g, '<br />\\r\\n') + '</p>';\r
-							if (content.length < 20) {\r
-								content = false;\r
-							}\r
-						}\r		
-				";
-			}
-			?>
-			return content;
-		}
-	</script>
-	
+        function delAttachment( id ) {
+            document.forms['delattform'].elements['fileID'].value = id;
+            $('delattform').set('send', {
+                noCache: true,
+                onComplete: function(resp){
+                                var el = $('att-' + id);
+                                if (el) { el.dispose(); }
+                            }
+            }).send();
+        }
+        
+        function validateEditor(form) {
+            var content = '';
+            <?php 
+            if ( isset( $this->editor ) && $params->get('otrsgateway_editor') == "0" ) { 
+                echo "	content = " . $this->editor->getContent( 'otrsreplytext' ) . ";\r
+                        if (content == null) {\r
+                            content = false;\r
+                        } else {\r
+                            if (content.length < 20) {\r
+                                content = false;\r
+                            }\r
+                        }\r
+                ";
+            } else {
+                echo "	content = form.otrsreplytext.value.trim();\r
+                        if (content == null) {\r
+                            content = false;\r
+                        } else {\r
+                            content = '<p>' + content.replace(/\\r\\n?|\\n/g, '<br />\\r\\n') + '</p>';\r
+                            if (content.length < 20) {\r
+                                content = false;\r
+                            }\r
+                        }\r		
+                ";
+            }
+            ?>
+            return content;
+        }
+    </script>
+    
 </div>
 <?php } ?>

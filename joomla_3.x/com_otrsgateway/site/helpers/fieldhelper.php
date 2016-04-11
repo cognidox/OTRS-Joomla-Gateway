@@ -137,12 +137,12 @@ class OTRSGatewayFieldHelper
         {
             $key = array_shift($result);
             $val = array_shift($result);
-			$val = translateOTRSTicketState($val);
+            $val = translateOTRSTicketState($val);
             $states[ $key ] = $val;
         }
         return $states;
     }
-	
+    
     /**
      * getOTRSTicketQueues
      *
@@ -182,60 +182,60 @@ class OTRSGatewayFieldHelper
  */
 function translateOTRSTicketState($state, $show_img = false)
 {
-	if (!$show_img) {
-		switch ($state) {
-				case "new":
-					$state = JText::_('COM_OTRSGATEWAY_STATE_NEW');
-					break;
-				case "pending reminder":
-					$state = JText::_('COM_OTRSGATEWAY_STATE_PENDING_REMINDER');
-					break;
-				case "pending auto close-":
-					$state = JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO-');
-					break;
-				case "pending auto close+":
-					$state = JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO+');
-					break;
-				case "closed successful":
-					$state = JText::_('COM_OTRSGATEWAY_STATE_CLOSED_SUCCESSFUL');
-					break;
-				case "closed unsuccessful":
-					$state = JText::_('COM_OTRSGATEWAY_STATE_CLOSED_UNSUCCESSFUL');
-					break;
-				case "open":
-					$state = JText::_('COM_OTRSGATEWAY_STATE_OPEN');
-					break;
-				default:
-					$state = " - "; // this should never happen... missing state?
-		}
-		return $state;
-	} else {
-		switch ($state) {
-				case "new":
-					$state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/new.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_NEW')."' title='".JText::_('COM_OTRSGATEWAY_STATE_NEW')."' width=22 />";
-					break;
-				case "pending reminder":
-					$state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/in_process.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_REMINDER')."' title='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_REMINDER')."' width=22 />";
-					break;					break;
-				case "pending auto close-":
-					$state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/in_process.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO-')."' title='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO-')."' width=22 />";
-					break;
-				case "pending auto close+":
-					$state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/in_process.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO+')."' title='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO+')."' width=22 />";
-					break;
-				case "closed successful":
-					$state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/successful.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_CLOSED_SUCCESSFUL')."' title='".JText::_('COM_OTRSGATEWAY_STATE_CLOSED_SUCCESSFUL')."' width=22 />";
-					break;
-				case "closed unsuccessful":
-					$state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/unsuccessful.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_CLOSED_UNSUCCESSFUL')."' title='".JText::_('COM_OTRSGATEWAY_STATE_CLOSED_UNSUCCESSFUL')."' width=22 />";
-					break;
-				case "open":
-					$state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/open.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_OPEN')."' title='".JText::_('COM_OTRSGATEWAY_STATE_OPEN')."' width=22 />";
-					break;
-				default:
-					$state = " - "; // this should never happen... missing state?
-		}
-		return $state;
-	}
+    if (!$show_img) {
+        switch ($state) {
+                case "new":
+                    $state = JText::_('COM_OTRSGATEWAY_STATE_NEW');
+                    break;
+                case "pending reminder":
+                    $state = JText::_('COM_OTRSGATEWAY_STATE_PENDING_REMINDER');
+                    break;
+                case "pending auto close-":
+                    $state = JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO-');
+                    break;
+                case "pending auto close+":
+                    $state = JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO+');
+                    break;
+                case "closed successful":
+                    $state = JText::_('COM_OTRSGATEWAY_STATE_CLOSED_SUCCESSFUL');
+                    break;
+                case "closed unsuccessful":
+                    $state = JText::_('COM_OTRSGATEWAY_STATE_CLOSED_UNSUCCESSFUL');
+                    break;
+                case "open":
+                    $state = JText::_('COM_OTRSGATEWAY_STATE_OPEN');
+                    break;
+                default:
+                    $state = " - "; // this should never happen... missing state?
+        }
+        return $state;
+    } else {
+        switch ($state) {
+                case "new":
+                    $state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/new.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_NEW')."' title='".JText::_('COM_OTRSGATEWAY_STATE_NEW')."' width=22 />";
+                    break;
+                case "pending reminder":
+                    $state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/in_process.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_REMINDER')."' title='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_REMINDER')."' width=22 />";
+                    break;					break;
+                case "pending auto close-":
+                    $state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/in_process.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO-')."' title='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO-')."' width=22 />";
+                    break;
+                case "pending auto close+":
+                    $state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/in_process.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO+')."' title='".JText::_('COM_OTRSGATEWAY_STATE_PENDING_AUTO+')."' width=22 />";
+                    break;
+                case "closed successful":
+                    $state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/successful.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_CLOSED_SUCCESSFUL')."' title='".JText::_('COM_OTRSGATEWAY_STATE_CLOSED_SUCCESSFUL')."' width=22 />";
+                    break;
+                case "closed unsuccessful":
+                    $state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/unsuccessful.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_CLOSED_UNSUCCESSFUL')."' title='".JText::_('COM_OTRSGATEWAY_STATE_CLOSED_UNSUCCESSFUL')."' width=22 />";
+                    break;
+                case "open":
+                    $state = "<img src='".JURI::root()."components/com_otrsgateway/views/img/open.png' alt='".JText::_('COM_OTRSGATEWAY_STATE_OPEN')."' title='".JText::_('COM_OTRSGATEWAY_STATE_OPEN')."' width=22 />";
+                    break;
+                default:
+                    $state = " - "; // this should never happen... missing state?
+        }
+        return $state;
+    }
 }
 
