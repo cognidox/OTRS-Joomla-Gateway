@@ -139,17 +139,23 @@ class OTRSGatewayViewTicket extends JViewLegacy
         $this->setLayout( 'submit' );
         $result = array();
 		$jinput = JFactory::getApplication()->input;
-		$text = $jinput->get( 'otrsmessage', null, null );
+		$text = $jinput->get( 'otrsmessage', null, 'RAW' );
 		
 		$conf = JFactory::getConfig();
 		$editor_conf = $conf->get('editor');
 		$editor = JEditor::getInstance($editor_conf);
 		
         if ( !is_object( $editor ) || 
-             $editor->get('_name') == 'none' || $editor->get('_name') == 'codemirror' )
+		    $editor->get('_name') == 'none' ||
+            $editor->get('_name') == 'codemirror' )
         {
             $text = '<span style="white-space:pre">' . htmlspecialchars( $text ) . '</span>';
         }
+		
+		//convert carriage return when no editor is used
+		$params = JComponentHelper::getParams( 'com_otrsgateway' );
+		if ( $params->get('otrsgateway_editor') == "1" )
+		    $text = nl2br($text);
 	
 		$ticketType = $jinput->get( 'typeID', null, null );
         $priority = $jinput->get( 'priorityID', null, null );

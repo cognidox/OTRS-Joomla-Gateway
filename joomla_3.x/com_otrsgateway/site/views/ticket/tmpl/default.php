@@ -318,6 +318,7 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 				?>
 						if (!jQuery('#otrsreplytext').val() || jQuery('#otrsreplytext').val().length <= 1) {
 							replyval = <?php echo $this->editor->getContent('otrsreplytext'); ?>
+							replyval.replace( /\r?\n/g, "<br>" );
 							jQuery('#otrsreplytext').val(replyval);
 						}
 				<?php } ?>
@@ -386,7 +387,6 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 						if (content == null) {\r
 							content = false;\r
 						} else {\r
-							content = content.replace(/<[^>]*>?/g,'');\r
 							if (content.length < 20) {\r
 								content = false;\r
 							}\r
@@ -397,6 +397,7 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 						if (content == null) {\r
 							content = false;\r
 						} else {\r
+							content = '<p>' + content.replace(/\\r\\n?|\\n/g, '<br />\\r\\n') + '</p>';\r
 							if (content.length < 20) {\r
 								content = false;\r
 							}\r
@@ -406,8 +407,6 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
 			?>
 			return content;
 		}
-		
-	//-->
 	</script>
 	
 </div>

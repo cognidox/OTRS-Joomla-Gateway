@@ -38,7 +38,7 @@ class OTRSGatewayViewTicket extends JViewLegacy
 
 				if ($ticket && $jinput->get( 'task', null, null ) == 'reply') {
 
-					$text = $jinput->get( 'otrsreplytext', null, null );
+					$text = $jinput->get( 'otrsreplytext', null, 'RAW' );
                     
                     // Determine if we should auto-escape the content
                     // of the ticket
@@ -47,11 +47,16 @@ class OTRSGatewayViewTicket extends JViewLegacy
 					$editor = JEditor::getInstance($editor_conf);
 					
                     if ( !is_object( $editor ) || 
-                         $editor->get('_name') == 'none' ||
-                         $editor->get('_name') == 'codemirror' )
+                        $editor->get('_name') == 'none' ||
+                        $editor->get('_name') == 'codemirror' )
                     {
                         $text = '<span style="white-space:pre">' . htmlspecialchars( $text ) . '</span>';
                     }
+					
+					//convert carriage return when no editor is used
+					$params = JComponentHelper::getParams( 'com_otrsgateway' );
+					if ( $params->get('otrsgateway_editor') == "1" )
+					    $text = nl2br($text);
 
 					$priority = $jinput->get( 'priorityID', null, null );
                     $state = $jinput->get( 'StateID', null, null );

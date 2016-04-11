@@ -155,8 +155,7 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
             }
             
             if (errorcount == 0) {
-                document.otrsNewTicketForm.submit();
-				jQuery('#loading').hide();
+                form.submit();
             } else {
 				jQuery('#loading').hide();
 				jQuery('.alert-error').show();
@@ -211,7 +210,6 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
 					if (content == null) {\r
 						content = false;\r
 					} else {\r
-						content = content.replace(/<[^>]*>?/g,'');\r
 						if (content.length < 20) {\r
 							content = false;\r
 						}\r
@@ -222,6 +220,7 @@ $params = JComponentHelper::getParams( 'com_otrsgateway' );
 					if (content == null) {\r
 						content = false;\r
 					} else {\r
+						content = '<p>' + content.replace(/\\r\\n?|\\n/g, '<br />\\r\\n') + '</p>';\r
 						if (content.length < 20) {\r
 							content = false;\r
 						}\r

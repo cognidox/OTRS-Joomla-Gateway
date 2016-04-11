@@ -101,7 +101,7 @@ class OTRSGatewayModelTicket extends JModelLegacy
         $vars = array(
             'TicketID' => array( $id, XSD_STRING ),
             'CustomerUserID' => array( $this->_userID, XSD_STRING ),
-            'Body' => array( nl2br($text), XSD_STRING ),
+            'Body' => array( $text, XSD_STRING ),
             'PriorityID' => array( $priority, XSD_INTEGER ),
             'StateID' => array( $state, XSD_INTEGER )
             );
@@ -145,7 +145,7 @@ class OTRSGatewayModelTicket extends JModelLegacy
         }
         $vars = array(
             'CustomerUserID' => array( $this->_userID, XSD_STRING ),
-            'Body' => array( nl2br($text), XSD_STRING ),
+            'Body' => array( $text, XSD_STRING ),
             'Subject' => array( $subject, XSD_STRING ),
             'PriorityID' => array( $priority, XSD_INTEGER ),
             'TypeID' => array( $ticketType, XSD_INTEGER ),
