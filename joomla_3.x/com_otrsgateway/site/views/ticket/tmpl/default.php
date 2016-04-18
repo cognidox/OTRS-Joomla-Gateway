@@ -318,6 +318,9 @@ if ( ! empty( $this->ticket->ArticleIndex ) )
                 ?>
                         if (!jQuery('#otrsreplytext').val() || jQuery('#otrsreplytext').val().length <= 1) {
                             replyval = <?php echo $this->editor->getContent('otrsreplytext'); ?>
+                            if (typeof replyval === "undefined") {
+                                replyval = "";
+                            }
                             replyval.replace( /\r?\n/g, "<br>" );
                             jQuery('#otrsreplytext').val(replyval);
                         }
