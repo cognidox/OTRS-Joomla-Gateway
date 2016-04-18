@@ -1,0 +1,130 @@
+/* 
+ * CSS file for the OTRS Gateway component 
+ * Copyright (C) 2010 Cognidox Ltd
+ */
+
+/* Top ticket status section in ticket detail view */
+div.otrs-ticket-status div.article-tools div.article-meta {
+    position:relative;
+    width:100%;
+}
+#otrs-top-attachments {
+    clear:left;
+}
+
+/* Top ticket status table */
+#otrs-ticket-status-table {
+    border:0;
+    padding:0;
+    border-collapse:collapse;
+}
+
+/* First column in ticket status table */
+td.otrs-ticket-status-col1 {
+    padding-right:10em;
+}
+
+/* Ticket detail top reply button */
+#otrs-ticket-top-reply {
+    position:absolute;
+    top:5px;
+    right:20px;
+}
+
+/* Ticket attachment boxes */
+div.otrs-attachment-box {
+    border: 1px #999 dashed;
+    padding: 0.5em;
+}
+
+/* Style for monospaced plain text */
+.otrs-monospace-text {
+    font-family:monospace;
+    white-space:pre;
+}
+
+/* Reply form content */
+#otrs-reply-form, #otrs-submit-form {
+    padding: 10px;
+}
+
+/* Comment within a ticket detail view, including heading text */
+.otrs-ticket-comment {
+    border: 1px #ccc solid;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+.otrs-ticket-table {
+    width: 100%;
+}
+
+/* Style for replies not sent by the current user in the ticket detail view */
+.otrs-reply-other {
+    background-color: #f4f0dc;
+}
+
+@media (max-width: 560px) {
+    .replyiframe {
+        max-width: 100%; 
+        height: 600px; 
+        width: 100%;
+    }
+}
+
+/* Style for Ticket Stats and Chart */
+.ticket-summary .bar {
+    margin-right: 1px;
+    margin-left: 1px;
+    z-index: 1;
+    background-color: #2E9AFE;
+    font-size: 0.8em;
+    overflow: hidden;
+}
+
+.ticket-summary .bar_column {
+    text-align: center;
+    border: 1px solid #e3e3e3;
+    font-size: 12px;
+    min-width: 37px;
+}
+
+.ticket-summary .bar:hover {
+    margin-right: 1px;
+    z-index: 1;
+    background-color: #ff5151;
+}
+
+.ticket-summary #ticket-stats {
+    width: 30%;
+    float: left;
+    padding-right: 5px;
+}
+
+.ticket-summary #ticket-dia {
+    width: auto;
+    float: right;
+    padding-left: 5px;
+}
+
+.ticket-summary #ticket-stats table tbody tr {
+    border: 1px solid #e3e3e3;
+}
+
+.ticket-summary #ticket-stats table tbody tr td {
+    padding-left: 5px;
+}
+
+@media (max-width: 979px) {
+    .ticket-summary #ticket-stats {
+        width: 100%;
+        float: none;
+        padding: 0;
+    }
+
+    .ticket-summary #ticket-dia {
+        width: 100%;
+        float: none;
+        padding: 0;
+    }
+} 

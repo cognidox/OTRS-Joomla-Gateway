@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+
+    <fieldset
+        name="connection"
+        label="COM_OTRSGATEWAY_CONNECTION_LABEL"
+        description="COM_OTRSGATEWAY_CONNECTION_DESC">
+        
+        <field 
+            name="otrsgateway_rpc_url" 
+            type="text" size="60" 
+            default="http://localhost/otrs/rpc.extended.pl" 
+            label="COM_OTRSGATEWAY_RPC_URL" 
+            description="COM_OTRSGATEWAY_RPC_URL_DESC" 
+        />
+        
+        <field 
+            name="otrsgateway_rpc_user" 
+            type="text" 
+            size="30" 
+            default="some_user" 
+            label="COM_OTRSGATEWAY_RPC_USER" 
+            description="COM_OTRSGATEWAY_RPC_USER_DESC" 
+        />
+        
+        <field 
+            name="otrsgateway_rpc_password" 
+            type="password" 
+            size="30" 
+            default="some_pass" 
+            label="COM_OTRSGATEWAY_RPC_PASSWORD" 
+            description="COM_OTRSGATEWAY_RPC_PASSWORD_DESC" 
+        />
+        
+        <field 
+            name="otrsgateway_auth_map" 
+            type="radio" 
+            default="0" 
+            label="COM_OTRSGATEWAY_AUTH_MAP" 
+            description="COM_OTRSGATEWAY_AUTH_MAP_DESC"
+            >
+            <option value="0">Login</option>
+            <option value="1">Email</option>
+        </field>
+        
+    </fieldset>
+    
+    <fieldset
+        name="configuration"
+        label="COM_OTRSGATEWAY_CONFIGURATION_LABEL"
+        description="COM_OTRSGATEWAY_CONFIGURATION_DESC">
+        
+        <field
+            name="otrsgateway_editor" 
+            type="radio" 
+            default="0" 
+            label="COM_OTRSGATEWAY_CHOOSE_EDITOR" 
+            description="COM_OTRSGATEWAY_CHOOSE_EDITOR_DESC"
+            >
+            <option value="0">Joomla Editor</option>
+            <option value="1">No Editor</option>
+        </field>
+        
+        <field 
+            name="otrsgateway_ticket_priority" 
+            type="radio"
+            default="1" 
+            class="btn-group btn-group-yesno" 
+            label="COM_OTRSGATEWAY_TICKET_PRIORITY" 
+            description="COM_OTRSGATEWAY_TICKET_PRIORITY_DESC"
+            >
+            <option value="1">JYES</option>
+			<option value="0">JNO</option>
+        </field>
+        
+        <field 
+            name="otrsgateway_ticket_queue" 
+            type="radio"
+            default="1"             
+            class="btn-group btn-group-yesno" 
+            label="COM_OTRSGATEWAY_TICKET_QUEUE" 
+            description="COM_OTRSGATEWAY_TICKET_QUEUE_DESC"
+            >
+            <option value="1">JYES</option>
+			<option value="0">JNO</option>
+        </field>
+        
+        <field 
+            name="otrsgateway_submit_priority" 
+            type="list"
+            default="0" 
+            label="COM_OTRSGATEWAY_SUBMIT_PRIORITY" 
+            description="COM_OTRSGATEWAY_SUBMIT_PRIORITY_DESC"
+            >
+            <option value="0">choose priority...</option>
+            <option value="1">very low</option>
+            <option value="2">low</option>
+            <option value="3">normal</option>
+            <option value="4">high</option>
+            <option value="5">very high</option>
+        </field>
+        
+        <field 
+            name="otrsgateway_submit_queue" 
+            type="text" 
+            label="COM_OTRSGATEWAY_SUBMIT_QUEUE" 
+            description="COM_OTRSGATEWAY_SUBMIT_QUEUE_DESC" 
+        />
+        
+        <field 
+            name="otrsgateway_tickets_reporter" 
+            type="radio"
+            default="1" 
+            class="btn-group btn-group-yesno" 
+            label="COM_OTRSGATEWAY_TICKETS_REPORTER" 
+            description="COM_OTRSGATEWAY_TICKETS_REPORTER_DESC"
+            >
+            <option value="1">JYES</option>
+			<option value="0">JNO</option>
+        </field>
+        
+        <field 
+            name="otrsgateway_tickets_priority" 
+            type="radio"
+            default="1"             
+            class="btn-group btn-group-yesno" 
+            label="COM_OTRSGATEWAY_TICKETS_PRIORITY" 
+            description="COM_OTRSGATEWAY_TICKETS_PRIORITY_DESC"
+            >
+            <option value="1">JYES</option>
+			<option value="0">JNO</option>
+        </field>
+        
+        <field 
+            name="otrsgateway_tickets_stats" 
+            type="radio"
+            default="1"             
+            class="btn-group btn-group-yesno" 
+            label="COM_OTRSGATEWAY_TICKETS_STATS" 
+            description="COM_OTRSGATEWAY_TICKETS_STATS_DESC"
+            >
+            <option value="1">JYES</option>
+			<option value="0">JNO</option>
+        </field>
+        
+        <field 
+            name="otrsgateway_submit_link" 
+            type="text" 
+            label="COM_OTRSGATEWAY_SUBMIT_LINK" 
+            description="COM_OTRSGATEWAY_SUBMIT_LINK_DESC" 
+        />
+        
+        <field 
+            name="otrsgateway_ticket_systemmail" 
+            type="text" 
+            label="COM_OTRSGATEWAY_TICKET_SYSTEMMAIL" 
+            description="COM_OTRSGATEWAY_TICKET_SYSTEMMAIL_DESC" 
+        />
+        
+        <field 
+            name="otrsgateway_filter_queues" 
+            type="text" 
+            label="COM_OTRSGATEWAY_FILTER_QUEUES" 
+            description="COM_OTRSGATEWAY_FILTER_QUEUES_DESC" 
+        />
+        
+        <field 
+            name="otrsgateway_tickets_showclosed" 
+            type="radio"
+            default="1" 
+            class="btn-group btn-group-yesno" 
+            label="COM_OTRSGATEWAY_TICKETS_SHOWCLOSED" 
+            description="COM_OTRSGATEWAY_TICKETS_SHOWCLOSED_DESC"
+            >
+            <option value="1">JYES</option>
+			<option value="0">JNO</option>
+        </field>
+    </fieldset>
+    
+</config>

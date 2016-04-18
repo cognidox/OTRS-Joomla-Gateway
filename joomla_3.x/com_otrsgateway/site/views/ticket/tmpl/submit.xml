@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="COM_OTRSGATEWAY_TICKET_VIEW_SUBMIT_TITLE">
+        <message>
+            <![CDATA[COM_OTRSGATEWAY_TICKET_VIEW_SUBMIT_DESC]]>
+        </message>
+    </layout>
+</metadata>
